@@ -1,0 +1,41 @@
+﻿#log_in {
+    margin-left: 250px;
+    margin-right: 250px;
+    border: 2px solid #3d8af7;
+    padding-bottom: 20%;
+}
+
+#header_color {
+    color: #006ce5;
+}
+
+#sub_theme {
+    font-size: 15px;
+    color: #7a7a7a;
+}
+
+.login-container {
+    min-height: 75vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: stretch;
+}
+
+.perma_container {
+    background: rgb(10,97,188);
+    background: linear-gradient(90deg, rgba(10,97,188,1) 5%, rgba(63,179,236,1) 25%);
+    height: 70px
+}
+
+.btn-primary {
+    margin-left: 0px;
+    margin-right: 0px;
+    background-color: #4dd7fa !important;
+    color: #FFF;
+    border-color: #3d8af7 !important;
+}
+
+.padding_left {
+    padding-left: 30px;
+}

@@ -26,5 +26,10 @@ namespace ProyectoWebApp_Plat2.Controllers
 
             return View();
         }
+
+        public ActionResult RegisterCustomer()
+        {
+            return View();
+        }
     }
 }

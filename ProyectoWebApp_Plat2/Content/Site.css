@@ -10,6 +10,7 @@
     padding-left: 15px;
     padding-right: 15px;
     flex-grow: 1;
+    overflow-y: auto;
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 

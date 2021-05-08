@@ -31,5 +31,37 @@ namespace ProyectoWebApp_Plat2.Controllers
         {
             return View();
         }
+
+        public ActionResult AdminMenu()
+        {
+            ViewData["Req"] = "Registrar Vuelo";
+            ViewData["Inicio"] = "si";
+            ViewData["Nombre"] = "Eduard Tomas";
+            return View();
+        }
+
+        public ActionResult AdminFlightList()
+        {
+            ViewData["Req"] = "Registrar Vuelo";
+            ViewData["Inicio"] = "no";
+            ViewData["Nombre"] = "Eduard Tomas";
+            return View();
+        }
+
+        public ActionResult MenuCliente()
+        {
+            ViewData["Req"] = "Reservar Vuelo";
+            ViewData["Inicio"] = "si";
+            ViewData["Nombre"] = "Eduard Tomas";
+            return View();
+        }
+
+        public ActionResult CustomerFlightList()
+        {
+            ViewData["Req"] = "Reservar Vuelo";
+            ViewData["Inicio"] = "no";
+            ViewData["Nombre"] = "Eduard Tomas";
+            return View();
+        }
     }
 }

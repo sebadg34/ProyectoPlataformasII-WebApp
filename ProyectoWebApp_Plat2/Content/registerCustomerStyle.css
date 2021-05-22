@@ -3,8 +3,9 @@
     width: 60%;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    
+    margin-top: 5vh;
+    margin-bottom: 5vh;
     border: 1px solid #3d8af7;
     min-height: 70vh;
     display: flex;
@@ -70,20 +71,27 @@ select {
 
 /*Colores de la página*/
 .perma_container {
+
     background: rgb(10,97,188);
     background: linear-gradient(90deg, rgba(10,97,188,1) 5%, rgba(63,179,236,1) 25%);
-    height: 70px
+    height: 70px;
 }
 
 #header_color {
     color: #006ce5;
 }
 
+
 /*Botón de registrar*/
 .btn-primary {
     margin-left: 0px;
     margin-right: 0px;
-    background-color: #4dd7fa !important;
+    background-color: #006ce5 !important;
     color: #FFF;
     border-color: #3d8af7 !important;
 }
+
+
+
+
+

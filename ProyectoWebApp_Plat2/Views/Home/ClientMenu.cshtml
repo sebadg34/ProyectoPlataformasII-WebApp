@@ -1,0 +1,22 @@
+﻿@{
+    ViewBag.Title = "ClientMenu";
+}
+<head>
+    <link rel="stylesheet" href="~/Content/menuStyles.css" />
+</head>
+<div>
+    @Html.Partial("_TopMenu")
+
+    <div id="general">
+        <div class="row form-group-2">
+            <div id="main_menu_left">
+                <img id="imagen" src="~/images/avion.png" />
+            </div>
+            <div id="main_menu_right">
+                <h3 style="margin-left: 10%; margin-top: 5%;font-size: 24px;color: black;">
+                    Bienvenido @ViewData["Nombre"]
+                </h3>
+            </div>
+        </div>
+    </div>
+</div>

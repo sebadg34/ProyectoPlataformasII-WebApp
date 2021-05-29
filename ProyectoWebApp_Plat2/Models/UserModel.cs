@@ -11,7 +11,7 @@ namespace ProyectoWebApp_Plat2.Models
     public class UserModel
     {
         [Required(ErrorMessage = "UserName is required")]
-        private string UserName { get; set; }
+        private string Username { get; set; }
         [Required(ErrorMessage = "Password is required")]
         [DataType(DataType.Password)]
         private string Password { get; set; }

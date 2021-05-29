@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="~/Content/makeMeisterStyles.css" />
 </head>
 
-
+x
 
 <style type="text/css">
 
@@ -31,7 +31,7 @@
 
 <div class="login-container">
 
-    <form id="form1" method="post" action="api/updates/complex" enctype="application/x-www-form-urlencoded">
+    <form> <!--id="form1" method="post" action="api/updates/complex" enctype="application/x-www-form-urlencoded"-->
 
         <div class="jumbotron" id="log_in">
             <h2 class="top-left ml-2 md-2" id="header_color">Iniciar Sesión</h2>
@@ -47,7 +47,7 @@
 
                 </div>
                 <div class="col-md-6">
-                    <input type="text" class="form-control" placeholder="email Usuario">
+                    <input type="text" class="form-control" id="userEmail" placeholder="email Usuario">
                 </div>
 
             </div>
@@ -56,7 +56,7 @@
                     <label>Contraseña</label>
                 </div>
                 <div class="col-md-6">
-                    <input type="text" class="form-control" placeholder="contraseña Usuario">
+                    <input type="text" class="form-control" id="userPassword" placeholder="contraseña Usuario">
                 </div>
             </div>
 
@@ -67,7 +67,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="row  flex-row-reverse no-gutters">
-                        <button type="submit" class="btn btn-primary" value="LoginUser">Iniciar Sesión</button>
+                        <button type="submit" class="btn btn-primary" id="LoginButton" value="LoginUser">Iniciar Sesión</button>
 
                     </div>
 
@@ -89,5 +89,34 @@
     </form>
 
 </div>
+
+<script>
+    $(document).ready(function () {
+        $('#LoginButton').click(function () {
+            var data = {
+                "Username": $("#userEmail").val(),
+                "Password": $("#userPassword").val()
+            };
+            $.ajax({
+                url: "/Login/validateuser",
+                type: "POST",
+                data: JSON.stringify(data),
+                dataType: "json",
+                contentType: "application/json",
+                success: function (response) {
+                    if (response.Success) {
+                      
+                     }
+                    else
+                        window.location.href = "@Url.Action("Home", "AdminMenu")";
+                },
+                error: function () {
+                    window.location.href = "@Url.Action("AdminMenu", "Home")";
+                    console.log('Login Fail!!!');
+                }
+            });
+        });
+    });
+</script>
 
 

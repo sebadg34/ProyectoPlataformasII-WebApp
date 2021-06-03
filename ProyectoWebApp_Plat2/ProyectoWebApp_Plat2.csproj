@@ -163,10 +163,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Login\Login.cshtml" />
     <Content Include="Views\Home\RegisterCustomer.cshtml" />
-    <Content Include="Views\Home\AdminFlightList.cshtml" />
-    <Content Include="Views\Home\AdminMenu.cshtml" />
-    <Content Include="Views\Home\ClientMenu.cshtml" />
-    <Content Include="Views\Home\CustomerFlightList.cshtml" />
+    <Content Include="Views\Home\Menu.cshtml" />
     <Content Include="Views\Shared\_TopMenu.cshtml" />
   </ItemGroup>
   <ItemGroup>

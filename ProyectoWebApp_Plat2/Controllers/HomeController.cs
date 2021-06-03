@@ -8,10 +8,7 @@ namespace ProyectoWebApp_Plat2.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
-        {
-            return View();
-        }
+        
 
         public ActionResult About()
         {
@@ -48,7 +45,7 @@ namespace ProyectoWebApp_Plat2.Controllers
             return View();
         }
 
-        public ActionResult MenuCliente()
+        public ActionResult ClientMenu()
         {
             ViewData["Req"] = "Reservar Vuelo";
             ViewData["Inicio"] = "si";

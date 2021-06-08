@@ -29,6 +29,14 @@ namespace ProyectoWebApp_Plat2.Controllers
             return View();
         }
 
+        public ActionResult RegisterFlights()
+        {
+            ViewData["Req"] = "Registrar Vuelo";
+            ViewData["Inicio"] = "si";
+            ViewData["Nombre"] = "Eduard Tomas";
+            return View();
+        }
+
         public ActionResult AdminMenu()
         {
             ViewData["Req"] = "Registrar Vuelo";

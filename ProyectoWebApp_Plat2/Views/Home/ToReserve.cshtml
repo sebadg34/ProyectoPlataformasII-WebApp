@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewBag.Title = "ToReserve";
+}
+
+<head>
+    <link rel="stylesheet" href="~/Content/menuStyles.css" />
+</head>
+<div>
+    @{
+        int sizeOfPassenger = 3;
+        for (int i = 0; i < sizeOfPassenger; i++)
+        {
+            ViewData["iterator"] = i + 1;
+            @Html.Partial("RegisterPassenger")
+        }
+    }
+    <div class="float-right">
+        <div class="row form-group">
+            <div class="row  flex-row-reverse no-gutters for">
+                <button type="button" class="btn btn-primary-2">
+                    <h3 id="sub_theme">
+                        Reservar
+                    </h3>
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>
+

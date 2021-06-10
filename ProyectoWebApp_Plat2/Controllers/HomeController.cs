@@ -39,9 +39,6 @@ namespace ProyectoWebApp_Plat2.Controllers
             return View();
         }
 
-        public ActionResult AdminMenu()
-
-
         public ActionResult Menu()
         {
             if (TempData["Log-In"] != null && TempData["Role"] != null)
@@ -49,9 +46,6 @@ namespace ProyectoWebApp_Plat2.Controllers
                 this.State = (bool)TempData["Log-In"];
                 this.Role = (bool)TempData["Role"];
             }
-
-
-
             ViewData["Nombre"] = "Eduard Tomas";
             ViewData["Log-In"] = this.State;
             ViewData["Role"] = this.Role;

@@ -14,11 +14,12 @@ namespace ProyectoWebApp_Plat2.Controllers
             return View();
         }
 
-
+        /*
         public void LoginUser() {
             System.Diagnostics.Debug.Write("PROBANDO BOTON LOGIN");
 
             return;
         }
+        */
     }
 }

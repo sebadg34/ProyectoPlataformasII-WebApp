@@ -8,7 +8,8 @@ namespace ProyectoWebApp_Plat2.Controllers
 {
     public class HomeController : Controller
     {
-        
+        bool State { get; set; } = true;
+        bool Role { get; set; } = true;
 
         public ActionResult About()
         {
@@ -29,6 +30,7 @@ namespace ProyectoWebApp_Plat2.Controllers
             return View();
         }
 
+
         public ActionResult RegisterFlights()
         {
             ViewData["Req"] = "Registrar Vuelo";
@@ -38,34 +40,22 @@ namespace ProyectoWebApp_Plat2.Controllers
         }
 
         public ActionResult AdminMenu()
-        {
-            ViewData["Req"] = "Registrar Vuelo";
-            ViewData["Inicio"] = "si";
-            ViewData["Nombre"] = "Eduard Tomas";
-            return View();
-        }
 
-        public ActionResult AdminFlightList()
-        {
-            ViewData["Req"] = "Registrar Vuelo";
-            ViewData["Inicio"] = "no";
-            ViewData["Nombre"] = "Eduard Tomas";
-            return View();
-        }
 
-        public ActionResult ClientMenu()
+        public ActionResult Menu()
         {
-            ViewData["Req"] = "Reservar Vuelo";
-            ViewData["Inicio"] = "si";
-            ViewData["Nombre"] = "Eduard Tomas";
-            return View();
-        }
+            if (TempData["Log-In"] != null && TempData["Role"] != null)
+            {
+                this.State = (bool)TempData["Log-In"];
+                this.Role = (bool)TempData["Role"];
+            }
 
-        public ActionResult CustomerFlightList()
-        {
-            ViewData["Req"] = "Reservar Vuelo";
-            ViewData["Inicio"] = "no";
+
+
             ViewData["Nombre"] = "Eduard Tomas";
+            ViewData["Log-In"] = this.State;
+            ViewData["Role"] = this.Role;
+
             return View();
         }
     }

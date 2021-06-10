@@ -6,16 +6,269 @@
 </head>
 <div>
     @Html.Partial("_TopMenu")
-    <div id="general">
-        <div class="row form-group-2">
-            <div id="main_menu_left">
-                <img id="imagen" src="~/images/avion.png" />
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(function () {
+            $("#desde").datepicker({
+                dateFormat: 'yy-mm-dd',
+                minDate: "dateToday",
+                maxDate: '+6m',
+                inline: true,
+                showButtonPanel: true
+            });
+        });
+    </script>
+    <script>
+        $(function () {
+            $("#hasta").datepicker({
+                dateFormat: 'yy-mm-dd',
+                minDate: "dateToday",
+                maxDate: '+6m',
+                inline: true,
+                showButtonPanel: true
+            });
+        });
+    </script>
+
+    @using (Html.BeginForm("Menu", "Home"))
+    {
+        <div class="perma_container_menu no-gutters for" style="height: 40px; display: flex;">
+            <div class="row" style="width: 100%; height: 40px; margin: auto; display: flex;">
+                <div class="col" style="width: 20%; height: 40px; margin: auto; display: flex;">
+                    <div class="row" style="width: 90%; height: 40px; margin: auto;">
+                        <div class="col" style="width: 50%; height: 40px; margin: auto; display: flex;">
+                            <h3 style="color: white; margin: auto; font-size: 14px;">
+                                Ciudad Origen
+                            </h3>
+                        </div>
+                        <div class="col p-0" style="width: 50%; height: 40px; margin: auto; display: flex;">
+                            @{
+                                int n = 0;
+                                List<string> ciudades_origen = new List<string>();
+                                ciudades_origen.Add(ViewBag.vuelos[0].Ciudad_Origen);
+
+                                for (int i = 0; i < ViewBag.vuelos.Count; i++)
+                                {
+                                    foreach (string ciudades in ciudades_origen)
+                                    {
+                                        if (ViewBag.vuelos[i].Ciudad_Origen.Equals(ciudades))
+                                        {
+                                            break;
+                                        }
+                                        if (ciudades_origen.Count == n + 1)
+                                        {
+                                            ciudades_origen.Add(ViewBag.vuelos[i].Ciudad_Origen);
+                                            break;
+                                        }
+                                        n++;
+                                    }
+                                    n = 0;
+                                }
+                                ciudades_origen.Sort();
+                            }
+                            <select class="form-control form-control-sm" name="origen" style="margin: auto; width: 100%;">
+                                <option value="Todo">Todo</option>
+                                @foreach (string ciudad in ciudades_origen)
+                                {
+                                    <option value="@ciudad">@ciudad</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col" style="width: 20%; height: 40px; margin: auto;">
+                    <div class="row" style="width: 90%; height: 40px; margin: auto;">
+                        <div class="col" style="width: 50%; height: 40px; margin: auto; display: flex;">
+                            <h3 style="color: white; margin: auto; font-size: 14px;">
+                                Ciudad Destino
+                            </h3>
+                        </div>
+                        <div class="col p-0" style="width: 50%; height: 40px; margin: auto; display: flex;">
+                            @{
+                                int m = 0;
+                                List<string> ciudades_destino = new List<string>();
+                                ciudades_destino.Add(ViewBag.vuelos[0].Ciudad_Destino);
+
+                                for (int i = 0; i < ViewBag.vuelos.Count; i++)
+                                {
+                                    foreach (string ciudades in ciudades_destino)
+                                    {
+                                        if (ViewBag.vuelos[i].Ciudad_Destino.Equals(ciudades))
+                                        {
+                                            break;
+                                        }
+                                        if (ciudades_destino.Count == m + 1)
+                                        {
+                                            ciudades_destino.Add(ViewBag.vuelos[i].Ciudad_Destino);
+                                            break;
+                                        }
+                                        m++;
+                                    }
+                                    m = 0;
+                                }
+                                ciudades_destino.Sort();
+                            }
+                            <select class="form-control form-control-sm" name="destino" style="margin: auto; width: 100%;">
+                                <option value="Todo">Todo</option>
+                                @foreach (string ciudad in ciudades_destino)
+                                {
+                                    <option value="@ciudad">@ciudad</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col" style="width: 20%; height: 40px; margin: auto;">
+                    <div class="row" style="width: 90%; height: 40px; margin: auto;">
+                        <div class="col" style="width: 50%; height: 40px; margin: auto; display: flex;">
+                            <h3 style="color: white; margin: auto; font-size: 14px;">
+                                Desde
+                            </h3>
+                        </div>
+                        <div class="col p-0" style="width: 50%; height: 40px; margin: auto; display: flex;">
+                            <input type="text" class="form-control form-control-sm" id="desde" name="desde" placeholder="yyyy-mm-dd" style="margin: auto; font-size: 14px; padding: 0px;" readonly />
+                        </div>
+                    </div>
+                </div>
+                <div class="col" style="width: 20%; height: 40px; margin: auto;">
+                    <div class="row" style="width: 90%; height: 40px; margin: auto;">
+                        <div class="col" style="width: 50%; height: 40px; margin: auto; display: flex;">
+                            <h3 style="color: white; margin: auto; font-size: 14px;">
+                                Hasta
+                            </h3>
+                        </div>
+                        <div class="col p-0" style="width: 50%; height: 40px; margin: auto; display: flex;">
+                            <input type="text" class="form-control form-control-sm" id="hasta" name="hasta" placeholder="yyyy-mm-dd" style="margin: auto; font-size: 14px; padding: 0px;" readonly />
+                        </div>
+                    </div>
+                </div>
+                <div class="col" style="width: 20%; height: 40px; margin: auto; display: flex;">
+                    <input type="submit" class="btn btn-primary" value="Buscar" style="margin: auto; font-size: 14px; padding: 0px;" />
+                </div>
             </div>
-            <div id="main_menu_right">
-                <h3 style="margin-left: 10%; margin-top: 5%;font-size: 24px;color: black;">
-                    Bienvenido @ViewData["Nombre"]
-                </h3>
+        </div>
+    }
+    <div id="general" style="width: 100%;">
+        <div class="row" style="height: 100px;">
+
+        </div>
+        <div class="row" style="background: red; width: 96%; display: flex; margin: auto; border: 4px solid #124982; background: #124982; border-radius: 5px">
+            <div class="row" style="width: 100%; height: 60px; margin: auto; display: flex; background: #0a61bc;">
+                <div class="col" style="width: 14.28571429%; height: 60px; margin: auto; display: flex; border: 3px solid black; border-right: 1px solid black;">
+                    <h3 style="color: white; margin: auto; font-size: 14px;">
+                        Código Vuelo
+                    </h3>
+                </div>
+                <div class="col" style="width: 14.28571429%; height: 60px; margin: auto; display: flex; border: 3px solid black; border-right: 1px solid black; border-left: 1px solid black;">
+                    <h3 style="color: white; margin: auto; font-size: 14px;">
+                        Ciudad Origen
+                    </h3>
+                </div>
+                <div class="col" style="width: 14.28571429%; height: 60px; margin: auto; display: flex; border: 3px solid black; border-right: 1px solid black; border-left: 1px solid black;">
+                    <h3 style="color: white; margin: auto; font-size: 14px;">
+                        Ciudad Destino
+                    </h3>
+                </div>
+                <div class="col" style="width: 14.28571429%; height: 60px; margin: auto; display: flex; border: 3px solid black; border-right: 1px solid black; border-left: 1px solid black;">
+                    <h3 style="color: white; margin: auto; font-size: 14px;">
+                        Fecha Salida
+                    </h3>
+                </div>
+                <div class="col" style="width: 14.28571429%; height: 60px; margin: auto; display: flex; border: 3px solid black; border-right: 1px solid black; border-left: 1px solid black;">
+                    <h3 style="color: white; margin: auto; font-size: 14px;">
+                        Duración del Vuelo
+                    </h3>
+                </div>
+                <div class="col" style="width: 14.28571429%; height: 60px; margin: auto; display: flex; border: 3px solid black; border-right: 1px solid black; border-left: 1px solid black;">
+                    <h3 style="color: white; margin: auto; font-size: 14px;">
+                        Cupos
+                    </h3>
+                </div>
+                <div class="col" style="width: 14.28571429%; height: 60px; margin: auto; display: flex; border: 3px solid black; border-left: 1px solid black;">
+                    <h3 style="color: white; margin: auto; font-size: 14px;">
+                        Categoría
+                    </h3>
+                </div>
             </div>
+            @{
+                bool Role = (bool)ViewData["Role"];
+                for (int i = 0; i < ViewBag.flights.Count; i++)
+                {
+                    <div class="row" style="width: 100%; height: 100px; margin: auto; display: flex; background: white;">
+                        @{
+                            if (Role)
+                            {
+                                <div class="col" style="width: 14.28571429%; height: 100px; margin: auto; display: flex; border: 1px solid black;">
+                                    <h3 style="color: #010812; margin: auto; font-size: 14px;">
+                                        @ViewBag.flights[i].ID_Vuelo
+                                    </h3>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col" style="width: 14.28571429%; height: 100px; margin: auto; display: flex; border: 1px solid black;">
+                                    <div class="row" style="width: 100%; margin: auto; display: flex; height: 60px;">
+                                        <div class="row" style="width: 100%; margin: auto; display: flex; height: 30px;">
+                                            <h3 style="color: #010812; margin: auto; font-size: 14px;">
+                                                @ViewBag.flights[i].ID_Vuelo
+                                            </h3>
+                                        </div>
+                                        <div class="row" style="width: 70%; margin: auto; display: flex; height: 30px;">
+                                            @using (Html.BeginForm("mirar", "Home"))
+                                            {
+                                                <button type="submit" class="btn btn-primary" value="@ViewBag.flights[i].ID_Vuelo" name="id_vuelo" style="margin: auto; font-size: 14px; padding: 0px; background-color: #0a61bc !important;">
+                                                    <h3 style="color: #010812; margin: auto; font-size: 14px; color: white;">
+                                                        Reservar
+                                                    </h3>
+                                                </button>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        <div class="col" style="width: 14.28571429%; height: 100px; margin: auto; display: flex; border: 1px solid black;">
+                            <h3 style="color: #010812; margin: auto; font-size: 14px;">
+                                @ViewBag.flights[i].Ciudad_Origen
+                            </h3>
+                        </div>
+                        <div class="col" style="width: 14.28571429%; height: 100px; margin: auto; display: flex; border: 1px solid black;">
+                            <h3 style="color: #010812; margin: auto; font-size: 14px;">
+                                @ViewBag.flights[i].Ciudad_Destino
+                            </h3>
+                        </div>
+                        <div class="col" style="width: 14.28571429%; height: 100px; margin: auto; display: flex; border: 1px solid black;">
+                            <h3 style="color: #010812; margin: auto; font-size: 14px;">
+                                @ViewBag.flights[i].Salida
+                            </h3>
+                        </div>
+                        <div class="col" style="width: 14.28571429%; height: 100px; margin: auto; display: flex; border: 1px solid black;">
+                            @{
+                                TimeSpan duracion = ViewBag.flights[i].Llegada - ViewBag.flights[i].Salida;
+                            }
+                            <h3 style="color: #010812; margin: auto; font-size: 14px;">
+                                @duracion.TotalHours Horas
+                            </h3>
+                        </div>
+                        <div class="col" style="width: 14.28571429%; height: 100px; margin: auto; display: flex; border: 1px solid black;">
+                            <h3 style="color: #010812; margin: auto; font-size: 14px;">
+                                @ViewBag.flights[i].Cupos
+                            </h3>
+                        </div>
+                        <div class="col" style="width: 14.28571429%; height: 100px; margin: auto; display: flex; border: 1px solid black;">
+                            <h3 style="color: #010812; margin: auto; font-size: 14px;">
+                                @ViewBag.flights[i].Categoria
+                            </h3>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+        <div class="row" style="height: 100px;">
+
         </div>
     </div>
 </div>

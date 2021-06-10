@@ -1,0 +1,152 @@
+﻿
+@{
+    ViewBag.Title = "RegisterFlights";
+}
+
+<head>
+    <link rel="stylesheet" href="~/Content/registerCustomerStyle.css" />
+</head>
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+    $(function () {
+        $("#Fecha-Salida").datepicker({
+            dateFormat: 'yy-mm-dd',
+            minDate: "dateToday",
+            maxDate: '+6m',
+            inline: true,
+            showButtonPanel: true
+        });
+    });
+</script>
+
+
+<style type="text/css">
+
+    #register_user {
+        width: 60%;
+        display: flex;
+        max-height: 0px;
+        min-height: 63vh;
+    }
+
+   
+</style>
+
+<div>
+    @Html.Partial("_TopMenu")
+
+    <div class="container-fluid vertical-center">
+
+        <section class="jumbotron" id="register_user" >
+            <div class="container-fluid">
+
+                <!--Título de la página-->
+                <div class="row">
+                    <h2 class="top-left" id="header_color">Registrar Vuelo</h2>
+                </div>
+                <h3 style="font-size: 15px;color: #000000; margin-left: 30px;">
+                    Datos del vuelo
+                </h3>
+
+                <div class="row">
+
+                    <!--Contenedor izquiedo: datos del usuario-->
+                    <div id="register_user_left">
+
+                        <!--Ingreso de la Ciudad de origen-->
+                        <div class="row form-group-mini">
+                            <div class="col-12">
+                                <input type="text" class="form-control" placeholder="Ciudad de Origen" id="Ciudad-Origen" name="Ciudad-Origen">
+                            </div>
+                        </div>
+
+                        <!--Ingreso de la Ciudad de destino-->
+                        <div class="row form-group">
+                            <div class="col-12">
+                                <input type="text" class="form-control" placeholder="Ciudad de Destino" id="Ciudad-Destino" name="Ciudad-Destino">
+                            </div>
+                        </div>
+
+                        <!--Ingreso Fecha y Hora de salida-->
+                        <div class="row form-group-mini">
+                            <div class="col-12">
+                                <small class="form-text text-muted ">
+                                    Fecha y hora de salida.
+                                </small>
+                                <input type="text" class="form-control" id="Fecha-Salida" name="Fecha-Salida" placeholder="yyyy-mm-dd"readonly/>
+                            </div>
+                        </div>
+
+                        <div class="row form-group">
+                            <div class="col-12">
+                                <input type="time" id="Hora-Salida" name="Hora-Salida" class="form-control"/>
+                            </div>
+                        </div>
+
+                        <!--Ingreso la duraciòn de vuelo-->
+                        <div class="row">
+                            <div class="col-12">
+                                <small class="form-text text-muted ">
+                                    Duración de vuelo.
+                                </small>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" placeholder="hh" id="hora-llegada" name="hora-llegada" min="00" max="23" maxlength="2" oninput="if (this.value > 23) this.value = 23;
+    this.value = this.value.slice(0, this.maxLength);" >
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">:</span>
+                                    </div>
+                                    <input type="number" class="form-control" placeholder="mm" id="minuto-llegada" name="minuto-llegada" min="00" max="59" maxlength="2" oninput="if (this.value > 59) this.value = 59;
+    this.value = this.value.slice(0, this.maxLength);" >
+                                </div>
+                            </div>
+                        </div>
+
+                    </div><!--Fin del contenedor izquierdo-->
+                    <!--Contenedor derecho-->
+                    <div id="register_user_right">
+
+                        <!--Selección de categoría-->
+                        <div class="row form-group">
+                            <div class="col-12">
+                                <select class="form-control" id="Categoria" name="Categoria">
+                                    <option value="" disabled selected>Categoria</option>
+                                    <option value="Basico">Básico</option>
+                                    <option value="Normal">Normal</option>
+                                    <option value="Premium">Premium</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!--Ingreso de cupos de asientos-->
+                        <div class="row form-group">
+                            <div class="col-12">
+                                <input  type="number" class="form-control" placeholder="Asientos disponibles" id="Cupos" name="Cupos" min="30" max="40" maxlength="2" oninput="if (this.value > 40) this.value = 40; if (this.value < 30) this.value = 30;
+    this.value = this.value.slice(0, this.maxLength);" >
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-6"></div>
+                            <div class="col-12">
+                                <button type="button" id="register-button" class="btn btn-block btn-lg"
+                                        style="margin-left: 0px;
+                                        margin-right: 0px;
+                                        background-color: #006ce5 !important;
+                                        color: #FFF;
+                                        border-color: #3d8af7 !important;">
+                                    Registrar vuelo
+                                </button>
+                            </div>
+                        </div>
+
+                    </div><!--Fin contenedor derecho-->
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+

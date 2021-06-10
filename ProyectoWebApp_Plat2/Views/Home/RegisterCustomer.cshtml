@@ -30,38 +30,45 @@
                     <!--Ingreso del nombre y apellido-->
                     <div class="row form-group">
                         <div class="col-6">
-                            <input type="text" class="form-control" placeholder="Nombre">
+                            <input type="text" class="form-control" placeholder="Nombre/s" id="Nombre" name="Nombre">
                         </div>
                         <div class="col-6">
-                            <input type="text" class="form-control" placeholder="Apellido">
+                            <input type="text" class="form-control" placeholder="Apellido/s" id="Apellido" name="Apellido">
                         </div>
                     </div>
                     <!--Ingreso del correo electrónico-->
                     <div class="row form-group">
                         <div class="col-12">
-                            <input type="text" class="form-control" placeholder="Correo electrónico">
+                            <input type="text" class="form-control" placeholder="Correo electrónico" id="Email" name="Email">
                         </div>
                     </div>
                     <!--Ingreso de la contraseña-->
                     <div class="row form-group">
                         <div class="col-12">
-                            <input type="password" class="form-control" placeholder="Contraseña">
+                            <input type="password" class="form-control" placeholder="Contraseña" id="Contrasenia" name="Contrasenia">
                         </div>
                     </div>
 
-                    
+                    <!--Selección del rut o número de pasaporte-->
+                    <div class="row form-group-mini">
+                        <div class="col-12">
+                            <select class="form-control" id="Rut-Pasaporte" name="Rut-Pasaporte">
+                                <option value="" disabled selected>Rut/Num. Pasaporte</option>
+                                <option value="Rut">Rut</option>
+                                <option value="Pasaporte">Número de pasaporte</option>
+                            </select>
+                        </div>
+                    </div>
+
                     <!--Ingreso del rut o número de pasaporte-->
                     <div class="row form-group">
                         <div class="col-12">
-                            <input type="text" class="form-control" placeholder="Rut/Num. Pasaporte">
+                            <input type="text" class="form-control" placeholder="Rut/Num. Pasaporte" id="Rut-Pasaporte2" name="Rut-Pasaporte2">
                             <small class="form-text text-muted ">
                                 Rut con guion y sin punto (ej: 15433456-7).
                             </small>
                         </div>
                     </div>
-
-                    
-
 
                 </div><!--Fin del contenedor izquierdo-->
                 <!--Contenedor derecho: contacto de emergencia-->
@@ -72,12 +79,19 @@
                     </h3>
                     <!--Ingreso de la dirección física-->
                     <div class="row form-group">
-                        <div class="col-7">
-                            <input type="text" class="form-control" placeholder="Dirección">
+                        <div class="col-6">
+                            <input type="text" class="form-control" placeholder="Dirección" id="Direccion" name="Direccion">
                         </div>
-                        <div class="col-5">
-                            <input type="text" class="form-control" placeholder="Número">
-                        </div>
+                        <div class="col-6">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">#</span>
+                                </div>
+                                <input type="number" class="form-control" placeholder="Número" id="Numero" name="Numero" min="00" max="9999" maxlength="4" oninput="if (this.value > 9999) this.value = 9999;
+    this.value = this.value.slice(0, this.maxLength);" > 
+                            </div>
+                        </div>  
+                        
                     </div>
                     <!--Ingreso del número telefónico-->
                     <div class="row form-group">
@@ -88,11 +102,9 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="">+56</span>
                                 </div>
-                                <input type="text" class="form-control" placeholder="Número de teléfono">
+                                <input type="number" class="form-control" placeholder="Número de teléfono" id="Numero-Telefono" name="Numero-Telefono" 
+                                       maxlength="9" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" />
                             </div>
-
-                          
-
                         </div>
                         </div>
 
@@ -102,27 +114,25 @@
                     <!--Ingreso del nombre y apellido-->
                     <div class="row form-group">
                         <div class="col-6">
-                            <input type="text" class="form-control" placeholder="Nombre">
+                            <input type="text" class="form-control" placeholder="Nombre/s" id="Nombre-Emergencia" name="Nombre-Emergencia">
                         </div>
                         <div class="col-6">
-                            <input type="text" class="form-control" placeholder="Apellido">
+                            <input type="text" class="form-control" placeholder="Apellido/s" id="Apellido-Emergencia" name="Apellido-Emergencia">
                         </div>
                     </div>
                     <!--Ingreso del número telefónico-->
                     <div class="form-row form-group">
                         <div class="col-12">
-
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="basic-addon1">+56</span>
                                 </div>
-                                <input type="text" class="form-control" placeholder="Número de teléfono">
+                                <input type="number" class="form-control" placeholder="Número de teléfono" id="Numero-Telefono-Emergencia" name="Numero-Telefono-Emergencia"
+                                       maxlength="9" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" />
                             </div>
-
-                            
-                            
                         </div>
                     </div>
+
                     <div class="row">
                         <div class="col-6"></div>
                         <div class="col-12">

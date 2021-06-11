@@ -133,5 +133,11 @@ namespace ProyectoWebApp_Plat2.Controllers
         {
             return "ID Vuelo: " + id_vuelo;
         }
+
+        public ActionResult ToReserve()
+        {
+            return View();
+        }
+
     }
 }

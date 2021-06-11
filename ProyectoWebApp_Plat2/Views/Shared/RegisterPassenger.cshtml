@@ -10,10 +10,13 @@
 
 <div class="container-fluid vertical-center">
 
-    @{ 
+    @{
         int iterator = (int)ViewData["iterator"];
-        String Text = "Registrar Pasajero " + iterator;
+        String Text = "Pasajero N°" + iterator;
     }
+
+    
+    
     <section class="jumbotron" id="register_user">
         <div class="container-fluid">
 
@@ -21,8 +24,8 @@
             <div class="row form-group-mini">
                 <h2 class="top-left ml-2 row-bottom-margin" id="header_color">@Text</h2>
             </div>
-
-            <div class="row">
+            <!--Caja expandible/comprimible-->
+            <div class="row" id="box">
 
                 <!--Contenedor izquiedo: datos del usuario-->
                 <div id="register_user_left">
@@ -135,4 +138,6 @@
 
     </section>
 </div>
+
+
 

@@ -125,6 +125,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\Flight.cs" />
+    <Compile Include="Models\Manager.cs" />
+    <Compile Include="Models\Reserve.cs" />
+    <Compile Include="Models\Rol.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -166,6 +171,8 @@
     <Content Include="Views\Home\Menu.cshtml" />
     <Content Include="Views\Shared\_TopMenu.cshtml" />
     <Content Include="Views\Home\RegisterFlights.cshtml" />
+    <Content Include="Views\Shared\RegisterPassenger.cshtml" />
+    <Content Include="Views\Home\ToReserve.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

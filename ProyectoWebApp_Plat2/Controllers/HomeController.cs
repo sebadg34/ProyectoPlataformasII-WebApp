@@ -9,14 +9,15 @@ namespace ProyectoWebApp_Plat2.Controllers
 {
     public class HomeController : Controller
     {
-        bool State { get; set; } = true;
-        bool Role { get; set; } = true;
+        bool state { get; set; }
+        bool role { get; set; }
 
         string origen = "Todo";
         string destino = "Todo";
         DateTime fecha_desde = DateTime.Today;
         DateTime fecha_hasta = DateTime.Today.AddMonths(6);
-
+        
+ 
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
@@ -31,17 +32,11 @@ namespace ProyectoWebApp_Plat2.Controllers
             return View();
         }
 
-        public ActionResult RegisterCustomer()
-        {
-            return View();
-        }
-
-
         public ActionResult RegisterFlights()
         {
-            ViewData["Req"] = "Registrar Vuelo";
-            ViewData["Inicio"] = "si";
             ViewData["Nombre"] = "Eduard Tomas";
+            ViewData["Log-In"] = this.state;
+            ViewData["Role"] = this.role;
             return View();
         }
 
@@ -49,8 +44,8 @@ namespace ProyectoWebApp_Plat2.Controllers
         {
             if (TempData["Log-In"] != null && TempData["Role"] != null)
             {
-                this.State = (bool)TempData["Log-In"];
-                this.Role = (bool)TempData["Role"];
+                this.state = (bool)TempData["Log-In"];
+                this.role = (bool)TempData["Role"];
             }
 
             if (origen != null)
@@ -86,9 +81,9 @@ namespace ProyectoWebApp_Plat2.Controllers
             }
 
 
-            ViewData["Nombre"] = "Eduard Tomas";
-            ViewData["Log-In"] = this.State;
-            ViewData["Role"] = this.Role;
+            ViewData["Nombre"] = TempData["Nombre"] as string;
+            ViewData["Log-In"] = this.state;
+            ViewData["Role"] = this.role;
 
 
             Flight vuelo1 = new Flight("Basico", "Santiago", "Antofagasta", 30, 1, "001", new DateTime(2020, 01, 22, 20, 20, 20), new DateTime(2020, 01, 20, 20, 20, 20));
@@ -129,7 +124,7 @@ namespace ProyectoWebApp_Plat2.Controllers
             return View();
         }
 
-        public string mirar(string id_vuelo)
+        public string Mirar(string id_vuelo)
         {
             return "ID Vuelo: " + id_vuelo;
         }
@@ -137,6 +132,20 @@ namespace ProyectoWebApp_Plat2.Controllers
         public ActionResult ToReserve()
         {
             return View();
+        }
+
+        // Definir métodos para cambiar de vista
+
+        public ActionResult Logout()
+        {
+            TempData["Log-In"] = false;
+            TempData["Role"] = false;
+            return RedirectToAction("Menu");
+        }
+
+        public ActionResult ToLogin()
+        {
+            return RedirectToAction("Login", "Login");
         }
 
     }

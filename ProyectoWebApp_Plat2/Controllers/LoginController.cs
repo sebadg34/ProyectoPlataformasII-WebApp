@@ -14,6 +14,26 @@ namespace ProyectoWebApp_Plat2.Controllers
             return View();
         }
 
+        public ActionResult RegisterCustomer()
+        {
+            return View();
+        }
+
+
+        public ActionResult ToMenu(bool role, string name)
+        {
+            TempData["Log-In"] = true;
+            TempData["Role"] = role;
+            TempData["Nombre"] = name;
+            return RedirectToAction("Menu","Home");
+        }
+
+        public ActionResult ToRegisterCustomer()
+        {
+
+            return RedirectToAction("RegisterCustomer", "Login");
+        }
+
         /*
         public void LoginUser() {
             System.Diagnostics.Debug.Write("PROBANDO BOTON LOGIN");

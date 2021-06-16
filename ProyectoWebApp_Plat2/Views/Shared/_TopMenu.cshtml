@@ -33,11 +33,15 @@
                             @ViewData["Nombre"]
                         </h3>
                         <div class="row  flex-row-reverse no-gutters for">
-                            <button type="button" class="btn btn-primary-3">
-                                <h3 id="sub_theme">
-                                    Cerrar Sesión
-                                </h3>
-                            </button>
+                            @using (Html.BeginForm("Logout", "Home"))
+                            {
+                                <button type="submit" class="btn btn-primary-3">
+                                    <h3 id="sub_theme">
+                                        Cerrar Sesión
+                                    </h3>
+                                </button>
+                            }
+
 
                         </div>
                     </div>
@@ -51,11 +55,14 @@
                             @ViewData["Nombre"]
                         </h3>
                         <div class="row  flex-row-reverse no-gutters for">
-                            <button type="button" class="btn btn-primary-3">
-                                <h3 id="sub_theme">
-                                    Cerrar Sesión
-                                </h3>
-                            </button>
+                            @using (Html.BeginForm("Logout", "Home"))
+                            {
+                                <button type="submit" class="btn btn-primary-3">
+                                    <h3 id="sub_theme">
+                                        Cerrar Sesión
+                                    </h3>
+                                </button>
+                            }
 
                         </div>
                     </div>
@@ -67,11 +74,14 @@
             <div class="float-right">
                 <div class="row form-group">
                     <div class="row  flex-row-reverse no-gutters for">
-                        <button type="button" class="btn btn-primary-3">
-                            <h3 id="sub_theme">
-                                Iniciar Sesión
-                            </h3>
-                        </button>
+                        @using (Html.BeginForm("ToLogin","Home"))
+                        {
+                            <button type="submit" class="btn btn-primary-3">
+                                <h3 id="sub_theme">
+                                    Iniciar Sesión
+                                </h3>
+                            </button>
+                        }
                     </div>
                 </div>
             </div>

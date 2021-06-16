@@ -7,7 +7,10 @@ using System.ComponentModel.DataAnnotations;
 
 
 namespace ProyectoWebApp_Plat2.Models
-{
+{ 
+    /// <summary>
+    /// 
+    /// </summary>
     public class UserModel
     {
         [Required(ErrorMessage = "Email is required")]

@@ -5,6 +5,7 @@ using System.Web;
 
 namespace ProyectoWebApp_Plat2.Models
 {
+    
     public class Rol
     {
         public string Email { get; set; }

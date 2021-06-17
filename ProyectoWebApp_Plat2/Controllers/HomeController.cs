@@ -9,7 +9,9 @@ namespace ProyectoWebApp_Plat2.Controllers
 {
     public class HomeController : Controller
     {
+        // Variable que guarda el estado de Login, es decir, si se ha iniciado sesión o no
         bool state { get; set; }
+        // Variable que guarda el rol del usuario que ha iniciado sesión; en caso de cerrar sesión o no estar iniciada esta misma, rol tomara el valor de false
         bool role { get; set; }
 
         string origen = "Todo";
@@ -124,18 +126,29 @@ namespace ProyectoWebApp_Plat2.Controllers
             return View();
         }
 
-        public string Mirar(string id_vuelo)
+        /// <summary>
+        /// Método que almacena los datos id_vuelo, cantidadPasajeros y usuarioPasajero para ser enviados a la vista ToReserve
+        /// </summary>
+        /// <param name="id_vuelo"></param>
+        /// <param name="cantidadPasajeros"></param>
+        /// <param name="usuarioPasajero"></param>
+        /// <returns>vista ToReserve</returns>
+        public ActionResult ToReserve(int id_vuelo, int cantidadPasajeros, bool usuarioPasajero)
         {
-            return "ID Vuelo: " + id_vuelo;
-        }
+            ViewData["Id_Vuelo"] = id_vuelo ;
+            ViewData["Pasajeros"] = cantidadPasajeros;
+            ViewData["Usuario"] = usuarioPasajero;
 
-        public ActionResult ToReserve()
-        {
             return View();
         }
 
-        // Definir métodos para cambiar de vista
+        // Métodos que redirigen hacia otra vista
 
+        /// <summary>
+        /// Metodo que almacena temporalmente dentro de las etiquetas Log-In y Role valores false de tipo bool,
+        /// estos datos seran usados posteriormente en la acción Menu, luego redirige hacia la acción Menu en el controlador Home 
+        /// </summary>
+        /// <returns>Redirige a la Acción Menu</returns>
         public ActionResult Logout()
         {
             TempData["Log-In"] = false;
@@ -143,6 +156,10 @@ namespace ProyectoWebApp_Plat2.Controllers
             return RedirectToAction("Menu");
         }
 
+        /// <summary>
+        /// Método que redirige hacia la acción Login que se encuentra en el controlador Login
+        /// </summary>
+        /// <returns>Acción Login del controlador Login</returns>
         public ActionResult ToLogin()
         {
             return RedirectToAction("Login", "Login");

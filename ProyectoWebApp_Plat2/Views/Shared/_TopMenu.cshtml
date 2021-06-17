@@ -18,11 +18,15 @@
                 <div class="float-left">
                     <div class="row form-group">
                         <div class="row  flex-row-reverse no-gutters for">
-                            <button type="button" class="btn btn-primary-2">
-                                <h3 id="sub_theme">
-                                    Registrar Vuelo
-                                </h3>
-                            </button>
+                            @using (Html.BeginForm("RegisterFlight", "Home"))
+                            {
+                                <button type="submit" class="btn btn-primary-2">
+                                    <h3 id="sub_theme">
+                                        Registrar Vuelo
+                                    </h3>
+                                </button>
+                            }
+
 
                         </div>
                     </div>

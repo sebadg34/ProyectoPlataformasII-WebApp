@@ -167,7 +167,7 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Login\Login.cshtml" />
-    <Content Include="Views\Home\RegisterCustomer.cshtml" />
+    <Content Include="Views\Login\RegisterCustomer.cshtml" />
     <Content Include="Views\Home\Menu.cshtml" />
     <Content Include="Views\Shared\_TopMenu.cshtml" />
     <Content Include="Views\Home\RegisterFlights.cshtml" />

@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
         $(function () {
             $("#desde").datepicker({
@@ -32,6 +34,90 @@
             });
         });
     </script>
+    @section scripts
+    {
+        <script>
+            /* inputOptions can be an object or Promise */
+            function algo(id) {
+                (async () => {
+                    /* inputOptions can be an object or Promise */
+                    const inputOptions = new Promise((resolve) => {
+                        setTimeout(() => {
+                            resolve({
+                                'myself': 'Para mí',
+                                'other': 'Para otra persona',
+                                'both': 'Ambos'
+                            })
+                        }, 1000)
+                    })
+                    const { value: option } = await Swal.fire({
+                        title: '¿Para quien desea reservar?',
+                        input: 'radio',
+                        inputOptions: inputOptions,
+                        inputValidator: (value) => {
+                            if (!value) {
+                                return 'Debe elegir una opción'
+                            }
+                        }
+                    })
+                    if (option) {
+                        if (option == "other") {
+                            const { value: amount } = await Swal.fire({
+                                title: '¿Cuantas personas en total?',
+                                input: 'text',
+                                inputPlaceholder: 'Ej. 5',
+                                inputValidator: (value) => {
+                                    if (!value) {
+                                        return 'Debe ingresar una cantidad!'
+                                    }
+                                    console.log(Number.isNaN(Number.parseInt(value, 10)))
+                                    if (Number.isNaN(Number.parseInt(value, 10))) {
+                                        console.log("hola")
+                                        return 'Debe ingresar una cantidad!'
+                                    }
+                                    else {
+
+                                    }
+                                }
+                            })
+
+                            if (amount) {
+                                Swal.fire(`Entered password: ${id}`)
+                            }
+                        }
+                        else if (option == "both") {
+                            const { value: amount } = await Swal.fire({
+
+                                title: '¿Cuantas personas en total?',
+                                input: 'text',
+                                inputPlaceholder: 'Ej. 5',
+                                inputValidator: (value) => {
+                                    if (!value) {
+                                        return 'Debe ingresar una cantidad!'
+                                    }
+                                    console.log(Number.isNaN(Number.parseInt(value, 10)))
+                                    if (Number.isNaN(Number.parseInt(value, 10))) {
+                                        console.log("hola")
+                                        return 'Debe ingresar una cantidad!'
+                                    }
+                                    else {
+
+                                    }
+                                }
+                            })
+                            if (amount) {
+                                Swal.fire(`Entered password: ${amount}`)
+                            }
+                        }
+                        else {
+
+                        }
+                    }
+
+                })()
+            }
+        </script>
+    }
 
     @using (Html.BeginForm("Menu", "Home"))
     {
@@ -217,14 +303,14 @@
                                             </h3>
                                         </div>
                                         <div class="row" style="width: 70%; margin: auto; display: flex; height: 30px;">
-                                            @using (Html.BeginForm("mirar", "Home"))
-                                            {
-                                                <button type="submit" class="btn btn-primary" value="@ViewBag.flights[i].ID_Vuelo" name="id_vuelo" style="margin: auto; font-size: 14px; padding: 0px; background-color: #0a61bc !important;">
-                                                    <h3 style="color: #010812; margin: auto; font-size: 14px; color: white;">
-                                                        Reservar
-                                                    </h3>
-                                                </button>
+                                            @{
+                                                int id = ViewBag.flights[i].ID;
                                             }
+                                            <button type="button" onclick="algo(@id)" class="btn btn-primary" value="@ViewBag.flights[i].ID_Vuelo" name="id_vuelo + @i" style="margin: auto; font-size: 14px; padding: 0px; background-color: #0a61bc !important;">
+                                                <h3 style="color: #010812; margin: auto; font-size: 14px; color: white;">
+                                                    Reservar
+                                                </h3>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -242,15 +328,15 @@
                         </div>
                         <div class="col" style="width: 14.28571429%; height: 100px; margin: auto; display: flex; border: 1px solid black;">
                             <h3 style="color: #010812; margin: auto; font-size: 14px;">
-                                @ViewBag.flights[i].Salida
+                                @ViewBag.flights[i].Fecha_Salida
                             </h3>
                         </div>
                         <div class="col" style="width: 14.28571429%; height: 100px; margin: auto; display: flex; border: 1px solid black;">
                             @{
-                                TimeSpan duracion = ViewBag.flights[i].Llegada - ViewBag.flights[i].Salida;
+                                TimeSpan duracion = ViewBag.flights[i].Fecha_Llegada - ViewBag.flights[i].Fecha_Salida;
                             }
                             <h3 style="color: #010812; margin: auto; font-size: 14px;">
-                                @duracion.TotalHours Horas
+                                @duracion.Hours Horas y @duracion.Minutes Minutos
                             </h3>
                         </div>
                         <div class="col" style="width: 14.28571429%; height: 100px; margin: auto; display: flex; border: 1px solid black;">
@@ -268,7 +354,6 @@
             }
         </div>
         <div class="row" style="height: 100px;">
-
         </div>
     </div>
 </div>

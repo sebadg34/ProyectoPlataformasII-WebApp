@@ -1,16 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using ProyectoWebApp_Plat2.Models;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using Newtonsoft.Json;
 
 namespace ProyectoWebApp_Plat2.Controllers
 {
     public class HomeController : Controller
     {
         bool State { get; set; } = true;
-        bool Role { get; set; } = true;
+        bool Role { get; set; } = false;
 
         string origen = "Todo";
         string destino = "Todo";
@@ -39,13 +43,13 @@ namespace ProyectoWebApp_Plat2.Controllers
 
         public ActionResult RegisterFlights()
         {
-            ViewData["Req"] = "Registrar Vuelo";
-            ViewData["Inicio"] = "si";
+            ViewData["Log-In"] = this.State;
+            ViewData["Role"] = this.Role;
             ViewData["Nombre"] = "Eduard Tomas";
             return View();
         }
 
-        public ActionResult Menu(string origen, string destino, string desde, string hasta)
+        public async Task<ActionResult> Menu(string origen, string destino, string desde, string hasta)
         {
             if (TempData["Log-In"] != null && TempData["Role"] != null)
             {
@@ -85,39 +89,16 @@ namespace ProyectoWebApp_Plat2.Controllers
                 fecha_hasta = DateTime.Today.AddMonths(6);
             }
 
-
             ViewData["Nombre"] = "Eduard Tomas";
             ViewData["Log-In"] = this.State;
             ViewData["Role"] = this.Role;
 
-
-            Flight vuelo1 = new Flight("Basico", "Santiago", "Antofagasta", 30, 1, "001", new DateTime(2020, 01, 22, 20, 20, 20), new DateTime(2020, 01, 20, 20, 20, 20));
-            Flight vuelo2 = new Flight("Normal", "Antofagasta", "Coquimbo", 40, 2, "002", new DateTime(2021, 07, 22, 20, 20, 20), new DateTime(2021, 07, 20, 20, 20, 20));
-            Flight vuelo3 = new Flight("Premium", "Antofagasta", "Chiloe", 35, 3, "003", new DateTime(2021, 09, 22, 20, 20, 20), new DateTime(2021, 09, 20, 20, 20, 20));
-            Flight vuelo4 = new Flight("Basico", "Concepcion", "Antofagasta", 35, 4, "004", new DateTime(2021, 09, 22, 20, 20, 20), new DateTime(2021, 09, 20, 20, 20, 20));
-            Flight vuelo5 = new Flight("Basico", "Santiago", "Antofagasta", 30, 1, "001", new DateTime(2020, 01, 22, 20, 20, 20), new DateTime(2020, 01, 20, 20, 20, 20));
-            Flight vuelo6 = new Flight("Normal", "Antofagasta", "Coquimbo", 40, 2, "002", new DateTime(2021, 07, 22, 20, 20, 20), new DateTime(2021, 07, 20, 20, 20, 20));
-            Flight vuelo7 = new Flight("Premium", "Antofagasta", "Chiloe", 35, 3, "003", new DateTime(2021, 09, 22, 20, 20, 20), new DateTime(2021, 09, 20, 20, 20, 20));
-            Flight vuelo8 = new Flight("Basico", "Concepcion", "Antofagasta", 35, 4, "004", new DateTime(2021, 09, 21, 19, 20, 20), new DateTime(2021, 09, 20, 20, 20, 20));
-            Flight vuelo9 = new Flight("Basico", "Arica", "Puerto Montt", 35, 4, "004", new DateTime(2021, 12, 12, 20, 20, 20), new DateTime(2021, 12, 11, 20, 20, 20));
-
-            List<Flight> vuelos = new List<Flight>();
-
-            vuelos.Add(vuelo1);
-            vuelos.Add(vuelo2);
-            vuelos.Add(vuelo3);
-            vuelos.Add(vuelo4);
-            vuelos.Add(vuelo5);
-            vuelos.Add(vuelo6);
-            vuelos.Add(vuelo7);
-            vuelos.Add(vuelo8);
-            vuelos.Add(vuelo9);
-
+            List<Flight> vuelos = await GetFlights();
             List<Flight> flights = new List<Flight>();
 
             foreach (Flight vuelo in vuelos)
             {
-                if ((this.origen == "Todo" || this.origen == vuelo.Ciudad_Origen) && (this.destino == "Todo" || this.destino == vuelo.Ciudad_Destino) && (DateTime.Compare(this.fecha_desde, vuelo.Salida) < 0) && (DateTime.Compare(this.fecha_hasta, vuelo.Salida) > 0))
+                if ((this.origen == "Todo" || this.origen == vuelo.Ciudad_Origen) && (this.destino == "Todo" || this.destino == vuelo.Ciudad_Destino) && (DateTime.Compare(this.fecha_desde, vuelo.Fecha_Salida) < 0) && (DateTime.Compare(this.fecha_hasta, vuelo.Fecha_Salida) > 0))
                 {
                     flights.Add(vuelo);
                 }
@@ -127,6 +108,28 @@ namespace ProyectoWebApp_Plat2.Controllers
             ViewBag.flights = flights;
 
             return View();
+        }
+
+        public async Task<List<Flight>> GetFlights()
+        {
+            using(var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:44350/");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = await client.GetAsync("api/Flights");
+                List<Flight> flight = new List<Flight>();
+                if (response.IsSuccessStatusCode)
+                {
+                    flight = await response.Content.ReadAsAsync<List<Flight>>();
+                }
+                else
+                {
+
+                }
+                return flight;
+            }
         }
 
         public string mirar(string id_vuelo)

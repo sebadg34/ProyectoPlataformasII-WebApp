@@ -69,8 +69,9 @@ Para el desarrollo y ejecución del programa se deben tener los siguiente:
 ### Commits
 Los commits deben incluir un mensaje descriptivo de los cambios realizados
 La estructura de los mensajes es la siguiente:
-- "type([scope]):subject"
-
+```
+- <type>(<scope>):<subject>
+```
 #### type: el tipo de cambio, este pueden ser
 - feat	  : adición nueva 	
 - fix 	  : bug fixes (arreglo de errores)
@@ -83,6 +84,24 @@ La estructura de los mensajes es la siguiente:
 
 #### scope: Opcional, específica el lugar en donde se realiza el cambio en el commit (clase, módulo, etc).
 #### subject: Descripción corta de que trata el cambio emitido.
+
+### Programación
+* Clases/Modelos: PascalCase
+* Métodos: PascalCase
+* Variables: camelCase
+* Parámetros para Métodos: camelCase
+* Json: spinal-case
+
+
+### Documentación 
+
+#### Para C#
+```
+///<summary>
+///</summary>
+* Hay que documentar las clases y métodos que se utilizan.
+* Comentarios útiles sobre algo en específico dentro del código.
+```
 
 ### Versión
 * *POR DEFINIR*

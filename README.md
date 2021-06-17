@@ -3,13 +3,13 @@
 
 
 ## Tabla de contenidos 
-* [Introduccion](#introduccion)
+* [Introducción](#introducción)
 * [Sobre el proyecto](#proyecto)
-* [Tecnologias](#tecnologias)
+* [Tecnologías](#tecnologías)
 * [Setup](#setup)
 * [Convenciones](#convenciones)
 
-## Introduccion
+## Introducción
 
 ### Quienes Somos
 Somos el equipo MakeMeister, compuesto por los siguientes integrantes
@@ -22,19 +22,19 @@ Somos el equipo MakeMeister, compuesto por los siguientes integrantes
 Landing web page: https://makemeister.wixsite.com/website
 
 ### Contexto
-El equipo esta formado por estudiantes de la Universidad Catolica del Norte, Antofagasta Chile. Con el fin de lograr el trabajo requerido para la asignatura de *Proyecto desarrolo de software basado en plataformas*.
+El equipo está formado por estudiantes de la Universidad Católica del Norte, Antofagasta Chile. Con el fin de lograr el trabajo requerido para la asignatura de *Proyecto desarrollo de software basado en plataformas*.
 
 ## Proyecto
-Este proyecto consta en la creacion de una aplicacion para realizar reservas de vuelos, El repositorio actual corresponde a la aplicacion por lado del cliente. El proyecto consta de 2 partes.
+Este proyecto consta en la creación de una aplicación para realizar reservas de vuelos. El repositorio actual corresponde a la aplicación por lado del cliente. El proyecto consta de 2 partes.
 
-- La primera corresponde a la aplicacion que incluye el frontend y backend (WebApp).
+- La primera corresponde a la aplicación que incluye el frontend y backend (WebApp).
 - La segunda corresponde a la API que se encargará de manegar los datos y Requests (WebApi).
 
-Este repositorio actualmente almacena la aplicacion web. 
+Este repositorio actualmente almacena la aplicación web. 
 Para la webApi, dirigirse al siguiente repositorio: https://github.com/sebadg34/ProyectoPlataformas_II_WebAPI
 
 
-## Tecnologias
+## Tecnologías
 ### WebApp
 * Visual Studio 2017/2019
 * ASP.NET framework 15.9
@@ -52,7 +52,7 @@ Para la webApi, dirigirse al siguiente repositorio: https://github.com/sebadg34/
 * ASP.NET Cors 5.2.7
 	
 ## Setup 
-Para el desarrollo y ejecucion del programa se deben tener los siguiente:
+Para el desarrollo y ejecución del programa se deben tener los siguiente:
 ### Programas instalados
 * Microsoft SQL Management Studio 18
 * SQL Express 2019
@@ -72,19 +72,19 @@ La estructura de los mensajes es la siguiente:
 - "type([scope]):subject"
 
 #### type: el tipo de cambio, este pueden ser
-- feat	  : adicion nueva 	
+- feat	  : adición nueva 	
 - fix 	  : bug fixes (arreglo de errores)
-- docs	  : cambios en la documentacion
+- docs	  : cambios en la documentación
 - Style	  : cambio de estilo que no afectan en la funcionalidad (formato, espaciados, etc).
 - Refactor: cambio que no arregla ni agrega una funcionalidad.
 - Test	  : agregar pruebas faltantes o bien corregir existentes
-- Chore	  : cambios en librerias, build y herramientas auxiliares.
+- Chore	  : cambios en librerías, build y herramientas auxiliares.
 - perf	  : cambio que mejora el rendimiento del programa.
 
-#### scope: Opcional, especifica el lugar en donde se realiza el cambio en el commit (clase, modulo, etc).
-#### subject: Descripcion corta de que trata el cambio emitido.
+#### scope: Opcional, específica el lugar en donde se realiza el cambio en el commit (clase, módulo, etc).
+#### subject: Descripción corta de que trata el cambio emitido.
 
-### Version
+### Versión
 * *POR DEFINIR*
 
 ### Comentarios

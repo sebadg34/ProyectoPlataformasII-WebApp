@@ -60,9 +60,9 @@ Para el desarrollo y ejecución del programa se deben tener los siguiente:
 * .Net Framework 4.7.*
 * SO Windows 7/8/10
 * Terminal git (GitBash, etc.)
-### Requerimientos minimos de Hardware
+### Requerimientos mínimos de Hardware
 * *POR DEFINIR*
-### Instalacion
+### Instalación
 * *POR DEFINIR*
 
 ## Convenciones

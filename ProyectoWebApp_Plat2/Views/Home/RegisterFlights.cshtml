@@ -10,9 +10,11 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<!--Script que permite obtener la fecha-->
 <script>
     $(function () {
-        $("#Fecha-Salida").datepicker({
+        $("#fechaSalida").datepicker({
             dateFormat: 'yy-mm-dd',
             minDate: "dateToday",
             maxDate: '+6m',
@@ -59,14 +61,14 @@
                         <!--Ingreso de la Ciudad de origen-->
                         <div class="row form-group-mini">
                             <div class="col-12">
-                                <input type="text" class="form-control" placeholder="Ciudad de Origen" id="Ciudad-Origen" name="Ciudad-Origen">
+                                <input type="text" class="form-control" placeholder="Ciudad de Origen" id="ciudadOrigen" name="ciudadOrigen">
                             </div>
                         </div>
 
                         <!--Ingreso de la Ciudad de destino-->
                         <div class="row form-group">
                             <div class="col-12">
-                                <input type="text" class="form-control" placeholder="Ciudad de Destino" id="Ciudad-Destino" name="Ciudad-Destino">
+                                <input type="text" class="form-control" placeholder="Ciudad de Destino" id="ciudadDestino" name="ciudadDestino">
                             </div>
                         </div>
 
@@ -76,13 +78,13 @@
                                 <small class="form-text text-muted ">
                                     Fecha y hora de salida.
                                 </small>
-                                <input type="text" class="form-control" id="Fecha-Salida" name="Fecha-Salida" placeholder="yyyy-mm-dd"readonly/>
+                                <input type="text" class="form-control" id="fechaSalida" name="fechaSalida" placeholder="yyyy-mm-dd"readonly/>
                             </div>
                         </div>
 
                         <div class="row form-group">
                             <div class="col-12">
-                                <input type="time" id="Hora-Salida" name="Hora-Salida" class="form-control"/>
+                                <input type="time" id="horaSalida" name="horaSalida" class="form-control"/>
                             </div>
                         </div>
 
@@ -93,12 +95,12 @@
                                     Duración de vuelo.
                                 </small>
                                 <div class="input-group">
-                                    <input type="number" class="form-control" placeholder="hh" id="hora-llegada" name="hora-llegada" min="00" max="23" maxlength="2" oninput="if (this.value > 23) this.value = 23;
+                                    <input type="number" class="form-control" placeholder="hh" id="horaLlegada" name="horaLlegada" min="00" max="23" maxlength="2" oninput="if (this.value > 23) this.value = 23;
     this.value = this.value.slice(0, this.maxLength);" >
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="basic-addon1">:</span>
                                     </div>
-                                    <input type="number" class="form-control" placeholder="mm" id="minuto-llegada" name="minuto-llegada" min="00" max="59" maxlength="2" oninput="if (this.value > 59) this.value = 59;
+                                    <input type="number" class="form-control" placeholder="mm" id="minutoLlegada" name="minutoLlegada" min="00" max="59" maxlength="2" oninput="if (this.value > 59) this.value = 59;
     this.value = this.value.slice(0, this.maxLength);" >
                                 </div>
                             </div>
@@ -111,7 +113,7 @@
                         <!--Selección de categoría-->
                         <div class="row form-group">
                             <div class="col-12">
-                                <select class="form-control" id="Categoria" name="Categoria">
+                                <select class="form-control" id="categoria" name="categoria">
                                     <option value="" disabled selected>Categoria</option>
                                     <option value="Basico">Básico</option>
                                     <option value="Normal">Normal</option>
@@ -123,7 +125,7 @@
                         <!--Ingreso de cupos de asientos-->
                         <div class="row form-group">
                             <div class="col-12">
-                                <input  type="number" class="form-control" placeholder="Asientos disponibles" id="Cupos" name="Cupos" min="30" max="40" maxlength="2" oninput="if (this.value > 40) this.value = 40; if (this.value < 30) this.value = 30;
+                                <input  type="number" class="form-control" placeholder="Asientos disponibles" id="cupos" name="cupos" min="30" max="40" maxlength="2" oninput="if (this.value > 40) this.value = 40; if (this.value < 30) this.value = 30;
     this.value = this.value.slice(0, this.maxLength);" >
                             </div>
                         </div>
@@ -131,7 +133,7 @@
                         <div class="row">
                             <div class="col-6"></div>
                             <div class="col-12">
-                                <button type="button" id="register-button" class="btn btn-block btn-lg"
+                                <button type="button" id="registerButton" class="btn btn-block btn-lg"
                                         style="margin-left: 0px;
                                         margin-right: 0px;
                                         background-color: #006ce5 !important;
@@ -148,5 +150,3 @@
         </section>
     </div>
 </div>
-
-

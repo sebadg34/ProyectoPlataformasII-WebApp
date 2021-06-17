@@ -9,141 +9,280 @@
 </head>
 
 <div class="container-fluid vertical-center">
+    <form id="register">
 
-    <section class="jumbotron" id="register_user">
-        <div class="container-fluid">
+        <section class="jumbotron" id="register_user">
+            <div class="container-fluid">
 
-            <!--Título de la página-->
-            <div class="row form-group-mini">
-                <h2 class="top-left ml-2 row-bottom-margin" id="header_color">Registrar Usuario</h2>
-            </div>
+                <!--Título de la página-->
+                <div class="row form-group-mini">
+                    <h2 class="top-left ml-2 row-bottom-margin" id="header_color">Registrar Usuario</h2>
+                </div>
 
-            <div class="row">
+                <div class="row">
 
-                <!--Contenedor izquiedo: datos del usuario-->
-                <div id="register_user_left">
+                    <!--Contenedor izquiedo: datos del usuario-->
+                    <div id="register_user_left">
 
-                    <h3 id="sub_theme">
-                        Datos del usuario
-                    </h3>
+                        <h3 id="sub_theme">
+                            Datos del usuario
+                        </h3>
 
-                    <!--Ingreso del nombre y apellido-->
-                    <div class="row form-group">
-                        <div class="col-6">
-                            <input type="text" class="form-control" placeholder="Nombre/s" id="Nombre" name="Nombre">
-                        </div>
-                        <div class="col-6">
-                            <input type="text" class="form-control" placeholder="Apellido/s" id="Apellido" name="Apellido">
-                        </div>
-                    </div>
-                    <!--Ingreso del correo electrónico-->
-                    <div class="row form-group">
-                        <div class="col-12">
-                            <input type="text" class="form-control" placeholder="Correo electrónico" id="Email" name="Email">
-                        </div>
-                    </div>
-                    <!--Ingreso de la contraseña-->
-                    <div class="row form-group">
-                        <div class="col-12">
-                            <input type="password" class="form-control" placeholder="Contraseña" id="Contrasenia" name="Contrasenia">
-                        </div>
-                    </div>
-
-                    <!--Selección del rut o número de pasaporte-->
-                    <div class="row form-group-mini">
-                        <div class="col-12">
-                            <select class="form-control" id="Rut-Pasaporte" name="Rut-Pasaporte">
-                                <option value="" disabled selected>Rut/Num. Pasaporte</option>
-                                <option value="Rut">Rut</option>
-                                <option value="Pasaporte">Número de pasaporte</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <!--Ingreso del rut o número de pasaporte-->
-                    <div class="row form-group">
-                        <div class="col-12">
-                            <input type="text" class="form-control" placeholder="Rut/Num. Pasaporte" id="Rut-Pasaporte2" name="Rut-Pasaporte2">
-                            <small class="form-text text-muted ">
-                                Rut con guion y sin punto (ej: 15433456-7).
-                            </small>
-                        </div>
-                    </div>
-
-                </div><!--Fin del contenedor izquierdo-->
-                <!--Contenedor derecho: contacto de emergencia-->
-                <div id="register_user_right">
-
-                    <h3 id="sub_theme">
-                        Datos personales
-                    </h3>
-                    <!--Ingreso de la dirección física-->
-                    <div class="row form-group">
-                        <div class="col-6">
-                            <input type="text" class="form-control" placeholder="Dirección" id="Direccion" name="Direccion">
-                        </div>
-                        <div class="col-6">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="basic-addon1">#</span>
-                                </div>
-                                <input type="number" class="form-control" placeholder="Número" id="Numero" name="Numero" min="00" max="9999" maxlength="4" oninput="if (this.value > 9999) this.value = 9999;
-    this.value = this.value.slice(0, this.maxLength);" > 
+                        <!--Ingreso del nombre y apellido-->
+                        <div class="row form-group">
+                            <div class="col-6">
+                                <input type="text" class="form-control" placeholder="Nombre/s" id="nombre" name="nombre">
                             </div>
-                        </div>  
-                        
-                    </div>
-                    <!--Ingreso del número telefónico-->
-                    <div class="row form-group">
-                        <div class="col-12">
-
-                            <div class="input-group">
-
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="">+56</span>
-                                </div>
-                                <input type="number" class="form-control" placeholder="Número de teléfono" id="Numero-Telefono" name="Numero-Telefono" 
-                                       maxlength="9" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" />
+                            <div class="col-6">
+                                <input type="text" class="form-control" placeholder="Apellido/s" id="apellido" name="apellido">
                             </div>
                         </div>
-                        </div>
-
-                    <h3 id="sub_theme">
-                        Contacto de emergencia
-                    </h3>
-                    <!--Ingreso del nombre y apellido-->
-                    <div class="row form-group">
-                        <div class="col-6">
-                            <input type="text" class="form-control" placeholder="Nombre/s" id="Nombre-Emergencia" name="Nombre-Emergencia">
-                        </div>
-                        <div class="col-6">
-                            <input type="text" class="form-control" placeholder="Apellido/s" id="Apellido-Emergencia" name="Apellido-Emergencia">
-                        </div>
-                    </div>
-                    <!--Ingreso del número telefónico-->
-                    <div class="form-row form-group">
-                        <div class="col-12">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="basic-addon1">+56</span>
-                                </div>
-                                <input type="number" class="form-control" placeholder="Número de teléfono" id="Numero-Telefono-Emergencia" name="Numero-Telefono-Emergencia"
-                                       maxlength="9" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" />
+                        <!--Ingreso del correo electrónico-->
+                        <div class="row form-group">
+                            <div class="col-12">
+                                <input type="text" class="form-control" placeholder="Correo electrónico" id="email" name="email">
                             </div>
                         </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-6"></div>
-                        <div class="col-12">
-                            <button type="button" id="register-button" class="btn btn-primary btn-block btn-lg">Registrar</button>
+                        <!--Ingreso de la contraseña-->
+                        <div class="row form-group">
+                            <div class="col-12">
+                                <input type="password" class="form-control" placeholder="Contraseña" id="contrasenia" name="contrasenia">
+                            </div>
                         </div>
-                    </div>
 
-                </div><!--Fin contenedor derecho-->
-                
-            </div>
-        </div> <!--Fin contenedor principal-->
+                        <!--Selección del rut o número de pasaporte-->
+                        <div class="row form-group-mini">
+                            <div class="col-12">
+                                <select class="form-control" id="rutPasaporte" name="rutPasaporte">
+                                    <option value="" disabled selected>Rut/Num. Pasaporte</option>
+                                    <option value="rut" id="rut">Rut</option>
+                                    <option value="numPasaporte" id="numPasaporte">Número de pasaporte</option>
+                                </select>
+                            </div>
+                        </div>
 
-    </section>
+                        <!--Ingreso del rut o número de pasaporte-->
+                        <div class="row form-group">
+                            <div class="col-12">
+                                <input type="text" class="form-control" placeholder="Rut/Num. Pasaporte" id="rutPasaporte2" name="rutPasaporte2">
+                                <small class="form-text text-muted ">
+                                    Rut con guion y sin punto (ej: 15433456-7).
+                                </small>
+                            </div>
+                        </div>
+
+                    </div><!--Fin del contenedor izquierdo-->
+                    <!--Contenedor derecho: contacto de emergencia-->
+                    <div id="register_user_right">
+
+                        <h3 id="sub_theme">
+                            Datos personales
+                        </h3>
+                        <!--Ingreso de la dirección física-->
+                        <div class="row form-group">
+                            <div class="col-6">
+                                <input type="text" class="form-control" placeholder="Dirección" id="direccion" name="direccion">
+                            </div>
+                            <div class="col-6">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">#</span>
+                                    </div>
+                                    <input type="number" class="form-control" placeholder="Número" id="numero" name="numero" min="00" max="9999" maxlength="4" oninput="if (this.value > 9999) this.value = 9999;
+    this.value = this.value.slice(0, this.maxLength);">
+                                </div>
+                            </div>
+
+                        </div>
+                        <!--Ingreso del número telefónico-->
+                        <div class="row form-group">
+                            <div class="col-12">
+
+                                <div class="input-group">
+
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="">+56</span>
+                                    </div>
+                                    <input type="number" class="form-control" placeholder="Número de teléfono" id="numeroTelefono" name="numeroTelefono"
+                                           maxlength="9" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3 id="sub_theme">
+                            Contacto de emergencia
+                        </h3>
+                        <!--Ingreso del nombre y apellido-->
+                        <div class="row form-group">
+                            <div class="col-6">
+                                <input type="text" class="form-control" placeholder="Nombre/s" id="nombreEmergencia" name="nombreEmergencia">
+                            </div>
+                            <div class="col-6">
+                                <input type="text" class="form-control" placeholder="Apellido/s" id="apellidoEmergencia" name="apellidoEmergencia">
+                            </div>
+                        </div>
+                        <!--Ingreso del número telefónico-->
+                        <div class="form-row form-group">
+                            <div class="col-12">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">+56</span>
+                                    </div>
+                                    <input type="number" class="form-control" placeholder="Número de teléfono" id="numeroTelefonoEmergencia" name="numeroTelefonoEmergencia"
+                                           maxlength="9" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-6"></div>
+                            <div class="col-12">
+                                <button type="button" id="registerButton" class="btn btn-primary btn-block btn-lg">Registrar</button>
+                            </div>
+                        </div>
+
+                    </div><!--Fin contenedor derecho-->
+
+                </div>
+            </div> <!--Fin contenedor principal-->
+        </section>
+    </form>
 </div>
+
+<script>
+    $(document).ready(function () {
+        jQuery.validator.addMethod('lettersonly', function (value, element) {
+            return this.optional(element) || /^[a-z áãâäàéêëèíîïìóõôöòúûüùçñ]+$/i.test(value);
+        }, "Letters and spaces only please");
+
+        $.extend($.validator.messages, {
+            required: "Este campo es obligatorio.",
+            remote: "Por favor, rellena este campo.",
+            email: "Por favor, escribe una dirección de correo válida.",
+            url: "Por favor, escribe una URL válida.",
+            date: "Por favor, escribe una fecha válida.",
+            dateISO: "Por favor, escribe una fecha (ISO) válida.",
+            number: "Por favor, escribe un número válido.",
+            digits: "Por favor, escribe sólo dígitos.",
+            lettersonly: "Por favor, incluir solo letras en el campo.",
+            creditcard: "Por favor, escribe un número de tarjeta válido.",
+            equalTo: "Por favor, escribe el mismo valor de nuevo.",
+            extension: "Por favor, escribe un valor con una extensión aceptada.",
+            maxlength: $.validator.format("Por favor, no escribas más de {0} caracteres."),
+            minlength: $.validator.format("Por favor, no escribas menos de {0} caracteres."),
+            rangelength: $.validator.format("Por favor, escribe un valor entre {0} y {1} caracteres."),
+            range: $.validator.format("Por favor, escribe un valor entre {0} y {1}."),
+            max: $.validator.format("Por favor, escribe un valor menor o igual a {0}."),
+            min: $.validator.format("Por favor, escribe un valor mayor o igual a {0}."),
+            nifES: "Por favor, escribe un NIF válido.",
+            nieES: "Por favor, escribe un NIE válido.",
+            cifES: "Por favor, escribe un CIF válido."
+        });
+
+
+        $("#register").validate({
+            //se inicia plugin para validar en tiempo real
+            rules: {
+                email: {
+                    required: true,
+                    email: true,
+                },
+                contrasenia: {
+                    required: true,
+                },
+                nombre: {
+                    required: true,
+                    lettersonly: true,
+                },
+                apellido: {
+                    required: true,
+                    lettersonly: true,
+                },
+                rutPasaporte: {
+                    required: true,
+                },
+                rutPasaporte2: {
+                    required: true,
+                },
+                direccion: {
+                    required: true,
+                    lettersonly: true,
+                },
+                numero: {
+                    required: true,
+                    digits: true,
+                },
+                numeroTelefono: {
+                    required: true,
+                    digits: true,
+                },
+                nombreEmergencia: {
+                    required: true,
+                    lettersonly: true,
+                },
+                apellidoEmergencia: {
+                    required: true,
+                    lettersonly: true,
+                },
+                numeroTelefonoEmergencia: {
+                    required: true,
+                    digits: true,
+                },
+            }
+        })
+
+        $('#registerButton').click(function () {
+
+            $.post("https://localhost:44350/api/Roles", {
+                Email: $("#email").val(),
+                Contrasenia: $("#contrasenia").val(),
+                ID_Rol: "false"
+            },
+                function (data, status) {
+                    alert("Data: " + data + "\nStatus: " + status);
+                    if (status == "success") {
+                        $.get("https://localhost:44350/api/Roles?email=" + $("#email").val(),
+                            function (data, status) {
+                                alert("Data: " + data.ID + "\nStatus: " + status);
+
+                                //Obtiene los valores temporales del rut o número de pasaporte para poder insertarlos en la base de dato
+                                var rutAux = "";
+                                var pasaporteAux = "";
+
+                                if ($("#rutPasaporte").val() == "rut") {
+                                    rutAux = $("#rutPasaporte2").val();
+                                }
+                                if ($("#rutPasaporte").val() == "numPasaporte") {
+                                    pasaporteAux = $("#rutPasaporte2").val();
+                                }
+
+                                $.post("https://localhost:44350/api/Customers", {
+                                    Nombres: $("#nombre").val(),
+                                    Apellidos: $("#apellido").val(),
+                                    Rut: rutAux,
+                                    Numero_Pasaporte: pasaporteAux,
+                                    Direccion: $("#direccion").val(),
+                                    Numero_Direccion: $("#numero").val(),
+                                    Numero_Telefono: $("#numeroTelefono").val(),
+                                    Nombres_Emergencia: $("#nombreEmergencia").val(),
+                                    Apellidos_Emergencia: $("#apellidoEmergencia").val(),
+                                    Numero_Telefono_Emergencia: $("#numeroTelefonoEmergencia").val(),
+                                    ID: data.ID
+                                },
+                                    function (data, status) {
+                                        alert("Data: " + data + "\nStatus: " + status);
+                                    }
+                                );
+                            }
+                        );
+                    }
+                        
+                }
+            );
+            
+        });
+
+    });
+
+</script>
+

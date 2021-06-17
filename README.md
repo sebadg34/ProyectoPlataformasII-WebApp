@@ -7,6 +7,7 @@
 * [Sobre el proyecto](#proyecto)
 * [Tecnologias](#tecnologias)
 * [Setup](#setup)
+* [Convenciones](#convenciones)
 
 ## Introduccion
 
@@ -63,5 +64,29 @@ Para el desarrollo y ejecucion del programa se deben tener los siguiente:
 * *POR DEFINIR*
 ### Instalacion
 * *POR DEFINIR*
+
+## Convenciones
+### Commits
+Los commits deben incluir un mensaje descriptivo de los cambios realizados
+La estructura de los mensajes es la siguiente:
+- "type([scope]):subject"
+
+#### type: el tipo de cambio, este pueden ser
+- feat	  : adicion nueva 	
+- fix 	  : bug fixes (arreglo de errores)
+- docs	  : cambios en la documentacion
+- Style	  : cambio de estilo que no afectan en la funcionalidad (formato, espaciados, etc).
+- Refactor: cambio que no arregla ni agrega una funcionalidad.
+- Test	  : agregar pruebas faltantes o bien corregir existentes
+- Chore	  : cambios en librerias, build y herramientas auxiliares.
+- perf	  : cambio que mejora el rendimiento del programa.
+
+#### scope: Opcional, especifica el lugar en donde se realiza el cambio en el commit (clase, modulo, etc).
+#### subject: Descripcion corta de que trata el cambio emitido.
+
+### Version
+* *POR DEFINIR*
+
+### Comentarios
 
 

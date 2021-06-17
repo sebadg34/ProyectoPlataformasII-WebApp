@@ -11,7 +11,7 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-<!--Script que permite obtener la fecha-->
+<!-- Script que permite obtener la fecha -->
 <script>
     $(function () {
         $("#fechaSalida").datepicker({
@@ -45,7 +45,7 @@
         <section class="jumbotron" id="register_user" >
             <div class="container-fluid">
 
-                <!--Título de la página-->
+                <!-- Titulo de la pagina -->
                 <div class="row">
                     <h2 class="top-left" id="header_color">Registrar Vuelo</h2>
                 </div>
@@ -55,24 +55,24 @@
 
                 <div class="row">
 
-                    <!--Contenedor izquiedo: datos del usuario-->
+                    <!-- Contenedor izquierdo: datos del usuario -->
                     <div id="register_user_left">
 
-                        <!--Ingreso de la Ciudad de origen-->
+                        <!-- Ingreso de la Ciudad de origen -->
                         <div class="row form-group-mini">
                             <div class="col-12">
                                 <input type="text" class="form-control" placeholder="Ciudad de Origen" id="ciudadOrigen" name="ciudadOrigen">
                             </div>
                         </div>
 
-                        <!--Ingreso de la Ciudad de destino-->
+                        <!-- Ingreso de la Ciudad de destino -->
                         <div class="row form-group">
                             <div class="col-12">
                                 <input type="text" class="form-control" placeholder="Ciudad de Destino" id="ciudadDestino" name="ciudadDestino">
                             </div>
                         </div>
 
-                        <!--Ingreso Fecha y Hora de salida-->
+                        <!-- Ingreso Fecha y Hora de salida -->
                         <div class="row form-group-mini">
                             <div class="col-12">
                                 <small class="form-text text-muted ">
@@ -88,7 +88,7 @@
                             </div>
                         </div>
 
-                        <!--Ingreso la duraciòn de vuelo-->
+                        <!-- Ingreso la duracion de vuelo -->
                         <div class="row">
                             <div class="col-12">
                                 <small class="form-text text-muted ">
@@ -106,11 +106,11 @@
                             </div>
                         </div>
 
-                    </div><!--Fin del contenedor izquierdo-->
-                    <!--Contenedor derecho-->
+                    </div><!-- Fin del contenedor izquierdo -->
+                    <!-- Contenedor derecho -->
                     <div id="register_user_right">
 
-                        <!--Selección de categoría-->
+                        <!-- Seleccion de categoria -->
                         <div class="row form-group">
                             <div class="col-12">
                                 <select class="form-control" id="categoria" name="categoria">
@@ -122,7 +122,7 @@
                             </div>
                         </div>
 
-                        <!--Ingreso de cupos de asientos-->
+                        <!-- Ingreso de cupos de asientos -->
                         <div class="row form-group">
                             <div class="col-12">
                                 <input  type="number" class="form-control" placeholder="Asientos disponibles" id="cupos" name="cupos" min="30" max="40" maxlength="2" oninput="if (this.value > 40) this.value = 40; if (this.value < 30) this.value = 30;
@@ -144,7 +144,7 @@
                             </div>
                         </div>
 
-                    </div><!--Fin contenedor derecho-->
+                    </div><!-- Fin contenedor derecho -->
                 </div>
             </div>
         </section>

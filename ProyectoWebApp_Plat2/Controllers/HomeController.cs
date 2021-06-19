@@ -9,14 +9,17 @@ namespace ProyectoWebApp_Plat2.Controllers
 {
     public class HomeController : Controller
     {
-        bool State { get; set; } = true;
-        bool Role { get; set; } = true;
+        // Variable que guarda el estado de Login, es decir, si se ha iniciado sesión o no
+        bool state { get; set; }
+        // Variable que guarda el rol del usuario que ha iniciado sesión; en caso de cerrar sesión o no estar iniciada esta misma, rol tomara el valor de false
+        bool role { get; set; }
 
         string origen = "Todo";
         string destino = "Todo";
         DateTime fecha_desde = DateTime.Today;
         DateTime fecha_hasta = DateTime.Today.AddMonths(6);
-
+        
+ 
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
@@ -31,17 +34,11 @@ namespace ProyectoWebApp_Plat2.Controllers
             return View();
         }
 
-        public ActionResult RegisterCustomer()
-        {
-            return View();
-        }
-
-
         public ActionResult RegisterFlights()
         {
-            ViewData["Req"] = "Registrar Vuelo";
-            ViewData["Inicio"] = "si";
             ViewData["Nombre"] = "Eduard Tomas";
+            ViewData["Log-In"] = this.state;
+            ViewData["Role"] = this.role;
             return View();
         }
 
@@ -49,8 +46,8 @@ namespace ProyectoWebApp_Plat2.Controllers
         {
             if (TempData["Log-In"] != null && TempData["Role"] != null)
             {
-                this.State = (bool)TempData["Log-In"];
-                this.Role = (bool)TempData["Role"];
+                this.state = (bool)TempData["Log-In"];
+                this.role = (bool)TempData["Role"];
             }
 
             if (origen != null)
@@ -86,9 +83,9 @@ namespace ProyectoWebApp_Plat2.Controllers
             }
 
 
-            ViewData["Nombre"] = "Eduard Tomas";
-            ViewData["Log-In"] = this.State;
-            ViewData["Role"] = this.Role;
+            ViewData["Nombre"] = TempData["Nombre"] as string;
+            ViewData["Log-In"] = this.state;
+            ViewData["Role"] = this.role;
 
 
             Flight vuelo1 = new Flight("Basico", "Santiago", "Antofagasta", 30, 1, "001", new DateTime(2020, 01, 22, 20, 20, 20), new DateTime(2020, 01, 20, 20, 20, 20));
@@ -129,9 +126,44 @@ namespace ProyectoWebApp_Plat2.Controllers
             return View();
         }
 
-        public string mirar(string id_vuelo)
+        /// <summary>
+        /// Método que almacena los datos id_vuelo, cantidadPasajeros y usuarioPasajero para ser enviados a la vista ToReserve
+        /// </summary>
+        /// <param name="id_vuelo"></param>
+        /// <param name="cantidadPasajeros"></param>
+        /// <param name="usuarioPasajero"></param>
+        /// <returns>vista ToReserve</returns>
+        public ActionResult ToReserve(int id_vuelo, int cantidadPasajeros, bool usuarioPasajero)
         {
-            return "ID Vuelo: " + id_vuelo;
+            ViewData["Id_Vuelo"] = id_vuelo ;
+            ViewData["Pasajeros"] = cantidadPasajeros;
+            ViewData["Usuario"] = usuarioPasajero;
+
+            return View();
         }
+
+        // Métodos que redirigen hacia otra vista
+
+        /// <summary>
+        /// Metodo que almacena temporalmente dentro de las etiquetas Log-In y Role valores false de tipo bool,
+        /// estos datos seran usados posteriormente en la acción Menu, luego redirige hacia la acción Menu en el controlador Home 
+        /// </summary>
+        /// <returns>Redirige a la Acción Menu</returns>
+        public ActionResult Logout()
+        {
+            TempData["Log-In"] = false;
+            TempData["Role"] = false;
+            return RedirectToAction("Menu");
+        }
+
+        /// <summary>
+        /// Método que redirige hacia la acción Login que se encuentra en el controlador Login
+        /// </summary>
+        /// <returns>Acción Login del controlador Login</returns>
+        public ActionResult ToLogin()
+        {
+            return RedirectToAction("Login", "Login");
+        }
+
     }
 }

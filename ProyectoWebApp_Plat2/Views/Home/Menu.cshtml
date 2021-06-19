@@ -7,6 +7,7 @@
 <div>
     @Html.Partial("_TopMenu")
 
+
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -195,6 +196,7 @@
             </div>
             @{
                 bool Role = (bool)ViewData["Role"];
+                bool State = (bool)ViewData["Log-In"];
                 for (int i = 0; i < ViewBag.flights.Count; i++)
                 {
                     <div class="row" style="width: 100%; height: 100px; margin: auto; display: flex; background: white;">
@@ -217,13 +219,27 @@
                                             </h3>
                                         </div>
                                         <div class="row" style="width: 70%; margin: auto; display: flex; height: 30px;">
-                                            @using (Html.BeginForm("mirar", "Home"))
+                                            @if (State)
                                             {
-                                                <button type="submit" class="btn btn-primary" value="@ViewBag.flights[i].ID_Vuelo" name="id_vuelo" style="margin: auto; font-size: 14px; padding: 0px; background-color: #0a61bc !important;">
-                                                    <h3 style="color: #010812; margin: auto; font-size: 14px; color: white;">
-                                                        Reservar
-                                                    </h3>
-                                                </button>
+                                                using (Html.BeginForm("ToReserve", "Home"))
+                                                {
+                                                    <button type="submit" class="btn btn-primary" value="@ViewBag.flights[i].ID_Vuelo" name="id_vuelo" style="margin: auto; font-size: 14px; padding: 0px; background-color: #0a61bc !important;">
+                                                        <h3 style="color: #010812; margin: auto; font-size: 14px; color: white;">
+                                                            Reservar
+                                                        </h3>
+                                                    </button>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                using (Html.BeginForm("ToLogin", "Home"))
+                                                {
+                                                    <button type="submit" class="btn btn-primary" value="@ViewBag.flights[i].ID_Vuelo" name="id_vuelo" style="margin: auto; font-size: 14px; padding: 0px; background-color: #0a61bc !important;">
+                                                        <h3 style="color: #010812; margin: auto; font-size: 14px; color: white;">
+                                                            Reservar
+                                                        </h3>
+                                                    </button>
+                                                }
                                             }
                                         </div>
                                     </div>

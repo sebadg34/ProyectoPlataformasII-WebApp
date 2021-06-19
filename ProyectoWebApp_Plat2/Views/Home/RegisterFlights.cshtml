@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
 
 <!-- Script que permite obtener la fecha -->
 <script>
@@ -33,120 +34,263 @@
         max-height: 0px;
         min-height: 63vh;
     }
-
-   
 </style>
 
 <div>
     @Html.Partial("_TopMenu")
 
     <div class="container-fluid vertical-center">
+        <form id="register">
+            <section class="jumbotron" id="register_user">
+                <div class="container-fluid">
 
-        <section class="jumbotron" id="register_user" >
-            <div class="container-fluid">
+                    <!-- Titulo de la pagina -->
+                    <div class="row">
+                        <h2 class="top-left" id="header_color">Registrar Vuelo</h2>
+                    </div>
+                    <h3 style="font-size: 15px;color: #000000; margin-left: 30px;">
+                        Datos del vuelo
+                    </h3>
 
-                <!-- Titulo de la pagina -->
-                <div class="row">
-                    <h2 class="top-left" id="header_color">Registrar Vuelo</h2>
-                </div>
-                <h3 style="font-size: 15px;color: #000000; margin-left: 30px;">
-                    Datos del vuelo
-                </h3>
+                    <div class="row">
 
-                <div class="row">
+                        <!-- Contenedor izquierdo: datos del usuario -->
+                        <div id="register_user_left">
 
-                    <!-- Contenedor izquierdo: datos del usuario -->
-                    <div id="register_user_left">
-
-                        <!-- Ingreso de la Ciudad de origen -->
-                        <div class="row form-group-mini">
-                            <div class="col-12">
-                                <input type="text" class="form-control" placeholder="Ciudad de Origen" id="ciudadOrigen" name="ciudadOrigen">
-                            </div>
-                        </div>
-
-                        <!-- Ingreso de la Ciudad de destino -->
-                        <div class="row form-group">
-                            <div class="col-12">
-                                <input type="text" class="form-control" placeholder="Ciudad de Destino" id="ciudadDestino" name="ciudadDestino">
-                            </div>
-                        </div>
-
-                        <!-- Ingreso Fecha y Hora de salida -->
-                        <div class="row form-group-mini">
-                            <div class="col-12">
-                                <small class="form-text text-muted ">
-                                    Fecha y hora de salida.
-                                </small>
-                                <input type="text" class="form-control" id="fechaSalida" name="fechaSalida" placeholder="yyyy-mm-dd"readonly/>
-                            </div>
-                        </div>
-
-                        <div class="row form-group">
-                            <div class="col-12">
-                                <input type="time" id="horaSalida" name="horaSalida" class="form-control"/>
-                            </div>
-                        </div>
-
-                        <!-- Ingreso la duracion de vuelo -->
-                        <div class="row">
-                            <div class="col-12">
-                                <small class="form-text text-muted ">
-                                    Duración de vuelo.
-                                </small>
-                                <div class="input-group">
-                                    <input type="number" class="form-control" placeholder="hh" id="horaLlegada" name="horaLlegada" min="00" max="23" maxlength="2" oninput="if (this.value > 23) this.value = 23;
-    this.value = this.value.slice(0, this.maxLength);" >
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon1">:</span>
-                                    </div>
-                                    <input type="number" class="form-control" placeholder="mm" id="minutoLlegada" name="minutoLlegada" min="00" max="59" maxlength="2" oninput="if (this.value > 59) this.value = 59;
-    this.value = this.value.slice(0, this.maxLength);" >
+                            <!-- Ingreso de la Ciudad de origen -->
+                            <div class="row form-group-mini">
+                                <div class="col-12">
+                                    <input type="text" class="form-control" placeholder="Ciudad de Origen" id="ciudadOrigen" name="ciudadOrigen">
                                 </div>
                             </div>
-                        </div>
 
-                    </div><!-- Fin del contenedor izquierdo -->
-                    <!-- Contenedor derecho -->
-                    <div id="register_user_right">
-
-                        <!-- Seleccion de categoria -->
-                        <div class="row form-group">
-                            <div class="col-12">
-                                <select class="form-control" id="categoria" name="categoria">
-                                    <option value="" disabled selected>Categoria</option>
-                                    <option value="Basico">Básico</option>
-                                    <option value="Normal">Normal</option>
-                                    <option value="Premium">Premium</option>
-                                </select>
+                            <!-- Ingreso de la Ciudad de destino -->
+                            <div class="row form-group">
+                                <div class="col-12">
+                                    <input type="text" class="form-control" placeholder="Ciudad de Destino" id="ciudadDestino" name="ciudadDestino">
+                                </div>
                             </div>
-                        </div>
 
-                        <!-- Ingreso de cupos de asientos -->
-                        <div class="row form-group">
-                            <div class="col-12">
-                                <input  type="number" class="form-control" placeholder="Asientos disponibles" id="cupos" name="cupos" min="30" max="40" maxlength="2" oninput="if (this.value > 40) this.value = 40; if (this.value < 30) this.value = 30;
-    this.value = this.value.slice(0, this.maxLength);" >
+                            <!-- Ingreso Fecha y Hora de salida -->
+                            <div class="row form-group-mini">
+                                <div class="col-12">
+                                    <small class="form-text text-muted ">
+                                        Fecha y hora de salida.
+                                    </small>
+                                    <input type="text" class="form-control" id="fechaSalida" name="fechaSalida" placeholder="yyyy-mm-dd" readonly />
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="row">
-                            <div class="col-6"></div>
-                            <div class="col-12">
-                                <button type="button" id="registerButton" class="btn btn-block btn-lg"
-                                        style="margin-left: 0px;
+                            <div class="row form-group">
+                                <div class="col-12">
+                                    <input type="time" id="horaSalida" name="horaSalida" class="form-control" />
+                                </div>
+                            </div>
+
+                            <!-- Ingreso la duracion de vuelo -->
+                            <div class="row">
+                                <div class="col-12">
+                                    <small class="form-text text-muted ">
+                                        Duración de vuelo.
+                                    </small>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" placeholder="hh" id="horaLlegada" name="horaLlegada" min="00" max="23" maxlength="2" oninput="if (this.value > 23) this.value = 23;
+    this.value = this.value.slice(0, this.maxLength);">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1">:</span>
+                                        </div>
+                                        <input type="number" class="form-control" placeholder="mm" id="minutoLlegada" name="minutoLlegada" min="00" max="59" maxlength="2" oninput="if (this.value > 59) this.value = 59;
+    this.value = this.value.slice(0, this.maxLength);">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div><!-- Fin del contenedor izquierdo -->
+                        <!-- Contenedor derecho -->
+                        <div id="register_user_right">
+
+                            <!-- Seleccion de categoria -->
+                            <div class="row form-group">
+                                <div class="col-12">
+                                    <select class="form-control" id="categoria" name="categoria">
+                                        <option value="" disabled selected>Categoria</option>
+                                        <option value="Básico">Básico</option>
+                                        <option value="Normal">Normal</option>
+                                        <option value="Premium">Premium</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Ingreso de cupos de asientos -->
+                            <div class="row form-group">
+                                <div class="col-12">
+                                    <input type="number" class="form-control" placeholder="Asientos disponibles" id="cupos" name="cupos" min="30" max="40" maxlength="2" oninput="this.value = this.value.slice(0, this.maxLength);">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-6"></div>
+                                <div class="col-12">
+                                    <button type="button" id="registerButton" class="btn btn-block btn-lg"
+                                            style="margin-left: 0px;
                                         margin-right: 0px;
                                         background-color: #006ce5 !important;
                                         color: #FFF;
                                         border-color: #3d8af7 !important;">
-                                    Registrar vuelo
-                                </button>
+                                        Registrar vuelo
+                                    </button>
+                                </div>
                             </div>
-                        </div>
 
-                    </div><!-- Fin contenedor derecho -->
+                        </div><!-- Fin contenedor derecho -->
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        </form>
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        // Incluye las letras de caracteres especiales
+        jQuery.validator.addMethod('lettersonly', function (value, element) {
+            return this.optional(element) || /^[a-z áãâäàéêëèíîïìóõôöòúûüùçñ]+$/i.test(value);
+        }, "Letters and spaces only please");
+        
+        // Descripcion de los mensajes de validacio
+        $.extend($.validator.messages, {
+            required: "Este campo es obligatorio.",
+            remote: "Por favor, rellena este campo.",
+            email: "Por favor, escribe una dirección de correo válida.",
+            url: "Por favor, escribe una URL válida.",
+            date: "Por favor, escribe una fecha válida.",
+            dateISO: "Por favor, escribe una fecha (ISO) válida.",
+            number: "Por favor, escribe un número válido.",
+            digits: "Por favor, escribe sólo dígitos.",
+            lettersonly: "Por favor, incluir solo letras en el campo.",
+            creditcard: "Por favor, escribe un número de tarjeta válido.",
+            equalTo: "Por favor, escribe el mismo valor de nuevo.",
+            extension: "Por favor, escribe un valor con una extensión aceptada.",
+            maxlength: $.validator.format("Por favor, no escribas más de {0} caracteres."),
+            minlength: $.validator.format("Por favor, no escribas menos de {0} caracteres."),
+            rangelength: $.validator.format("Por favor, escribe un valor entre {0} y {1} caracteres."),
+            range: $.validator.format("Por favor, escribe un valor entre {0} y {1}."),
+            max: $.validator.format("Por favor, escribe un valor menor o igual a {0}."),
+            min: $.validator.format("Por favor, escribe un valor mayor o igual a {0}."),
+            nifES: "Por favor, escribe un NIF válido.",
+            nieES: "Por favor, escribe un NIE válido.",
+            cifES: "Por favor, escribe un CIF válido."
+        });
+
+        $("#register").validate({
+            // Se inicia plugin para validar en tiempo real
+            rules: {
+                ciudadOrigen: {
+                    required: true,
+                    lettersonly: true,
+                },
+                ciudadDestino: {
+                    required: true,
+                    lettersonly: true,
+                },
+                fechaSalida: {
+                    required: true,
+                },
+                horaSalida: {
+                    required: true,
+                },
+                horaLlegada: {
+                    required: true,
+                },
+                minutoLlegada: {
+                    required: true,
+                },
+                categoria: {
+                    required: true,
+                },
+                cupos: {
+                    required: true,
+                    digits: true,
+                },
+            }
+        })
+
+        // Aqui inicia el registro una vez haga click en el boton registrar
+        $('#registerButton').click(function () {
+            $.get("https://localhost:44350/api/Flights/-1",
+                function (data, status) {
+                    alert("Data: " + data.ID + "\nStatus: " + status);
+                    // ---------------- Transformaciones y conversiones de las fechas ----------------
+
+                    // Obtiene variables de fechas y las convierte tipo fecha
+                    var fechaSalida = $("#fechaSalida").val();
+                    var horaSalida = $("#horaSalida").val();
+                    var hora = $("#horaLlegada").val();
+                    var minuto = $("#minutoLlegada").val();
+
+                    var formatoSalida = fechaSalida + "T" + horaSalida + ":00";
+
+                    // Transformacion de la duracion del vuelo a formato fecha
+                    var fechaLlegada = new Date(formatoSalida);
+                    var horaEnMilisegundo = 3600000 * parseInt(hora);
+                    var minutoEnMilisegundo = 60000 * parseInt(minuto);
+                    var tiempoEnMilisegundos = parseInt(horaEnMilisegundo) + parseInt(minutoEnMilisegundo);
+                    var suma = parseInt(fechaLlegada.getTime()) + parseInt(tiempoEnMilisegundos);
+
+                    // Ya que el formato Date es distinto al formato DateTime en la API se deben obtener una por una las variables y asi encadenarlas al final
+                    var fecha = new Date(suma);
+                    var anioLlegada = fecha.getFullYear();
+                    var mesLlegada = fecha.getMonth() + 1;
+                    var diaLlegada = fecha.getDate();
+                    var horaLlegada = fecha.getHours();
+                    var minutoLlegada = fecha.getMinutes();
+
+                    if (mesLlegada < 10) {
+                        mesLlegada = "0" + mesLlegada;
+                    }
+
+                    if (diaLlegada < 10) {
+                        diaLlegada = "0" + diaLlegada;
+                    }
+
+                    var formatoLlegada = anioLlegada + "-" + mesLlegada + "-" + diaLlegada + "T" + horaLlegada + ":" + minutoLlegada + ":00";
+
+                    // Si existe un ultimo vuelo registrado entonces procedera a registrar el vuelo
+                    if (status == "success") {
+                        var idVueloAnterior = data.ID_Vuelo;
+
+                        // Se realiza a aumentar el ID_Vuelo mediante una expresion regular que elimina la constante AP- para obtener el valor numerico y asi aumentarlo
+                        var exp = new RegExp("(^AP-?)");
+                        var inc = parseInt(idVueloAnterior.replace(exp, "")) + 1;
+
+                        if (inc < 10) {
+                            var idVuelo = "AP-00" + inc;
+                        }
+                        else if (inc < 100) {
+                            var idVuelo = "AP-0" + inc;
+                        }
+                        else {
+                            var idVuelo = "AP-" + inc;
+                        }
+
+                        $.post("https://localhost:44350/api/Flights", {
+                            ID_Vuelo: idVuelo,
+                            Ciudad_Origen: $("#ciudadOrigen").val(),
+                            Ciudad_Destino: $("#ciudadDestino").val(),
+                            Fecha_Salida: formatoSalida,
+                            Fecha_Llegada: formatoLlegada,
+                            Cupos: $("#cupos").val(),
+                            Categoria: $("#categoria").val()
+                        },
+                            function (data, status) {
+                                alert("Data: " + data + "\nStatus: " + status);
+                            }
+                        );
+                    }
+                }
+            );
+        });
+    });
+</script>
+
+

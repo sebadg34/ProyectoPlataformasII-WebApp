@@ -11,7 +11,7 @@
 
             var userUrl = "";
 
-            alert("LOGIN EXITOSO\n " + registro.Email + " " + registro.ID);
+            alert("LOGIN EXITOSO\n usuario: " + registro.Email + "\n id: " + registro.ID);
 
             // en el caso de ser cliente comun
             if (registro.ID_Rol == 0) {
@@ -25,22 +25,15 @@
             }
             
             $.get(userUrl, function (usuario) {
-
-                     alert(usuario.Nombres);
-                     rol_id = registro.ID_Rol;
-
-                    rol_nombre = usuario.Nombres;
-                rol_user = usuario.ID;
                 
+                
+                rol_id = registro.ID_Rol;
+                rol_nombre = usuario.Nombres;
+                rol_user = usuario.ID;
                 window.location.href = "http://localhost:52811/Login/ToMenu?role=" + registro.ID_Rol + "&name=" + usuario.Nombres + "&idUsuario=" + usuario.ID;
-                 //changeView(registro.ID_Rol, usuario.Nombres, usuario.ID);
-                //return { rol_id, rol_nombre, rol_user };
-                //return false;
+                 
             });
 
-
-
-            
         }).fail(function () {
             alert("error");
         });
@@ -109,7 +102,5 @@
 }
 
 function changeView(rol, nombre, id) {
-
-    
    return [ rol, nombre, id ];  
 }

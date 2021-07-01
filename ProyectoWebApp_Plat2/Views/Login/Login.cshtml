@@ -15,7 +15,7 @@
 
 <style type="text/css">
 
-    
+
     label.error {
         color: red;
         font-size: 12px;
@@ -40,12 +40,15 @@
 
 
 
-
 <div class="login-container">
 
    
 
+
         <form id="formLogin">
+
+
+
             <!--id="form1" method="post" action="api/updates/complex" enctype="application/x-www-form-urlencoded"-->
 
             <div class="jumbotron" id="log_in">
@@ -80,11 +83,11 @@
                     <div class="col-md-6">
 
                         <label id="registrar">¿No está registrado? haz click</label>
-                        <div>@Html.ActionLink("aqui", "RegisterCustomer", "Home")</div>  
+                        <div>@Html.ActionLink("aqui", "RegisterCustomer", "Login")</div>
                     </div>
                     <div class="col-md-6">
                         <div class="row  flex-row-reverse no-gutters">
-                            <button type="submit" class="btn btn-primary" id="LoginButton" value="LoginUser">Iniciar Sesión</button>
+                            <button type="" class="btn btn-primary" id="LoginButton" value="LoginUser">Iniciar Sesión</button>
 
                         </div>
 
@@ -103,35 +106,50 @@
 
 
             </div>
+
         </form>
 
-    
+
+   
+
+
+
+
+
 </div>
 
 
-
 <script>
+
     $(document).ready(function () {
+
+        
+        ValidateForm();
+       
+
+            $("#formLogin").validate({
+                rules: {
+                    userEmail: {
+                        required: true,
+                        email: true,
+                    },
+                    userPassword: {
+                        required: true,
+                    },
+                },
+                submitHandler: function () {
+
+                    Login();
+
+                }
+            });
+
+
+        
         
 
-        ValidateForm();
-     
-        $("#formLogin").validate({
-            rules: {
-                userEmail: {
-                    required: true,
-                    email: true,
-                },
-                userPassword: {
-                    required: true,
-                },
-            },
-            submitHandler: function () {
-                Login();
-            }
-        });
-    });    
-    
+    });
+
 
 </script>
 

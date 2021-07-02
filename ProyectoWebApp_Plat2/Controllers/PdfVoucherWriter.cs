@@ -65,9 +65,9 @@ namespace ProyectoWebApp_Plat2.Controllers
             Style styleCell = new Style()
                 .SetFont(font)
                 .SetFontSize(12)
-                .SetBackgroundColor(ColorConstants.LIGHT_GRAY)
-                .SetBorder(Border.NO_BORDER)
-                .SetTextAlignment(TextAlignment.CENTER);
+                .SetTextAlignment(TextAlignment.CENTER)
+                .SetVerticalAlignment(VerticalAlignment.MIDDLE);
+
 
             Image logo = new Image(ImageDataFactory.Create(@"C:\Users\tomas\source\repos\ProyectoReservaVuelos\ProyectoWebApp_Plat2\images\Logo AirlinePlus.jfif"));
 
@@ -86,40 +86,76 @@ namespace ProyectoWebApp_Plat2.Controllers
             //Tabla de datos pasajero
             Table table = new Table(2).UseAllAvailableWidth();
             //Datos Pasajero
-            Cell cell = new Cell(1,2).Add(new Paragraph("Datos Pasajero").AddStyle(styleCell).SetBold());
+            Cell cell = new Cell(1,2).Add(new Paragraph("Datos Pasajero"))
+                .AddStyle(styleCell)
+                .SetBold()
+                .SetBackgroundColor(ColorConstants.LIGHT_GRAY);
             table.AddCell(cell);
             //Nombre y Apellido
-            cell = new Cell(1,1).Add(new Paragraph("Nombre del pasajero").AddStyle(styleCell).SetBold());
+            cell = new Cell(1,1).Add(new Paragraph("Nombre del pasajero"))
+                .AddStyle(styleCell)
+                .SetBold()
+                .SetBackgroundColor(ColorConstants.LIGHT_GRAY);
             table.AddCell(cell);
-            cell = new Cell(1,1).Add(new Paragraph("").AddStyle(styleCell));
+            cell = new Cell(1,1).Add(new Paragraph(""))
+                .AddStyle(styleCell)
+                .SetBackgroundColor(ColorConstants.LIGHT_GRAY, 0.5f);
             table.AddCell(cell);
             //Rut o Num. Pasaporte
-            cell = new Cell(1, 1).Add(new Paragraph("Documento de identificación").AddStyle(styleCell).SetBold());
+            cell = new Cell(1, 1).Add(new Paragraph("Documento de identificación"))
+                .AddStyle(styleCell)
+                .SetBold()
+                .SetBackgroundColor(ColorConstants.LIGHT_GRAY);
             table.AddCell(cell);
-            cell = new Cell(1, 1).Add(new Paragraph("").AddStyle(styleCell));
+            cell = new Cell(1, 1).Add(new Paragraph(""))
+                .AddStyle(styleCell)
+                .SetBackgroundColor(ColorConstants.LIGHT_GRAY, 0.5f);
             table.AddCell(cell);
             //Dirección y Num. Dirección
-            cell = new Cell(1, 1).Add(new Paragraph("Dirección del pasajero").AddStyle(styleCell).SetBold());
+            cell = new Cell(1, 1).Add(new Paragraph("Dirección del pasajero"))
+                .AddStyle(styleCell)
+                .SetBold()
+                .SetBackgroundColor(ColorConstants.LIGHT_GRAY);
             table.AddCell(cell);
-            cell = new Cell(1, 1).Add(new Paragraph("").AddStyle(styleCell));
+            cell = new Cell(1, 1).Add(new Paragraph(""))
+                .AddStyle(styleCell)
+                .SetBackgroundColor(ColorConstants.LIGHT_GRAY, 0.5f);
             table.AddCell(cell);
             //N° Teléfono
-            cell = new Cell(1, 1).Add(new Paragraph("Número Telefónico").AddStyle(styleCell).SetBold());
+            cell = new Cell(1, 1).Add(new Paragraph("Número Telefónico"))
+                .AddStyle(styleCell)
+                .SetBold()
+                .SetBackgroundColor(ColorConstants.LIGHT_GRAY);
             table.AddCell(cell);
-            cell = new Cell(1, 1).Add(new Paragraph("").AddStyle(styleCell));
+            cell = new Cell(1, 1).Add(new Paragraph(""))
+                .AddStyle(styleCell)
+                .SetBackgroundColor(ColorConstants.LIGHT_GRAY, 0.5f);
             table.AddCell(cell);
             //Datos Emergencia
-            cell = new Cell(1, 2).Add(new Paragraph("Datos de Emergencia").AddStyle(styleCell).SetBold());
+            cell = new Cell(1, 2).Add(new Paragraph("Datos de Emergencia"))
+                .AddStyle(styleCell)
+                .SetBold()
+                .SetBackgroundColor(ColorConstants.LIGHT_GRAY);
             table.AddCell(cell);
             //Nombre y Apellido de Emergencia
-            cell = new Cell(1, 1).Add(new Paragraph("Nombre de Emergencia").AddStyle(styleCell).SetBold());
+            cell = new Cell(1, 1).Add(new Paragraph("Nombre de Emergencia"))
+                .AddStyle(styleCell)
+                .SetBold()
+                .SetBackgroundColor(ColorConstants.LIGHT_GRAY);
             table.AddCell(cell);
-            cell = new Cell(1, 1).Add(new Paragraph("").AddStyle(styleCell));
+            cell = new Cell(1, 1).Add(new Paragraph(""))
+                .AddStyle(styleCell)
+                .SetBackgroundColor(ColorConstants.LIGHT_GRAY, 0.5f);
             table.AddCell(cell);
             //N° Teléfono Emergencia
-            cell = new Cell(1, 1).Add(new Paragraph("Número Telefónico Emergencia").AddStyle(styleCell).SetBold());
+            cell = new Cell(1, 1).Add(new Paragraph("Número Telefónico Emergencia"))
+                .AddStyle(styleCell)
+                .SetBold()
+                .SetBackgroundColor(ColorConstants.LIGHT_GRAY);
             table.AddCell(cell);
-            cell = new Cell(1, 1).Add(new Paragraph("").AddStyle(styleCell));
+            cell = new Cell(1, 1).Add(new Paragraph(""))
+                .AddStyle(styleCell)
+                .SetBackgroundColor(ColorConstants.LIGHT_GRAY, 0.5f);
             table.AddCell(cell);
 
             document.Add(table);
@@ -131,44 +167,80 @@ namespace ProyectoWebApp_Plat2.Controllers
             //Datos de Vuelo
             table = new Table(6).UseAllAvailableWidth();
             //N° de Vuelo
-            cell = new Cell(2,1).Add(new Paragraph("N° de Vuelo").AddStyle(styleCell).SetBold());
+            cell = new Cell(2, 1).Add(new Paragraph("N° de Vuelo"))
+                .AddStyle(styleCell)
+                .SetBold()
+                .SetBackgroundColor(ColorConstants.LIGHT_GRAY);
             table.AddHeaderCell(cell);
             //Origen
-            cell = new Cell(1, 2).Add(new Paragraph("Origen").AddStyle(styleCell).SetBold());
+            cell = new Cell(1, 2).Add(new Paragraph("Origen"))
+                .AddStyle(styleCell)
+                .SetBold()
+                .SetBackgroundColor(ColorConstants.LIGHT_GRAY);
             table.AddHeaderCell(cell);
             //Destino
-            cell = new Cell(1, 2).Add(new Paragraph("Destino").AddStyle(styleCell).SetBold());
+            cell = new Cell(1, 2).Add(new Paragraph("Destino"))
+                .AddStyle(styleCell)
+                .SetBold()
+                .SetBackgroundColor(ColorConstants.LIGHT_GRAY);
             table.AddHeaderCell(cell);
             //Categoría
-            cell = new Cell(2, 1).Add(new Paragraph("Categoría").AddStyle(styleCell).SetBold());
+            cell = new Cell(2, 1).Add(new Paragraph("Categoría"))
+                .AddStyle(styleCell)
+                .SetBold()
+                .SetBackgroundColor(ColorConstants.LIGHT_GRAY);
             table.AddHeaderCell(cell);
             //Ciudad y Fecha Origen
-            cell = new Cell().Add(new Paragraph("Fecha").AddStyle(styleCell).SetBold());
+            cell = new Cell().Add(new Paragraph("Fecha"))
+                .AddStyle(styleCell)
+                .SetBold()
+                .SetBackgroundColor(ColorConstants.LIGHT_GRAY);
             table.AddHeaderCell(cell);
-            cell = new Cell().Add(new Paragraph("Ciudad Origen").AddStyle(styleCell).SetBold());
+            cell = new Cell().Add(new Paragraph("Ciudad Origen"))
+                .AddStyle(styleCell)
+                .SetBold()
+                .SetBackgroundColor(ColorConstants.LIGHT_GRAY);
             table.AddHeaderCell(cell);
             //Ciudad y Fecha Destino
-            cell = new Cell().Add(new Paragraph("Fecha").AddStyle(styleCell).SetBold());
+            cell = new Cell().Add(new Paragraph("Fecha"))
+                .AddStyle(styleCell)
+                .SetBold()
+                .SetBackgroundColor(ColorConstants.LIGHT_GRAY);
             table.AddHeaderCell(cell);
-            cell = new Cell().Add(new Paragraph("Ciudad Destino").AddStyle(styleCell).SetBold());
+            cell = new Cell().Add(new Paragraph("Ciudad Destino"))
+                .AddStyle(styleCell)
+                .SetBold()
+                .SetBackgroundColor(ColorConstants.LIGHT_GRAY);
             table.AddHeaderCell(cell);
 
             //Datos
             //Dato N° de Vuelo
-            cell = new Cell().Add(new Paragraph(" "));
+            cell = new Cell().Add(new Paragraph(" "))
+                .AddStyle(styleCell)
+                .SetBackgroundColor(ColorConstants.LIGHT_GRAY, 0.5f);
             table.AddCell(cell);
             //Dato Ciudad y Fecha Origen
-            cell = new Cell().Add(new Paragraph(" "));
+            cell = new Cell().Add(new Paragraph(" "))
+                .AddStyle(styleCell)
+                .SetBackgroundColor(ColorConstants.LIGHT_GRAY, 0.5f);
             table.AddCell(cell);
-            cell = new Cell().Add(new Paragraph(" "));
+            cell = new Cell().Add(new Paragraph(" "))
+                .AddStyle(styleCell)
+                .SetBackgroundColor(ColorConstants.LIGHT_GRAY, 0.5f);
             table.AddCell(cell);
             //Dato Ciudad y Fecha Destino
-            cell = new Cell().Add(new Paragraph(" "));
+            cell = new Cell().Add(new Paragraph(" "))
+                .AddStyle(styleCell)
+                .SetBackgroundColor(ColorConstants.LIGHT_GRAY, 0.5f);
             table.AddCell(cell);
-            cell = new Cell().Add(new Paragraph(" "));
+            cell = new Cell().Add(new Paragraph(" "))
+                .AddStyle(styleCell)
+                .SetBackgroundColor(ColorConstants.LIGHT_GRAY, 0.5f);
             table.AddCell(cell);
             //Dato Categoría
-            cell = new Cell().Add(new Paragraph(" "));
+            cell = new Cell().Add(new Paragraph(" "))
+                .AddStyle(styleCell)
+                .SetBackgroundColor(ColorConstants.LIGHT_GRAY, 0.5f);
             table.AddCell(cell);
 
             document.Add(table);

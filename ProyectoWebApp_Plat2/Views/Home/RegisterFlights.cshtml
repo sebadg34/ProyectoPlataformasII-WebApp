@@ -5,12 +5,13 @@
 
 <head>
     <link rel="stylesheet" href="~/Content/registerCustomerStyle.css" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="~/Scripts/CustomJavascript/RegisterFlightScript.js" language="javascript" type="text/javascript"></script>
 </head>
-
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="~/Scripts/jquery.validate.min.js"></script>
 
 <!-- Script que permite obtener la fecha -->
 <script>
@@ -124,7 +125,10 @@
                             <!-- Ingreso de cupos de asientos -->
                             <div class="row form-group">
                                 <div class="col-12">
-                                    <input type="number" class="form-control" placeholder="Asientos disponibles" id="cupos" name="cupos" min="30" max="40" maxlength="2" oninput="this.value = this.value.slice(0, this.maxLength);">
+                                    <input type="number" class="form-control" placeholder="30" id="cupos" name="cupos" min="30" max="40" maxlength="2" oninput="this.value = this.value.slice(0, this.maxLength); if (this.value < 30 || this.value > 40) this.value = 30;">
+                                    <small class="form-text text-muted ">
+                                        Mínimo 30 y máximo 40.
+                                    </small>
                                 </div>
                             </div>
 
@@ -152,35 +156,8 @@
 
 <script>
     $(document).ready(function () {
-        // Incluye las letras de caracteres especiales
-        jQuery.validator.addMethod('lettersonly', function (value, element) {
-            return this.optional(element) || /^[a-z áãâäàéêëèíîïìóõôöòúûüùçñ]+$/i.test(value);
-        }, "Letters and spaces only please");
-        
-        // Descripcion de los mensajes de validacio
-        $.extend($.validator.messages, {
-            required: "Este campo es obligatorio.",
-            remote: "Por favor, rellena este campo.",
-            email: "Por favor, escribe una dirección de correo válida.",
-            url: "Por favor, escribe una URL válida.",
-            date: "Por favor, escribe una fecha válida.",
-            dateISO: "Por favor, escribe una fecha (ISO) válida.",
-            number: "Por favor, escribe un número válido.",
-            digits: "Por favor, escribe sólo dígitos.",
-            lettersonly: "Por favor, incluir solo letras en el campo.",
-            creditcard: "Por favor, escribe un número de tarjeta válido.",
-            equalTo: "Por favor, escribe el mismo valor de nuevo.",
-            extension: "Por favor, escribe un valor con una extensión aceptada.",
-            maxlength: $.validator.format("Por favor, no escribas más de {0} caracteres."),
-            minlength: $.validator.format("Por favor, no escribas menos de {0} caracteres."),
-            rangelength: $.validator.format("Por favor, escribe un valor entre {0} y {1} caracteres."),
-            range: $.validator.format("Por favor, escribe un valor entre {0} y {1}."),
-            max: $.validator.format("Por favor, escribe un valor menor o igual a {0}."),
-            min: $.validator.format("Por favor, escribe un valor mayor o igual a {0}."),
-            nifES: "Por favor, escribe un NIF válido.",
-            nieES: "Por favor, escribe un NIE válido.",
-            cifES: "Por favor, escribe un CIF válido."
-        });
+
+        ValidateForm();
 
         $("#register").validate({
             // Se inicia plugin para validar en tiempo real
@@ -211,84 +188,15 @@
                 cupos: {
                     required: true,
                     digits: true,
+                    max: 40,
+                    min: 30,
                 },
             }
         })
 
         // Aqui inicia el registro una vez haga click en el boton registrar
         $('#registerButton').click(function () {
-            $.get("https://localhost:44350/api/Flights/-1",
-                function (data, status) {
-                    alert("Data: " + data.ID + "\nStatus: " + status);
-                    // ---------------- Transformaciones y conversiones de las fechas ----------------
-
-                    // Obtiene variables de fechas y las convierte tipo fecha
-                    var fechaSalida = $("#fechaSalida").val();
-                    var horaSalida = $("#horaSalida").val();
-                    var hora = $("#horaLlegada").val();
-                    var minuto = $("#minutoLlegada").val();
-
-                    var formatoSalida = fechaSalida + "T" + horaSalida + ":00";
-
-                    // Transformacion de la duracion del vuelo a formato fecha
-                    var fechaLlegada = new Date(formatoSalida);
-                    var horaEnMilisegundo = 3600000 * parseInt(hora);
-                    var minutoEnMilisegundo = 60000 * parseInt(minuto);
-                    var tiempoEnMilisegundos = parseInt(horaEnMilisegundo) + parseInt(minutoEnMilisegundo);
-                    var suma = parseInt(fechaLlegada.getTime()) + parseInt(tiempoEnMilisegundos);
-
-                    // Ya que el formato Date es distinto al formato DateTime en la API se deben obtener una por una las variables y asi encadenarlas al final
-                    var fecha = new Date(suma);
-                    var anioLlegada = fecha.getFullYear();
-                    var mesLlegada = fecha.getMonth() + 1;
-                    var diaLlegada = fecha.getDate();
-                    var horaLlegada = fecha.getHours();
-                    var minutoLlegada = fecha.getMinutes();
-
-                    if (mesLlegada < 10) {
-                        mesLlegada = "0" + mesLlegada;
-                    }
-
-                    if (diaLlegada < 10) {
-                        diaLlegada = "0" + diaLlegada;
-                    }
-
-                    var formatoLlegada = anioLlegada + "-" + mesLlegada + "-" + diaLlegada + "T" + horaLlegada + ":" + minutoLlegada + ":00";
-
-                    // Si existe un ultimo vuelo registrado entonces procedera a registrar el vuelo
-                    if (status == "success") {
-                        var idVueloAnterior = data.ID_Vuelo;
-
-                        // Se realiza a aumentar el ID_Vuelo mediante una expresion regular que elimina la constante AP- para obtener el valor numerico y asi aumentarlo
-                        var exp = new RegExp("(^AP-?)");
-                        var inc = parseInt(idVueloAnterior.replace(exp, "")) + 1;
-
-                        if (inc < 10) {
-                            var idVuelo = "AP-00" + inc;
-                        }
-                        else if (inc < 100) {
-                            var idVuelo = "AP-0" + inc;
-                        }
-                        else {
-                            var idVuelo = "AP-" + inc;
-                        }
-
-                        $.post("https://localhost:44350/api/Flights", {
-                            ID_Vuelo: idVuelo,
-                            Ciudad_Origen: $("#ciudadOrigen").val(),
-                            Ciudad_Destino: $("#ciudadDestino").val(),
-                            Fecha_Salida: formatoSalida,
-                            Fecha_Llegada: formatoLlegada,
-                            Cupos: $("#cupos").val(),
-                            Categoria: $("#categoria").val()
-                        },
-                            function (data, status) {
-                                alert("Data: " + data + "\nStatus: " + status);
-                            }
-                        );
-                    }
-                }
-            );
+            Register();
         });
     });
 </script>

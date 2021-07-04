@@ -6,6 +6,8 @@
 
 <head>
     <link rel="stylesheet" href="~/Content/registerCustomerStyle.css" />
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="~/Scripts/CustomJavascript/RegisterCustomerScript.js" language="javascript" type="text/javascript"></script>
 </head>
 
 <div class="container-fluid vertical-center">
@@ -151,35 +153,7 @@
 
 <script>
     $(document).ready(function () {
-        // Incluye las letras de caracteres especiales
-        jQuery.validator.addMethod('lettersonly', function (value, element) {
-            return this.optional(element) || /^[a-z áãâäàéêëèíîïìóõôöòúûüùçñ]+$/i.test(value);
-        }, "Letters and spaces only please");
-
-        // Descripcion de los mensajes de validacion
-        $.extend($.validator.messages, {
-            required: "Este campo es obligatorio.",
-            remote: "Por favor, rellena este campo.",
-            email: "Por favor, escribe una dirección de correo válida.",
-            url: "Por favor, escribe una URL válida.",
-            date: "Por favor, escribe una fecha válida.",
-            dateISO: "Por favor, escribe una fecha (ISO) válida.",
-            number: "Por favor, escribe un número válido.",
-            digits: "Por favor, escribe sólo dígitos.",
-            lettersonly: "Por favor, incluir solo letras en el campo.",
-            creditcard: "Por favor, escribe un número de tarjeta válido.",
-            equalTo: "Por favor, escribe el mismo valor de nuevo.",
-            extension: "Por favor, escribe un valor con una extensión aceptada.",
-            maxlength: $.validator.format("Por favor, no escribas más de {0} caracteres."),
-            minlength: $.validator.format("Por favor, no escribas menos de {0} caracteres."),
-            rangelength: $.validator.format("Por favor, escribe un valor entre {0} y {1} caracteres."),
-            range: $.validator.format("Por favor, escribe un valor entre {0} y {1}."),
-            max: $.validator.format("Por favor, escribe un valor menor o igual a {0}."),
-            min: $.validator.format("Por favor, escribe un valor mayor o igual a {0}."),
-            nifES: "Por favor, escribe un NIF válido.",
-            nieES: "Por favor, escribe un NIE válido.",
-            cifES: "Por favor, escribe un CIF válido."
-        });
+        ValidateForm();
 
         $("#register").validate({
             // Se inicia plugin para validar en tiempo real
@@ -234,57 +208,7 @@
 
         // Aqui inicia el registro una vez haga click en el boton registrar
         $('#registerButton').click(function () {
-            // Primero que todo, toma el email, la contrasenia y el id_rol, en este caso falso debido a que es cliente. Lo ingresa a la tabla Rol.
-            $.post("https://localhost:44350/api/Roles", {
-                Email: $("#email").val(),
-                Contrasenia: $("#contrasenia").val(),
-                ID_Rol: "false"
-            },
-                function (data, status) {
-                    alert("Data: " + data + "\nStatus: " + status);
-
-                    // Si los datos son válidos para el Rol, entonces procede a tomar el ID (clave primaria) del rol para poder registrar la informacion restante en la tabla Customer.
-                    if (status == "success") {
-                        $.get("https://localhost:44350/api/Roles?email=" + $("#email").val(),
-                            function (data, status) {
-                                alert("Data: " + data.ID + "\nStatus: " + status);
-
-                                // Obtiene los valores temporales del rut o numero de pasaporte para poder insertarlos en la base de dato
-                                var rutAux = "";
-                                var pasaporteAux = "";
-
-                                if ($("#rutPasaporte").val() == "rut") {
-                                    rutAux = $("#rutPasaporte2").val();
-                                }
-                                if ($("#rutPasaporte").val() == "numPasaporte") {
-                                    pasaporteAux = $("#rutPasaporte2").val();
-                                }
-
-                                // Aqui inserta los datos a la tabla Customer.
-                                $.post("https://localhost:44350/api/Customers", {
-                                    Nombres: $("#nombre").val(),
-                                    Apellidos: $("#apellido").val(),
-                                    Rut: rutAux,
-                                    Numero_Pasaporte: pasaporteAux,
-                                    Direccion: $("#direccion").val(),
-                                    Numero_Direccion: $("#numero").val(),
-                                    Numero_Telefono: $("#numeroTelefono").val(),
-                                    Nombres_Emergencia: $("#nombreEmergencia").val(),
-                                    Apellidos_Emergencia: $("#apellidoEmergencia").val(),
-                                    Numero_Telefono_Emergencia: $("#numeroTelefonoEmergencia").val(),
-                                    ID: data.ID
-                                },
-                                    function (data, status) {
-                                        alert("Data: " + data + "\nStatus: " + status);
-                                    }
-                                );
-                            }
-                        );
-                    }
-                        
-                }
-            );
-            
+            Register();
         });
 
     });

@@ -10,14 +10,13 @@
 
 <div class="login-container">
 
-    <form id="formLogin">
-
         <div class="jumbotron" id="log_in">
             <h2 class="ml-2 md-2" id="header_color">
                 ¡Se ha realizado la reserva con éxito!
             </h2>
 
             <div class="row no-gutters">
+
                 <div class="col-md-6">
                     <div class="float-left row flex-row-reverse no-gutters">
                         @using (Html.BeginForm("Menu", "Home"))
@@ -27,7 +26,6 @@
                     </div>
                 </div>
                 
-
                 <div class="col-md-6">
                     <div class="float-right row flex-row-reverse no-gutters">
                         @using (Html.BeginForm("SendVoucher", "Home"))
@@ -38,9 +36,8 @@
                 </div>
 
             </div>
-        </div>
-    </form>
 
+        </div>
 
 </div>
 

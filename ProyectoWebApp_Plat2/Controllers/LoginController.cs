@@ -35,10 +35,10 @@ namespace ProyectoWebApp_Plat2.Controllers
         /// <returns>Acción Menu del controlador Home</returns>
         public ActionResult ToMenu(bool role, string name, string idUsuario)
         {
-            TempData["Log-In"] = true;
-            TempData["Role"] = role;
-            TempData["Nombre"] = name;
-            TempData["Id"] = Convert.ToInt32(idUsuario);
+            Session["Log-In"] = true;
+            Session["Role"] = role;
+            Session["Nombre"] = name;
+            Session["Id"] = Convert.ToInt32(idUsuario);
 
             return RedirectToAction("Menu","Home");
         }

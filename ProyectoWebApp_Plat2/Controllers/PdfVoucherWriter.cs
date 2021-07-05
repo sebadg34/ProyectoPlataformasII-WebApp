@@ -22,15 +22,26 @@ using ProyectoWebApp_Plat2.Models;
 
 namespace ProyectoWebApp_Plat2.Controllers
 {
+    /// <summary>
+    /// Clase que se encarga de la escritura del archivo Pdf de cada Reserva
+    /// </summary>
     public class PdfVoucherWriter
     {
+        //instancia de la clase.
         public static PdfVoucherWriter instance { get; private set; }
 
+        /// <summary>
+        /// Constructor de la clase. Es de caracter privado para seguir el patrón de sisenio Singleton.
+        /// </summary>
         private PdfVoucherWriter()
         {
 
         }
 
+        /// <summary>
+        /// Metodo que verifica si existe ya una instancia de la clase, de no existir una, entonces se crea la instancia única. En cualquier caso se retorna la instancia de la clase.
+        /// </summary>
+        /// <returns>La instancia única de la clase</returns>
         public static PdfVoucherWriter GetInstance()
         {
             if (instance == null)
@@ -41,6 +52,11 @@ namespace ProyectoWebApp_Plat2.Controllers
             return instance;
         }
 
+        /// <summary>
+        /// Método encargado de escribir cada aspecto del archivo Pdf de la reserva.
+        /// </summary>
+        /// <param name="customer"></param>
+        /// <returns></returns>
         public FileStreamResult WriteVoucher(Customer customer)
         {
             MemoryStream memoryStream = new MemoryStream();

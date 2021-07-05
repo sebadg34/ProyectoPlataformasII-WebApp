@@ -6,7 +6,7 @@ using System.Web;
 namespace ProyectoWebApp_Plat2.Models
 {
     
-    public class Rol
+    public class User
     {
         public string Email { get; set; }
 
@@ -16,7 +16,7 @@ namespace ProyectoWebApp_Plat2.Models
 
         public int ID { get; set; }
 
-        public Rol(string Email, string Contrasenia, bool ID_Rol, int ID)
+        public User(string Email, string Contrasenia, bool ID_Rol, int ID)
         {
             this.Email = Email;
             this.Contrasenia = Contrasenia;

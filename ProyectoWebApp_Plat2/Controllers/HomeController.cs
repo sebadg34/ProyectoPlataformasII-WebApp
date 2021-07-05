@@ -46,10 +46,10 @@ namespace ProyectoWebApp_Plat2.Controllers
 
         public ActionResult Menu(string origen, string destino, string desde, string hasta)
         {
-            if (TempData["Log-In"] != null && TempData["Role"] != null)
+            if (Session["Log-In"] != null && Session["Role"] != null)
             {
-                this.state = (bool)TempData["Log-In"];
-                this.role = (bool)TempData["Role"];
+                this.state = (bool)Session["Log-In"];
+                this.role = (bool)Session["Role"];
             }
 
             if (origen != null)
@@ -85,7 +85,7 @@ namespace ProyectoWebApp_Plat2.Controllers
             }
 
 
-            ViewData["Nombre"] = TempData["Nombre"] as string;
+            ViewData["Nombre"] = Session["Nombre"] as string;
             ViewData["Log-In"] = this.state;
             ViewData["Role"] = this.role;
 
@@ -139,7 +139,6 @@ namespace ProyectoWebApp_Plat2.Controllers
         {
            
             //ViewData["Id_Vuelo"] = id_vuelo ;
-            //ViewData["Palabra"] = cantidadPasajeros;
 
             return View();
         }
@@ -165,8 +164,8 @@ namespace ProyectoWebApp_Plat2.Controllers
         /// <returns>Redirige a la Acción Menu</returns>
         public ActionResult Logout()
         {
-            TempData["Log-In"] = false;
-            TempData["Role"] = false;
+            Session["Log-In"] = false;
+            Session["Role"] = false;
             return RedirectToAction("Menu");
         }
 

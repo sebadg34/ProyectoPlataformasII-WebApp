@@ -1,24 +1,16 @@
-﻿function Login() {
+﻿// Funcion encargada de mandar request a la API para hacer login
+function Login() {
 
     var newUrl = "https://localhost:44350/api/Login";
-
-    $.ajax({
-
-        type: "POST",
-        url: newUrl,
-        dataType: "json",
-        data: {
-            Email: $("#userEmail").val(),
-            Contrasenia: $("#userPassword").val()
-        },
-        success: function (result) {
-            alert("LOGIN EXITOSO\n " + result.Email + " " + result.ID);
-        },
-        error: function (result) {
-            alert("ERROOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOR " + result);
-            console.log('Login Fail!!!');
-            console.log(result.Email + result.Contrasenia);
-        }
-    });
+    // Post a al loginController de la api
+    $.post(newUrl, {Email: $("#userEmail").val(), Contrasenia: $("#userPassword").val()},
+        function (registro, status) {
+            
+            alert("LOGIN EXITOSO\n usuario: " + registro.Name + "\n id: " + registro.Id);
+            window.location.href = "http://localhost:52811/Login/ToMenu?role=" + registro.IdRol + "&name=" + registro.Name + "&idUsuario=" + registro.Id;
+            
+        }).fail(function (data, status) {
+            alert("error");
+        });
     
 }

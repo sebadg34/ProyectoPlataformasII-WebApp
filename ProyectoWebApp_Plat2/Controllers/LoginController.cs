@@ -5,24 +5,35 @@ using System.Web;
 using System.Web.Mvc;
 using ProyectoWebApp_Plat2.Models;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using Newtonsoft.Json;
+using System.Net.Http.Formatting;
 
 namespace ProyectoWebApp_Plat2.Controllers
 {
     public class LoginController : Controller
     {
+
+
+
         // GET: Login
         public ActionResult Login()
         {
             return View();
         }
 
-
+        
+        
         public ActionResult RegisterCustomer()
         {
             return View();
         }
+        
+      
+        
+        
 
         // Métodos que redirigen hacia otra vista
 
@@ -33,18 +44,20 @@ namespace ProyectoWebApp_Plat2.Controllers
         /// <param name="name"></param>
         /// <param name="idUsuario"></param>
         /// <returns>Acción Menu del controlador Home</returns>
+
         public ActionResult ToMenu(bool role, string name, string idUsuario)
         {
             Session["Log-In"] = true;
             Session["Role"] = role;
             Session["Nombre"] = name;
-            Session["Id"] = Convert.ToInt32(idUsuario);
+            Session["Id"] = idUsuario;
+            
 
             return RedirectToAction("Menu","Home");
         }
 
       
 
-
+        
     }
 }

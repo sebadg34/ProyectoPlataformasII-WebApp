@@ -85,8 +85,8 @@ namespace ProyectoWebApp_Plat2.Controllers
                 .SetVerticalAlignment(VerticalAlignment.MIDDLE);
 
 
-            Image logo = new Image(ImageDataFactory.Create(@"C:\Users\tomas\source\repos\ProyectoReservaVuelos\ProyectoWebApp_Plat2\images\Logo AirlinePlus.jfif"));
-
+            Image logo = new Image(ImageDataFactory.Create($"~//images//Logo_AirlinePlus.jfif"));
+            
             pdfDocument.AddEventHandler(PdfDocumentEvent.START_PAGE, new HeaderEventHandler(logo));
 
             document.SetMargins(25,25,25,25);

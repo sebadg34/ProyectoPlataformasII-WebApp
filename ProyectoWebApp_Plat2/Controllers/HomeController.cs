@@ -9,19 +9,14 @@ namespace ProyectoWebApp_Plat2.Controllers
 {
     public class HomeController : Controller
     {
-        // Variable que guarda el estado de Login, es decir, si se ha iniciado sesión o no
-        bool state { get; set; }
-        // Variable que guarda el rol del usuario que ha iniciado sesión; en caso de cerrar sesión o no estar iniciada esta misma, rol tomara el valor de false
-        bool role { get; set; }
+        bool State { get; set; } = true;
+        bool Role { get; set; } = true;
 
         string origen = "Todo";
         string destino = "Todo";
         DateTime fecha_desde = DateTime.Today;
         DateTime fecha_hasta = DateTime.Today.AddMonths(6);
 
-        Customer reserveCustomer;
-        
- 
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
@@ -36,20 +31,26 @@ namespace ProyectoWebApp_Plat2.Controllers
             return View();
         }
 
+        public ActionResult RegisterCustomer()
+        {
+            return View();
+        }
+
+
         public ActionResult RegisterFlights()
         {
             ViewData["Nombre"] = "Eduard Tomas";
-            ViewData["Log-In"] = this.state;
-            ViewData["Role"] = this.role;
+            ViewData["Log-In"] = this.State;
+            ViewData["Role"] = this.Role;
             return View();
         }
 
         public ActionResult Menu(string origen, string destino, string desde, string hasta)
         {
-            if (Session["Log-In"] != null && Session["Role"] != null)
+            if (TempData["Log-In"] != null && TempData["Role"] != null)
             {
-                this.state = (bool)Session["Log-In"];
-                this.role = (bool)Session["Role"];
+                this.State = (bool)TempData["Log-In"];
+                this.Role = (bool)TempData["Role"];
             }
 
             if (origen != null)
@@ -85,9 +86,9 @@ namespace ProyectoWebApp_Plat2.Controllers
             }
 
 
-            ViewData["Nombre"] = Session["Nombre"] as string;
-            ViewData["Log-In"] = this.state;
-            ViewData["Role"] = this.role;
+            ViewData["Nombre"] = "Eduard Tomas";
+            ViewData["Log-In"] = this.State;
+            ViewData["Role"] = this.Role;
 
 
             Flight vuelo1 = new Flight("Basico", "Santiago", "Antofagasta", 30, 1, "001", new DateTime(2020, 01, 22, 20, 20, 20), new DateTime(2020, 01, 20, 20, 20, 20));
@@ -128,59 +129,9 @@ namespace ProyectoWebApp_Plat2.Controllers
             return View();
         }
 
-        /// <summary>
-        /// Método que almacena los datos id_vuelo, cantidadPasajeros y usuarioPasajero para ser enviados a la vista ToReserve
-        /// </summary>
-        /// <param name="id_vuelo"></param>
-        /// <param name="cantidadPasajeros"></param>
-        /// <param name="usuarioPasajero"></param>
-        /// <returns>vista ToReserve</returns>
-        public ActionResult ToReserve()
+        public string mirar(string id_vuelo)
         {
-           
-            //ViewData["Id_Vuelo"] = id_vuelo ;
-
-            return View();
-        }
-
-        /// <summary>
-        /// Método que retorna la vista Voucher para acceder
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult Voucher() {
-            //parametros string Nombres, string Apellidos, string Rut, string Numero_Pasaporte, string Direccion, int Numero_Direccion, int Numero_Telefono, string Nombres_Emergencia, string Apellidos_Emergencia, int Numero_Telefono_Emergencia, int ID
-            //this.reserveCustomer = new Customer(Nombres, Apellidos, Rut, Numero_Pasaporte, Direccion, Numero_Direccion, Numero_Telefono, Nombres_Emergencia, Apellidos_Emergencia, Numero_Telefono_Emergencia, ID);
-
-            return View();
-        }
-
-        
-        // Métodos que redirigen hacia otra vista
-
-        /// <summary>
-        /// Metodo que almacena temporalmente dentro de las etiquetas Log-In y Role valores false de tipo bool,
-        /// estos datos seran usados posteriormente en la acción Menu, luego redirige hacia la acción Menu en el controlador Home 
-        /// </summary>
-        /// <returns>Redirige a la Acción Menu</returns>
-        public ActionResult Logout()
-        {
-            Session["Log-In"] = false;
-            Session["Role"] = false;
-            return RedirectToAction("Menu");
-        }
-
-        /// <summary>
-        /// Método que redirige hacia la acción Login que se encuentra en el controlador Login
-        /// </summary>
-        /// <returns>Acción Login del controlador Login</returns>
-        public ActionResult ToLogin()
-        {
-            return RedirectToAction("Login", "Login");
-        }
-
-        public FileStreamResult SendVoucher()
-        {
-            return PdfVoucherWriter.GetInstance().WriteVoucher(this.reserveCustomer);
+            return "ID Vuelo: " + id_vuelo;
         }
     }
 }

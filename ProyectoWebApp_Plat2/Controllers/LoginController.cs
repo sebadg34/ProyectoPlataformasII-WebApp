@@ -31,30 +31,7 @@ namespace ProyectoWebApp_Plat2.Controllers
             return View();
         }
         
-        public async Task<ActionResult> PostLogin(string userEmail, string userPassword) {
-
-
-            var client = new HttpClient();
-            client.BaseAddress = new Uri("https://localhost:44350/");
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-          
-
-            var user = new UserModel() { email = userEmail, contrasenia = userPassword};
-
-            HttpResponseMessage response = await client.PostAsJsonAsync("api/login", user);
-
-            if (response.IsSuccessStatusCode)
-            {
-                Console.WriteLine("success");
-            }
-            else {
-
-            }
-           
-            return ToMenu(false,"asd","asd");
-        }
+      
         
         
 
@@ -74,10 +51,11 @@ namespace ProyectoWebApp_Plat2.Controllers
         
         public ActionResult ToMenu(bool role, string name, string idUsuario)
         {
-            TempData["Log-In"] = true;
-            TempData["Role"] = role;
-            TempData["Nombre"] = name;
-            TempData["Id"] = idUsuario;
+            Session["Log-In"] = true;
+            Session["Role"] = role;
+            Session["Nombre"] = name;
+            Session["Id"] = idUsuario;
+            
             return RedirectToAction("Menu","Home");
         }
 

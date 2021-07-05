@@ -81,7 +81,7 @@
                     <div class="col-md-6">
                         <div class="row  flex-row-reverse no-gutters">
                             <button type="" class="btn btn-primary" id="LoginButton" value="LoginUser">Iniciar Sesión</button>
-
+                            
                         </div>
 
                     </div>
@@ -103,28 +103,24 @@
 <script>
 
     $(document).ready(function () {
-
         
         ValidateForm();
+        $("#formLogin").validate({
 
-            $("#formLogin").validate({
-                rules: {
-                    userEmail: {
-                        required: true,
-                        email: true,
-                    },
-                    userPassword: {
-                        required: true,
-                    },
-                },
-                submitHandler: function () {
-                    Login();
-                }
-            });
+           rules: {
+               userEmail: {
+                   required: true,
+                   email: true,
+               },
+               userPassword: {
+                   required: true,
+               },
+           },
 
-
-        
-        
+           submitHandler: function () {
+                   Login();
+           }
+        });
 
     });
 

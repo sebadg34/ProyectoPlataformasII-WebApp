@@ -44,11 +44,7 @@ namespace ProyectoWebApp_Plat2.Controllers
         /// <param name="name"></param>
         /// <param name="idUsuario"></param>
         /// <returns>Acción Menu del controlador Home</returns>
-        
 
-
-
-        
         public ActionResult ToMenu(bool role, string name, string idUsuario)
         {
             Session["Log-In"] = true;
@@ -56,14 +52,11 @@ namespace ProyectoWebApp_Plat2.Controllers
             Session["Nombre"] = name;
             Session["Id"] = idUsuario;
             
+
             return RedirectToAction("Menu","Home");
         }
 
-        public ActionResult ToRegisterCustomer()
-        {
-
-            return RedirectToAction("RegisterCustomer");
-        }
+      
 
         
     }

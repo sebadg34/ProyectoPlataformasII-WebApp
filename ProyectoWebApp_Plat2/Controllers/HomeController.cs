@@ -18,6 +18,8 @@ namespace ProyectoWebApp_Plat2.Controllers
         string destino = "Todo";
         DateTime fecha_desde = DateTime.Today;
         DateTime fecha_hasta = DateTime.Today.AddMonths(6);
+
+        Customer reserveCustomer;
         
  
         public ActionResult About()
@@ -44,10 +46,10 @@ namespace ProyectoWebApp_Plat2.Controllers
 
         public ActionResult Menu(string origen, string destino, string desde, string hasta)
         {
-            if (TempData["Log-In"] != null && TempData["Role"] != null)
+            if (Session["Log-In"] != null && Session["Role"] != null)
             {
-                this.state = (bool)TempData["Log-In"];
-                this.role = (bool)TempData["Role"];
+                this.state = (bool)Session["Log-In"];
+                this.role = (bool)Session["Role"];
             }
 
             if (origen != null)
@@ -83,7 +85,7 @@ namespace ProyectoWebApp_Plat2.Controllers
             }
 
 
-            ViewData["Nombre"] = TempData["Nombre"] as string;
+            ViewData["Nombre"] = Session["Nombre"] as string;
             ViewData["Log-In"] = this.state;
             ViewData["Role"] = this.role;
 
@@ -133,15 +135,26 @@ namespace ProyectoWebApp_Plat2.Controllers
         /// <param name="cantidadPasajeros"></param>
         /// <param name="usuarioPasajero"></param>
         /// <returns>vista ToReserve</returns>
-        public ActionResult ToReserve(int id_vuelo, int cantidadPasajeros, bool usuarioPasajero)
+        public ActionResult ToReserve()
         {
-            ViewData["Id_Vuelo"] = id_vuelo ;
-            ViewData["Pasajeros"] = cantidadPasajeros;
-            ViewData["Usuario"] = usuarioPasajero;
+           
+            //ViewData["Id_Vuelo"] = id_vuelo ;
 
             return View();
         }
 
+        /// <summary>
+        /// Método que retorna la vista Voucher para acceder
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Voucher() {
+            //parametros string Nombres, string Apellidos, string Rut, string Numero_Pasaporte, string Direccion, int Numero_Direccion, int Numero_Telefono, string Nombres_Emergencia, string Apellidos_Emergencia, int Numero_Telefono_Emergencia, int ID
+            //this.reserveCustomer = new Customer(Nombres, Apellidos, Rut, Numero_Pasaporte, Direccion, Numero_Direccion, Numero_Telefono, Nombres_Emergencia, Apellidos_Emergencia, Numero_Telefono_Emergencia, ID);
+
+            return View();
+        }
+
+        
         // Métodos que redirigen hacia otra vista
 
         /// <summary>
@@ -151,8 +164,8 @@ namespace ProyectoWebApp_Plat2.Controllers
         /// <returns>Redirige a la Acción Menu</returns>
         public ActionResult Logout()
         {
-            TempData["Log-In"] = false;
-            TempData["Role"] = false;
+            Session["Log-In"] = false;
+            Session["Role"] = false;
             return RedirectToAction("Menu");
         }
 
@@ -165,5 +178,9 @@ namespace ProyectoWebApp_Plat2.Controllers
             return RedirectToAction("Login", "Login");
         }
 
+        public FileStreamResult SendVoucher()
+        {
+            return PdfVoucherWriter.GetInstance().WriteVoucher(this.reserveCustomer);
+        }
     }
 }

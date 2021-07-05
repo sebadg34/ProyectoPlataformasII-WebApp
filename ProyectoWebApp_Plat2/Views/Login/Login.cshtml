@@ -42,8 +42,6 @@
 
 <div class="login-container">
 
-   
-
 
         <form id="formLogin">
 
@@ -76,7 +74,9 @@
                     <div class="col-md-6">
 
                         <label id="registrar">¿No está registrado? haz click</label>
+
                         <div>@Html.ActionLink("aqui", "RegisterCustomer", "Login")</div>
+
                     </div>
                     <div class="col-md-6">
                         <div class="row  flex-row-reverse no-gutters">
@@ -91,12 +91,6 @@
         </form>
 
 
-   
-
-
-
-
-
 </div>
 
 
@@ -106,6 +100,7 @@
         
         ValidateForm();
         $("#formLogin").validate({
+
 
            rules: {
                userEmail: {
@@ -123,7 +118,6 @@
         });
 
     });
-
 
 </script>
 

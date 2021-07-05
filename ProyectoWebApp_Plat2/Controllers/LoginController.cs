@@ -9,7 +9,6 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using Newtonsoft.Json;
-using System.Net.Http.Formatting;
 
 namespace ProyectoWebApp_Plat2.Controllers
 {

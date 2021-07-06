@@ -8,13 +8,14 @@
 
 <head>
     <link rel="stylesheet" href="~/Content/makeMeisterStyles.css" />
+    <script src="~/Scripts/CustomJavascript/LoginPost.js" language="javascript" type="text/javascript"></script>
 </head>
 
 
 
 <style type="text/css">
 
-    
+
     label.error {
         color: red;
         font-size: 12px;
@@ -36,182 +37,87 @@
 
 
 
-<!--Html.BeginForm("ActionMethod", "ControllerName","Get⁄Post Method")-->
+
+
 
 <div class="login-container">
 
-    <form id="form1">
-        <!--id="form1" method="post" action="api/updates/complex" enctype="application/x-www-form-urlencoded"-->
 
-        <div class="jumbotron" id="log_in">
-            <h2 class="top-left ml-2 md-2" id="header_color">Iniciar Sesión</h2>
-            <p class="lead ml-2 md-2" id="sub_theme">
-                Si ya eres socio Airline Plus ingresa con tus datos de siempre
-            </p>
+        <form id="formLogin">
 
+            <div class="jumbotron" id="log_in">
+                <h2 class="top-left ml-2 md-2" id="header_color">Iniciar Sesión</h2>
+                <p class="lead ml-2 md-2" id="sub_theme">
+                    Si ya eres socio Airline Plus ingresa con tus datos de siempre
+                </p>
 
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Email</label>
 
-            <div class="row">
-                <div class="col-md-6">
-                    <label>Email</label>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" id="userEmail" name="userEmail" placeholder="email Usuario">
+                    </div>
 
                 </div>
-                <div class="col-md-6">
-                    <input type="text" class="form-control" id="userEmail" name="userEmail" placeholder="email Usuario">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Contraseña</label>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="password" class="form-control" id="userPassword" name="userPassword" placeholder="contraseña Usuario">
+                    </div>
                 </div>
 
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <label>Contraseña</label>
-                </div>
-                <div class="col-md-6">
-                    <input type="password" class="form-control" id="userPassword" name="userPassword" placeholder="contraseña Usuario">
-                </div>
-            </div>
+                <div class="row no-gutters">
+                    <div class="col-md-6">
 
+                        <label id="registrar">¿No está registrado? haz click</label>
 
-            <div class="row no-gutters">
-                <div class="col-md-6">
-                    <label id="registrar">¿No está registrado? haz click aqui </label>
-                </div>
-                <div class="col-md-6">
-                    <div class="row  flex-row-reverse no-gutters">
-                        <button type="button" class="btn btn-primary" id="LoginButton" value="LoginUser">Iniciar Sesión</button>
+                        <div>@Html.ActionLink("aqui", "RegisterCustomer", "Login")</div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row  flex-row-reverse no-gutters">
+                            <button type="" class="btn btn-primary" id="LoginButton" value="LoginUser">Iniciar Sesión</button>
+                            
+                        </div>
 
                     </div>
 
                 </div>
-
             </div>
+        </form>
 
-
-
-
-
-
-
-
-
-
-
-        </div>
-    </form>
 
 </div>
 
 
-
 <script>
+
     $(document).ready(function () {
+        
+        ValidateForm();
+        $("#formLogin").validate({
 
 
+           rules: {
+               userEmail: {
+                   required: true,
+                   email: true,
+               },
+               userPassword: {
+                   required: true,
+               },
+           },
 
-
-        jQuery.validator.addMethod('lettersonly', function (value, element) {
-            return this.optional(element) || /^[a-z áãâäàéêëèíîïìóõôöòúûüùçñ]+$/i.test(value);
-        }, "Letters and spaces only please");
-
-        $.extend($.validator.messages, {
-            required: "Este campo es obligatorio.",
-            remote: "Por favor, rellena este campo.",
-            email: "Por favor, escribe una dirección de correo válida.",
-            url: "Por favor, escribe una URL válida.",
-            date: "Por favor, escribe una fecha válida.",
-            dateISO: "Por favor, escribe una fecha (ISO) válida.",
-            number: "Por favor, escribe un número válido.",
-            digits: "Por favor, escribe sólo dígitos.",
-            lettersonly: "Por favor, incluir solo letras en el campo.",
-            creditcard: "Por favor, escribe un número de tarjeta válido.",
-            equalTo: "Por favor, escribe el mismo valor de nuevo.",
-            extension: "Por favor, escribe un valor con una extensión aceptada.",
-            maxlength: $.validator.format("Por favor, no escribas más de {0} caracteres."),
-            minlength: $.validator.format("Por favor, no escribas menos de {0} caracteres."),
-            rangelength: $.validator.format("Por favor, escribe un valor entre {0} y {1} caracteres."),
-            range: $.validator.format("Por favor, escribe un valor entre {0} y {1}."),
-            max: $.validator.format("Por favor, escribe un valor menor o igual a {0}."),
-            min: $.validator.format("Por favor, escribe un valor mayor o igual a {0}."),
-            nifES: "Por favor, escribe un NIF válido.",
-            nieES: "Por favor, escribe un NIE válido.",
-            cifES: "Por favor, escribe un CIF válido."
+           submitHandler: function () {
+                   Login();
+           }
         });
 
-
-        
-            $("#form1").validate({
-
-
-                //se inicia plugin para validar en tiempo real
-                rules: {
-                    userEmail: {
-                        required: true,
-                        email: true,
-                    },
-                    userPassword: {
-                        required: true,
-                    },
-
-                }
-            });
-        
-
-
-
-
-
-        
-         
-        $('#LoginButton').click(function () {
-            $.post("https://localhost:44350/api/Login", {
-                Email: $("#userEmail").val(),
-                Contrasenia: $("#userPassword").val()
-            },
-
-            function (data, status) {
-                alert("Data: " + data + "\nStatus: " + status);
-            });
-        });
-
-
-            
-
-
-
-
-             /*
-            var UserModel = {
-                "Email": $("#userEmail").val(),
-                "Password": $("#userPassword").val()
-            };
-
-            var newUrl = "https://localhost:44350/api/Roles?email=" + $("#userEmail").val();
-            $.ajax({
-
-                type: "GET",
-                url: newUrl,
-                dataType: "json",
-                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-                success: function (response) {
-                    if (response.Success) {
-                        console.log('exito');
-                    }
-                    else {
-                        console.log('exito');
-                    }
-
-                },
-                error: function ()
-                {
-
-                    console.log('Login Fail!!!');
-                }
-            });
-
-            */
-     });
-         
-        
-    
+    });
 
 </script>
 

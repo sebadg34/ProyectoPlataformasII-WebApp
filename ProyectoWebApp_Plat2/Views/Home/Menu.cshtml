@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
         $(function () {
             $("#desde").datepicker({
@@ -32,11 +34,105 @@
             });
         });
     </script>
+    @section scripts
+    {
+        <script>
+            /* Función que despliega ventana emergente */
+            function algo(id) {
+                (async () => {
+                    // Estas son opciones importantes a la hora de pasar a la reserva de vuelos, las opciones son reservar para si mismo, reservar para otras personas, o ambos
+                    const inputOptions = new Promise((resolve) => {
+                        setTimeout(() => {
+                            resolve({
+                                'myself': 'Para mí',
+                                'other': 'Para otra persona'/*,
+                                        'both': 'Ambos'*/
+                            })
+                        }, 1000)
+                    })
+                    const { value: option } = await Swal.fire({
+                        title: '¿Para quien desea reservar?',
+                        confirmButtonColor: '#0a61bc',
+                        input: 'radio',
+                        inputOptions: inputOptions,
+                        inputValidator: (value) => {
+                            if (!value) {
+                                return 'Debe elegir una opción'
+                            }
+                        }
+                    })
+                    if (option) {
+                        // Si se selecciona "Para otra persona" entonces pregunta a cuantas personas
+                        if (option == "other") {
+                            /*const { value: amount } = await Swal.fire({
+                                title: '¿Cuantas personas en total?',
+                                confirmButtonColor: '#0a61bc',
+                                input: 'text',
+                                inputPlaceholder: 'Ej. 5',
+                                inputValidator: (value) => {
+                                    if (!value) {
+                                        return 'Debe ingresar una cantidad!'
+                                    }
+                                    if (Number.isNaN(Number.parseInt(value, 10))) {
+                                        console.log("hola")
+                                        return 'Debe ingresar una cantidad!'
+                                    }
+                                    else {
+
+                                    }
+                                }
+                            })
+
+                            if (amount) {
+                                url = "/Home/Mostrar?id=" + id + "&option=" + option + "&amount=" + amount;
+                                window.location = url;
+                            }*/
+                            url = "/Home/Mostrar?id=" + id + "&option=" + option + "&amount=1";
+                            window.location = url;
+                        }
+                        // Si se selecciona "Ambos" entonces pregunta a cuantas personas mas
+                        /*else if (option == "both") {
+                            const { value: amount } = await Swal.fire({
+                                title: '¿Cuantas personas en total?',
+                                confirmButtonColor: '#0a61bc',
+                                input: 'text',
+                                inputPlaceholder: 'Ej. 5',
+                                inputValidator: (value) => {
+                                    if (!value) {
+                                        return 'Debe ingresar una cantidad!'
+                                    }
+                                    if (Number.isNaN(Number.parseInt(value, 10))) {
+                                        console.log("hola")
+                                        return 'Debe ingresar una cantidad!'
+                                    }
+                                    else {
+
+                                    }
+                                }
+                            })
+                            if (amount) {
+                                url = "/Home/Mostrar?id=" + id + "&option=" + option + "&amount=" + amount;
+                                window.location = url;
+                            }
+                        }*/
+                        else {
+                            url = "/Home/Mostrar?id=" + id + "&option=" + option + "&amount=1";
+                            window.location = url;
+                        }
+                    }
+                })()
+            }
+        </script>
+    }
+
+
 
     @using (Html.BeginForm("Menu", "Home"))
     {
+        <!-- Contenedor superior: área de filtros -->
         <div class="perma_container_menu no-gutters for" style="height: 40px; display: flex;">
             <div class="row" style="width: 100%; height: 40px; margin: auto; display: flex;">
+                <!--Filtro por ciudad de origen-->
                 <div class="col" style="width: 20%; height: 40px; margin: auto; display: flex;">
                     <div class="row" style="width: 90%; height: 40px; margin: auto;">
                         <div class="col" style="width: 50%; height: 40px; margin: auto; display: flex;">
@@ -49,7 +145,7 @@
                                 int n = 0;
                                 List<string> ciudades_origen = new List<string>();
                                 ciudades_origen.Add(ViewBag.vuelos[0].Ciudad_Origen);
-
+                                // Ciclo encargado de formar lista de ciudades de origen sin repetir
                                 for (int i = 0; i < ViewBag.vuelos.Count; i++)
                                 {
                                     foreach (string ciudades in ciudades_origen)
@@ -67,8 +163,10 @@
                                     }
                                     n = 0;
                                 }
+                                // Ordenar lista de ciudades de origen alfabéticamente
                                 ciudades_origen.Sort();
                             }
+                            <!-- Selección de la ciudad de origen -->
                             <select class="form-control form-control-sm" name="origen" style="margin: auto; width: 100%;">
                                 <option value="Todo">Todo</option>
                                 @foreach (string ciudad in ciudades_origen)
@@ -79,6 +177,7 @@
                         </div>
                     </div>
                 </div>
+                <!-- Filtro por ciudad de destino -->
                 <div class="col" style="width: 20%; height: 40px; margin: auto;">
                     <div class="row" style="width: 90%; height: 40px; margin: auto;">
                         <div class="col" style="width: 50%; height: 40px; margin: auto; display: flex;">
@@ -91,7 +190,7 @@
                                 int m = 0;
                                 List<string> ciudades_destino = new List<string>();
                                 ciudades_destino.Add(ViewBag.vuelos[0].Ciudad_Destino);
-
+                                // Ciclo encargado de formar lista de ciudades de destino sin repetir
                                 for (int i = 0; i < ViewBag.vuelos.Count; i++)
                                 {
                                     foreach (string ciudades in ciudades_destino)
@@ -109,8 +208,10 @@
                                     }
                                     m = 0;
                                 }
+                                // Ordenar lista de ciudades de destino alfabéticamente
                                 ciudades_destino.Sort();
                             }
+                            <!-- Selección de la ciudad de destino -->
                             <select class="form-control form-control-sm" name="destino" style="margin: auto; width: 100%;">
                                 <option value="Todo">Todo</option>
                                 @foreach (string ciudad in ciudades_destino)
@@ -121,6 +222,7 @@
                         </div>
                     </div>
                 </div>
+                <!-- Filtro por fecha mínima de despegue -->
                 <div class="col" style="width: 20%; height: 40px; margin: auto;">
                     <div class="row" style="width: 90%; height: 40px; margin: auto;">
                         <div class="col" style="width: 50%; height: 40px; margin: auto; display: flex;">
@@ -128,11 +230,13 @@
                                 Desde
                             </h3>
                         </div>
+                        <!-- Selección de la fecha mínima de despegue -->
                         <div class="col p-0" style="width: 50%; height: 40px; margin: auto; display: flex;">
                             <input type="text" class="form-control form-control-sm" id="desde" name="desde" placeholder="yyyy-mm-dd" style="margin: auto; font-size: 14px; padding: 0px;" readonly />
                         </div>
                     </div>
                 </div>
+                <!-- Filtro por fecha máxima de despegue -->
                 <div class="col" style="width: 20%; height: 40px; margin: auto;">
                     <div class="row" style="width: 90%; height: 40px; margin: auto;">
                         <div class="col" style="width: 50%; height: 40px; margin: auto; display: flex;">
@@ -140,22 +244,28 @@
                                 Hasta
                             </h3>
                         </div>
+                        <!-- Selección de la fecha máxima de despegue -->
                         <div class="col p-0" style="width: 50%; height: 40px; margin: auto; display: flex;">
                             <input type="text" class="form-control form-control-sm" id="hasta" name="hasta" placeholder="yyyy-mm-dd" style="margin: auto; font-size: 14px; padding: 0px;" readonly />
                         </div>
                     </div>
                 </div>
+                <!-- Botón que aplica los filtros selesccionados -->
                 <div class="col" style="width: 20%; height: 40px; margin: auto; display: flex;">
                     <input type="submit" class="btn btn-primary" value="Buscar" style="margin: auto; font-size: 14px; padding: 0px;" />
                 </div>
             </div>
         </div>
     }
+    <!-- Cuerpo principal de la vista Menu -->
     <div id="general" style="width: 100%;">
+        <!-- Div con el objetivo de dejar un espacio entre el menú superior y la lista de vuelos -->
         <div class="row" style="height: 100px;">
 
         </div>
+        <!-- Div con el propósito de encerrar toda la lista de vuelos dentro de un borde -->
         <div class="row" style="background: red; width: 96%; display: flex; margin: auto; border: 4px solid #124982; background: #124982; border-radius: 5px">
+            <!-- Cabezal de la lista de vuelos -->
             <div class="row" style="width: 100%; height: 60px; margin: auto; display: flex; background: #0a61bc;">
                 <div class="col" style="width: 14.28571429%; height: 60px; margin: auto; display: flex; border: 3px solid black; border-right: 1px solid black;">
                     <h3 style="color: white; margin: auto; font-size: 14px;">
@@ -195,10 +305,13 @@
             </div>
             @{
                 bool Role = (bool)ViewData["Role"];
+                // La cantidad de vuelos disponibles puede variar por lo que hay que generar tantas filas de vuelos como vuelos hayan disponibles
                 for (int i = 0; i < ViewBag.flights.Count; i++)
                 {
+                    <!-- Fila donde se expone la información de un vuelo -->
                     <div class="row" style="width: 100%; height: 100px; margin: auto; display: flex; background: white;">
                         @{
+                            // Un Administrador no puede reservar un vuelo, por lo que la opcón de reservar no debería de ser mostrada a el
                             if (Role)
                             {
                                 <div class="col" style="width: 14.28571429%; height: 100px; margin: auto; display: flex; border: 1px solid black;">
@@ -207,6 +320,7 @@
                                     </h3>
                                 </div>
                             }
+                            // Si el usuario es un clienteentonces tiene la opción de reservar
                             else
                             {
                                 <div class="col" style="width: 14.28571429%; height: 100px; margin: auto; display: flex; border: 1px solid black;">
@@ -217,14 +331,14 @@
                                             </h3>
                                         </div>
                                         <div class="row" style="width: 70%; margin: auto; display: flex; height: 30px;">
-                                            @using (Html.BeginForm("mirar", "Home"))
-                                            {
-                                                <button type="submit" class="btn btn-primary" value="@ViewBag.flights[i].ID_Vuelo" name="id_vuelo" style="margin: auto; font-size: 14px; padding: 0px; background-color: #0a61bc !important;">
-                                                    <h3 style="color: #010812; margin: auto; font-size: 14px; color: white;">
-                                                        Reservar
-                                                    </h3>
-                                                </button>
+                                            @{
+                                                int id = ViewBag.flights[i].ID;
                                             }
+                                            <button type="button" onclick="algo(@id)" class="btn btn-primary" value="@ViewBag.flights[i].ID_Vuelo" name="id_vuelo + @i" style="margin: auto; font-size: 14px; padding: 0px; background-color: #0a61bc !important;">
+                                                <h3 style="color: #010812; margin: auto; font-size: 14px; color: white;">
+                                                    Reservar
+                                                </h3>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -242,15 +356,15 @@
                         </div>
                         <div class="col" style="width: 14.28571429%; height: 100px; margin: auto; display: flex; border: 1px solid black;">
                             <h3 style="color: #010812; margin: auto; font-size: 14px;">
-                                @ViewBag.flights[i].Salida
+                                @ViewBag.flights[i].Fecha_Salida
                             </h3>
                         </div>
                         <div class="col" style="width: 14.28571429%; height: 100px; margin: auto; display: flex; border: 1px solid black;">
                             @{
-                                TimeSpan duracion = ViewBag.flights[i].Llegada - ViewBag.flights[i].Salida;
+                                TimeSpan duracion = ViewBag.flights[i].Fecha_Llegada - ViewBag.flights[i].Fecha_Salida;
                             }
                             <h3 style="color: #010812; margin: auto; font-size: 14px;">
-                                @duracion.TotalHours Horas
+                                @duracion.Hours Horas y @duracion.Minutes Minutos
                             </h3>
                         </div>
                         <div class="col" style="width: 14.28571429%; height: 100px; margin: auto; display: flex; border: 1px solid black;">
@@ -267,8 +381,8 @@
                 }
             }
         </div>
+        <!-- Div con el objetivo de dejar un espacio entre la lista de vuelos y el fin de la página -->
         <div class="row" style="height: 100px;">
-
         </div>
     </div>
 </div>

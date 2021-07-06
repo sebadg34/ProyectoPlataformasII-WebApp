@@ -1,31 +1,154 @@
-﻿
+﻿@model ProyectoWebApp_Plat2.Models.Customer
+
 @{
     ViewBag.Title = "ToReserve";
 }
 
 <head>
-    <link rel="stylesheet" href="~/Content/menuStyles.css" />
+    <link rel="stylesheet" href="~/Content/registerCustomerStyle.css" />
 </head>
-<div>
-    @{
-        int sizeOfPassenger = 3;
-        for (int i = 0; i < sizeOfPassenger; i++)
-        {
-            ViewData["iterator"] = i + 1;
-            @Html.Partial("RegisterPassenger")
-        }
-    }
-    <div class="float-right">
-        <div class="row form-group">
-            <div class="row  flex-row-reverse no-gutters for">
-                <button type="button" class="btn btn-primary-2">
-                    <h3 id="sub_theme">
-                        Reservar
-                    </h3>
-                </button>
 
+<div class="container-fluid vertical-center">
+
+
+    <section class="jumbotron" id="register_user">
+        <div class="container-fluid">
+
+            <!--Título de la página-->
+            <div class="row form-group-mini">
+                <h2 class="top-left ml-2 row-bottom-margin" id="header_color">Registrar Pasajero</h2>
             </div>
-        </div>
-    </div>
+
+            @using (Html.BeginForm("Voucher","Home"))
+            {
+                <div class="row">
+
+                    <!--Contenedor izquiedo: datos del usuario-->
+                    <div id="register_user_left">
+
+                        <h3 id="sub_theme">
+                            Datos del pasajero
+                        </h3>
+
+                        <!--Ingreso del nombre y apellido-->
+                        <div class="row form-group">
+                            <div class="col-6">
+                                <input type="text" class="form-control" placeholder="Nombre/s" id="Nombre" name="Nombre">
+                            </div>
+                            <div class="col-6">
+                                <input type="text" class="form-control" placeholder="Apellido/s" id="Apellido" name="Apellido">
+                            </div>
+                        </div>
+                        <!--Ingreso del correo electrónico-->
+                        <div class="row form-group">
+                            <div class="col-12">
+                                <input type="text" class="form-control" placeholder="Correo electrónico" id="Email" name="Email">
+                            </div>
+                        </div>
+                        <!--Ingreso de la contraseña-->
+                        <div class="row form-group">
+                            <div class="col-12">
+                                <input type="password" class="form-control" placeholder="Contraseña" id="Contrasenia" name="Contrasenia">
+                            </div>
+                        </div>
+
+                        <!--Selección del rut o número de pasaporte-->
+                        <div class="row form-group-mini">
+                            <div class="col-12">
+                                <select class="form-control" id="Rut-Pasaporte" name="Rut-Pasaporte">
+                                    <option value="" disabled selected>Rut/Num. Pasaporte</option>
+                                    <option value="Rut">Rut</option>
+                                    <option value="Pasaporte">Número de pasaporte</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!--Ingreso del rut o número de pasaporte-->
+                        <div class="row form-group">
+                            <div class="col-12">
+                                <input type="text" class="form-control" placeholder="Rut/Num. Pasaporte" id="Rut-Pasaporte2" name="Rut-Pasaporte2">
+                                <small class="form-text text-muted ">
+                                    Rut con guion y sin punto (ej: 15433456-7).
+                                </small>
+                            </div>
+                        </div>
+
+                    </div><!--Fin del contenedor izquierdo-->
+                    <!--Contenedor derecho: contacto de emergencia-->
+                    <div id="register_user_right">
+
+                        <h3 id="sub_theme">
+                            Datos personales
+                        </h3>
+                        <!--Ingreso de la dirección física-->
+                        <div class="row form-group">
+                            <div class="col-6">
+                                <input type="text" class="form-control" placeholder="Dirección" id="Direccion" name="Direccion">
+                            </div>
+                            <div class="col-6">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">#</span>
+                                    </div>
+                                    <input type="number" class="form-control" placeholder="Número" id="Numero" name="Numero" min="00" max="9999" maxlength="4" oninput="if (this.value > 9999) this.value = 9999;
+                                    this.value = this.value.slice(0, this.maxLength);">
+                                </div>
+                            </div>
+
+                        </div>
+                        <!--Ingreso del número telefónico-->
+                        <div class="row form-group">
+                            <div class="col-12">
+
+                                <div class="input-group">
+
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="">+56</span>
+                                    </div>
+                                    <input type="number" class="form-control" placeholder="Número de teléfono" id="Numero-Telefono" name="Numero-Telefono"
+                                           maxlength="9" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3 id="sub_theme">
+                            Contacto de emergencia
+                        </h3>
+                        <!--Ingreso del nombre y apellido-->
+                        <div class="row form-group">
+                            <div class="col-6">
+                                <input type="text" class="form-control" placeholder="Nombre/s" id="Nombre-Emergencia" name="Nombre-Emergencia">
+                            </div>
+                            <div class="col-6">
+                                <input type="text" class="form-control" placeholder="Apellido/s" id="Apellido-Emergencia" name="Apellido-Emergencia">
+                            </div>
+                        </div>
+                        <!--Ingreso del número telefónico-->
+                        <div class="form-row form-group">
+                            <div class="col-12">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">+56</span>
+                                    </div>
+                                    <input type="number" class="form-control" placeholder="Número de teléfono" id="Numero-Telefono-Emergencia" name="Numero-Telefono-Emergencia"
+                                           maxlength="9" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-6"></div>
+                            <div class="col-12">
+                                <button type="submit" id="register-button" class="btn btn-primary btn-block btn-lg">Reservar</button>
+                            </div>
+                        </div>
+
+                    </div><!--Fin contenedor derecho-->
+
+                </div>
+            }
+        </div> <!--Fin contenedor principal-->
+
+    </section>
 </div>
 

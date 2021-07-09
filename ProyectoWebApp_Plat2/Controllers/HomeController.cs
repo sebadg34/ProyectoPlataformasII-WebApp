@@ -24,8 +24,9 @@ namespace ProyectoWebApp_Plat2.Controllers
         DateTime fechaDesde = DateTime.Today;
         DateTime fechaHasta = DateTime.Today.AddMonths(6);
 
+        string option;
+        string idVueloReserva;
         Customer reserveCustomer;
-
 
         public ActionResult About()
         {
@@ -116,42 +117,7 @@ namespace ProyectoWebApp_Plat2.Controllers
             return View();
         }
 
-        /// <summary>
-        /// Método que obtiene todos los vuelos de la API
-        /// </summary>
-        /// <returns>
-        /// Retorna todos los vuelos en forma de un list<Flight>
-        /// </returns>
-        public async Task<List<Flight>> GetFlights()
-        {
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri("https://localhost:44350/");
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                HttpResponseMessage response = await client.GetAsync("api/Flights");
-                List<Flight> flight = new List<Flight>();
-                if (response.IsSuccessStatusCode)
-                {
-                    flight = await response.Content.ReadAsAsync<List<Flight>>();
-                }
-                else
-                {
-
-                }
-                return flight;
-            }
-        }
-
-        public ActionResult Mostrar(string idVuelo, string cantidad, string opcion)
-        {
-            ViewData["idVuelo"] = Request.QueryString["id"];
-            ViewData["cantidad"] = Request.QueryString["amount"];
-            ViewData["opcion"] = Request.QueryString["option"];
-
-            return View();
-        }
+        
 
         /// <summary>
         /// Método que almacena los datos id_vuelo, cantidadPasajeros y usuarioPasajero para ser enviados a la vista ToReserve
@@ -162,9 +128,6 @@ namespace ProyectoWebApp_Plat2.Controllers
         /// <returns>vista ToReserve</returns>
         public ActionResult ToReserve()
         {
-
-            //ViewData["Id_Vuelo"] = id_vuelo ;
-
             return View();
         }
 
@@ -179,7 +142,6 @@ namespace ProyectoWebApp_Plat2.Controllers
 
             return View();
         }
-
 
         // Métodos que redirigen hacia otra vista
 
@@ -204,9 +166,83 @@ namespace ProyectoWebApp_Plat2.Controllers
             return RedirectToAction("Login", "Login");
         }
 
+        public ActionResult GoToReserve()
+        {
+            this.idVueloReserva = Request.QueryString["id"];
+            Session["cantidad"] = Request.QueryString["amount"];
+            this.option = Request.QueryString["option"];
+
+            return RedirectToAction("ToReserve");
+        }
+
         public FileStreamResult SendVoucher()
         {
             return PdfVoucherWriter.GetInstance().WriteVoucher(this.reserveCustomer);
+        }
+
+        /// <summary>
+        /// Método que obtiene todos los vuelos de la API
+        /// </summary>
+        /// <returns>
+        /// Retorna todos los vuelos en forma de un list<Flight>
+        /// </returns>
+        public async Task<List<Flight>> GetFlights()
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:44350/");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = await client.GetAsync("api/Flights");
+                List<Flight> flight = new List<Flight>();
+                if (response.IsSuccessStatusCode)
+                {
+                    flight = await response.Content.ReadAsAsync<List<Flight>>();
+                }
+
+                return flight;
+            }
+        }
+
+        public async Task<Flight> GetFlight()
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:44350/");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = await client.GetAsync("api/Flights");
+                Flight flight = null;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    flight = await response.Content.ReadAsAsync<Flight>();
+                }
+
+                return flight;
+            }
+        }
+
+        public async Task<Customer> GetCustomer()
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:44350/");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = await client.GetAsync("api/Customers/");
+                Customer customer = null;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    customer = await response.Content.ReadAsAsync<Customer>();
+                }
+
+                return customer;
+            }
         }
     }
 }

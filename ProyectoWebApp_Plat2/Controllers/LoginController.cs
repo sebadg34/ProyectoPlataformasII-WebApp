@@ -14,26 +14,17 @@ namespace ProyectoWebApp_Plat2.Controllers
 {
     public class LoginController : Controller
     {
-
-
-
         // GET: Login
         public ActionResult Login()
         {
             return View();
         }
-
-        
-        
+       
         public ActionResult RegisterCustomer()
         {
             return View();
         }
         
-      
-        
-        
-
         // Métodos que redirigen hacia otra vista
 
         /// <summary>
@@ -51,12 +42,8 @@ namespace ProyectoWebApp_Plat2.Controllers
             Session["Nombre"] = name;
             Session["Id"] = idUsuario;
             
-
             return RedirectToAction("Menu","Home");
         }
-
       
-
-        
     }
 }

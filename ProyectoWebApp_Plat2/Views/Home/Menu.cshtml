@@ -62,61 +62,15 @@
                         }
                     })
                     if (option) {
-                        // Si se selecciona "Para otra persona" entonces pregunta a cuantas personas
+                        
+                        // Si se selecciona "Para mi" entonces realiza la reserva directamente para el usuario conectado
                         if (option == "other") {
-                            /*const { value: amount } = await Swal.fire({
-                                title: '¿Cuantas personas en total?',
-                                confirmButtonColor: '#0a61bc',
-                                input: 'text',
-                                inputPlaceholder: 'Ej. 5',
-                                inputValidator: (value) => {
-                                    if (!value) {
-                                        return 'Debe ingresar una cantidad!'
-                                    }
-                                    if (Number.isNaN(Number.parseInt(value, 10))) {
-                                        console.log("hola")
-                                        return 'Debe ingresar una cantidad!'
-                                    }
-                                    else {
-
-                                    }
-                                }
-                            })
-
-                            if (amount) {
-                                url = "/Home/Mostrar?id=" + id + "&option=" + option + "&amount=" + amount;
-                                window.location = url;
-                            }*/
-                            url = "/Home/GoToReserve?id=" + id + "&option=" + option + "&amount=1";
+                            url = "/Home/GoToReserve?id=" + id + "&option=" + option;
                             window.location = url;
                         }
-                        // Si se selecciona "Ambos" entonces pregunta a cuantas personas mas
-                        /*else if (option == "both") {
-                            const { value: amount } = await Swal.fire({
-                                title: '¿Cuantas personas en total?',
-                                confirmButtonColor: '#0a61bc',
-                                input: 'text',
-                                inputPlaceholder: 'Ej. 5',
-                                inputValidator: (value) => {
-                                    if (!value) {
-                                        return 'Debe ingresar una cantidad!'
-                                    }
-                                    if (Number.isNaN(Number.parseInt(value, 10))) {
-                                        console.log("hola")
-                                        return 'Debe ingresar una cantidad!'
-                                    }
-                                    else {
-
-                                    }
-                                }
-                            })
-                            if (amount) {
-                                url = "/Home/Mostrar?id=" + id + "&option=" + option + "&amount=" + amount;
-                                window.location = url;
-                            }
-                        }*/
+                        // Si se selecciona "Para otra persona" entonces se cambia la vista para llenar los datos requeridos
                         else {
-                            url = "/Home/GoToReserve?id=" + id + "&option=" + option + "&amount=1";
+                            url = "/Home/GoToReserve?id=" + id + "&option=" + option;
                             window.location = url;
                         }
                     }
@@ -304,10 +258,11 @@
                 </div>
             </div>
             @{
-                bool Role = (bool)ViewData["Role"];
-                // La cantidad de vuelos disponibles puede variar por lo que hay que generar tantas filas de vuelos como vuelos hayan disponibles
-                for (int i = 0; i < ViewBag.flights.Count; i++)
-                {
+                    bool Role = (bool)ViewData["Role"];
+                    bool State = (bool)ViewData["Log-In"];
+                    // La cantidad de vuelos disponibles puede variar por lo que hay que generar tantas filas de vuelos como vuelos hayan disponibles
+                    for (int i = 0; i < ViewBag.flights.Count; i++)
+                    {
                     <!-- Fila donde se expone la información de un vuelo -->
                     <div class="row" style="width: 100%; height: 100px; margin: auto; display: flex; background: white;">
                         @{
@@ -320,7 +275,7 @@
                                     </h3>
                                 </div>
                             }
-                            // Si el usuario es un clienteentonces tiene la opción de reservar
+                            // Si el usuario es un cliente entonces tiene la opción de reservar
                             else
                             {
                                 <div class="col" style="width: 14.28571429%; height: 100px; margin: auto; display: flex; border: 1px solid black;">
@@ -334,11 +289,25 @@
                                             @{
                                                 int id = ViewBag.flights[i].ID;
                                             }
-                                            <button type="button" onclick="algo(@id)" class="btn btn-primary" value="@ViewBag.flights[i].ID_Vuelo" name="id_vuelo + @i" style="margin: auto; font-size: 14px; padding: 0px; background-color: #0a61bc !important;">
-                                                <h3 style="color: #010812; margin: auto; font-size: 14px; color: white;">
-                                                    Reservar
-                                                </h3>
-                                            </button>
+                                            @if (State)
+                                            {
+                                                <button type="button" onclick="algo(@id)" class="btn btn-primary" value="@ViewBag.flights[i].ID_Vuelo" name="id_vuelo + @i" style="margin: auto; font-size: 14px; padding: 0px; background-color: #0a61bc !important;">
+                                                    <h3 style="color: #010812; margin: auto; font-size: 14px; color: white;">
+                                                        Reservar
+                                                    </h3>
+                                                </button>
+                                            }
+                                            else
+                                            {
+                                                using (Html.BeginForm("Login", "Login"))
+                                                {
+                                                    <button type="submit" class="btn btn-primary" style= "margin: auto; font-size: 14px; padding: 0px; background-color: #0a61bc !important;">
+                                                        <h3 style="color: #010812; margin: auto; font-size: 14px; color: white;">
+                                                            Reservar
+                                                        </h3>
+                                                    </button>
+                                                }
+                                            }
                                         </div>
                                     </div>
                                 </div>
@@ -361,8 +330,8 @@
                         </div>
                         <div class="col" style="width: 14.28571429%; height: 100px; margin: auto; display: flex; border: 1px solid black;">
                             @{
-                                TimeSpan duracion = ViewBag.flights[i].Fecha_Llegada - ViewBag.flights[i].Fecha_Salida;
-                            }
+                    TimeSpan duracion = ViewBag.flights[i].Fecha_Llegada - ViewBag.flights[i].Fecha_Salida;
+                }
                             <h3 style="color: #010812; margin: auto; font-size: 14px;">
                                 @duracion.Hours Horas y @duracion.Minutes Minutos
                             </h3>

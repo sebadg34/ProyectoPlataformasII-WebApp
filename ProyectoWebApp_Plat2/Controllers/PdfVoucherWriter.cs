@@ -57,7 +57,7 @@ namespace ProyectoWebApp_Plat2.Controllers
         /// </summary>
         /// <param name="customer"></param>
         /// <returns></returns>
-        public FileStreamResult WriteVoucher(Customer customer)
+        public FileStreamResult WriteVoucher(Customer customer, Flight flight)
         {
             MemoryStream memoryStream = new MemoryStream();
 
@@ -113,7 +113,7 @@ namespace ProyectoWebApp_Plat2.Controllers
                 .SetBold()
                 .SetBackgroundColor(ColorConstants.LIGHT_GRAY);
             table.AddCell(cell);
-            cell = new Cell(1,1).Add(new Paragraph(""))
+            cell = new Cell(1,1).Add(new Paragraph(customer.Nombres + " " + customer.Apellidos))
                 .AddStyle(styleCell)
                 .SetBackgroundColor(ColorConstants.LIGHT_GRAY, 0.5f);
             table.AddCell(cell);
@@ -123,17 +123,27 @@ namespace ProyectoWebApp_Plat2.Controllers
                 .SetBold()
                 .SetBackgroundColor(ColorConstants.LIGHT_GRAY);
             table.AddCell(cell);
-            cell = new Cell(1, 1).Add(new Paragraph(""))
+            if(customer.Rut != null)
+            {
+                cell = new Cell(1, 1).Add(new Paragraph(customer.Rut))
                 .AddStyle(styleCell)
                 .SetBackgroundColor(ColorConstants.LIGHT_GRAY, 0.5f);
-            table.AddCell(cell);
+                table.AddCell(cell);
+            }
+            else
+            {
+                cell = new Cell(1, 1).Add(new Paragraph(customer.Numero_Pasaporte))
+                .AddStyle(styleCell)
+                .SetBackgroundColor(ColorConstants.LIGHT_GRAY, 0.5f);
+                table.AddCell(cell);
+            }
             //Dirección y Num. Dirección
             cell = new Cell(1, 1).Add(new Paragraph("Dirección del pasajero"))
                 .AddStyle(styleCell)
                 .SetBold()
                 .SetBackgroundColor(ColorConstants.LIGHT_GRAY);
             table.AddCell(cell);
-            cell = new Cell(1, 1).Add(new Paragraph(""))
+            cell = new Cell(1, 1).Add(new Paragraph(customer.Direccion + " " + customer.Numero_Direccion))
                 .AddStyle(styleCell)
                 .SetBackgroundColor(ColorConstants.LIGHT_GRAY, 0.5f);
             table.AddCell(cell);
@@ -143,7 +153,7 @@ namespace ProyectoWebApp_Plat2.Controllers
                 .SetBold()
                 .SetBackgroundColor(ColorConstants.LIGHT_GRAY);
             table.AddCell(cell);
-            cell = new Cell(1, 1).Add(new Paragraph(""))
+            cell = new Cell(1, 1).Add(new Paragraph(customer.Numero_Telefono.ToString()))
                 .AddStyle(styleCell)
                 .SetBackgroundColor(ColorConstants.LIGHT_GRAY, 0.5f);
             table.AddCell(cell);
@@ -159,7 +169,7 @@ namespace ProyectoWebApp_Plat2.Controllers
                 .SetBold()
                 .SetBackgroundColor(ColorConstants.LIGHT_GRAY);
             table.AddCell(cell);
-            cell = new Cell(1, 1).Add(new Paragraph(""))
+            cell = new Cell(1, 1).Add(new Paragraph(customer.Nombres_Emergencia + " " + customer.Apellidos_Emergencia ))
                 .AddStyle(styleCell)
                 .SetBackgroundColor(ColorConstants.LIGHT_GRAY, 0.5f);
             table.AddCell(cell);
@@ -169,7 +179,7 @@ namespace ProyectoWebApp_Plat2.Controllers
                 .SetBold()
                 .SetBackgroundColor(ColorConstants.LIGHT_GRAY);
             table.AddCell(cell);
-            cell = new Cell(1, 1).Add(new Paragraph(""))
+            cell = new Cell(1, 1).Add(new Paragraph(customer.Numero_Telefono_Emergencia.ToString()))
                 .AddStyle(styleCell)
                 .SetBackgroundColor(ColorConstants.LIGHT_GRAY, 0.5f);
             table.AddCell(cell);
@@ -231,30 +241,30 @@ namespace ProyectoWebApp_Plat2.Controllers
 
             //Datos
             //Dato N° de Vuelo
-            cell = new Cell().Add(new Paragraph(" "))
+            cell = new Cell().Add(new Paragraph(flight.ID_Vuelo))
                 .AddStyle(styleCell)
                 .SetBackgroundColor(ColorConstants.LIGHT_GRAY, 0.5f);
             table.AddCell(cell);
             //Dato Ciudad y Fecha Origen
-            cell = new Cell().Add(new Paragraph(" "))
+            cell = new Cell().Add(new Paragraph(flight.Ciudad_Origen))
                 .AddStyle(styleCell)
                 .SetBackgroundColor(ColorConstants.LIGHT_GRAY, 0.5f);
             table.AddCell(cell);
-            cell = new Cell().Add(new Paragraph(" "))
+            cell = new Cell().Add(new Paragraph(flight.Fecha_Salida.ToString()))
                 .AddStyle(styleCell)
                 .SetBackgroundColor(ColorConstants.LIGHT_GRAY, 0.5f);
             table.AddCell(cell);
             //Dato Ciudad y Fecha Destino
-            cell = new Cell().Add(new Paragraph(" "))
+            cell = new Cell().Add(new Paragraph(flight.Ciudad_Destino))
                 .AddStyle(styleCell)
                 .SetBackgroundColor(ColorConstants.LIGHT_GRAY, 0.5f);
             table.AddCell(cell);
-            cell = new Cell().Add(new Paragraph(" "))
+            cell = new Cell().Add(new Paragraph(flight.Fecha_Llegada.ToString()))
                 .AddStyle(styleCell)
                 .SetBackgroundColor(ColorConstants.LIGHT_GRAY, 0.5f);
             table.AddCell(cell);
             //Dato Categoría
-            cell = new Cell().Add(new Paragraph(" "))
+            cell = new Cell().Add(new Paragraph(flight.Categoria))
                 .AddStyle(styleCell)
                 .SetBackgroundColor(ColorConstants.LIGHT_GRAY, 0.5f);
             table.AddCell(cell);

@@ -84,9 +84,9 @@ namespace ProyectoWebApp_Plat2.Controllers
                 .SetTextAlignment(TextAlignment.CENTER)
                 .SetVerticalAlignment(VerticalAlignment.MIDDLE);
 
+            string rutaLogo = HttpContext.Current.Server.MapPath("~/Images/LogoAirlinePlus.png");
+            Image logo = new Image(ImageDataFactory.Create(rutaLogo));
 
-            Image logo = new Image(ImageDataFactory.Create(@"C:\Users\tomas\source\repos\ProyectoReservaVuelos\ProyectoWebApp_Plat2\images\LogoAirlinePlus.png"));
-            
             documentoPdf.AddEventHandler(PdfDocumentEvent.START_PAGE, new HeaderEventHandler(logo));
 
             documento.SetMargins(25,25,25,25);

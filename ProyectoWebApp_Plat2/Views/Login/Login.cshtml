@@ -35,64 +35,55 @@
     }
 </style>
 
-
-
-
-
-
 <div class="login-container">
 
+    <form id="formLogin">
 
-        <form id="formLogin">
+        <div class="jumbotron" id="log_in">
+            <h2 class="top-left ml-2 md-2" id="header_color">Iniciar Sesión</h2>
+            <p class="lead ml-2 md-2" id="sub_theme">
+                Si ya eres socio Airline Plus ingresa con tus datos de siempre
+            </p>
 
-            <div class="jumbotron" id="log_in">
-                <h2 class="top-left ml-2 md-2" id="header_color">Iniciar Sesión</h2>
-                <p class="lead ml-2 md-2" id="sub_theme">
-                    Si ya eres socio Airline Plus ingresa con tus datos de siempre
-                </p>
-
-                <div class="row">
-                    <div class="col-md-6">
-                        <label>Email</label>
-
-                    </div>
-                    <div class="col-md-6">
-                        <input type="text" class="form-control" id="userEmail" name="userEmail" placeholder="email Usuario">
-                    </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Email</label>
 
                 </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <label>Contraseña</label>
-                    </div>
-                    <div class="col-md-6">
-                        <input type="password" class="form-control" id="userPassword" name="userPassword" placeholder="contraseña Usuario">
-                    </div>
+                <div class="col-md-6">
+                    <input type="text" class="form-control" id="userEmail" name="userEmail" placeholder="email Usuario">
                 </div>
 
-                <div class="row no-gutters">
-                    <div class="col-md-6">
-
-                        <label id="registrar">¿No está registrado? haz click</label>
-
-                        <div>@Html.ActionLink("aqui", "RegisterCustomer", "Login")</div>
-
-                    </div>
-                    <div class="col-md-6">
-                        <div class="row  flex-row-reverse no-gutters">
-                            <button type="" class="btn btn-primary" id="LoginButton" value="LoginUser">Iniciar Sesión</button>
-                            
-                        </div>
-
-                    </div>
-
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Contraseña</label>
+                </div>
+                <div class="col-md-6">
+                    <input type="password" class="form-control" id="userPassword" name="userPassword" placeholder="contraseña Usuario">
                 </div>
             </div>
-        </form>
 
+            <div class="row no-gutters">
+                <div class="col-md-6">
 
+                    <label id="registrar">¿No está registrado? haz click</label>
+
+                    <div>@Html.ActionLink("aqui", "RegisterCustomer", "Login")</div>
+
+                </div>
+                <div class="col-md-6">
+                    <div class="row  flex-row-reverse no-gutters">
+                        <button type="" class="btn btn-primary" id="LoginButton" value="LoginUser">Iniciar Sesión</button>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </form>
 </div>
-
 
 <script>
 

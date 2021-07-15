@@ -28,7 +28,7 @@ namespace ProyectoWebApp_Plat2.Controllers
     public class PdfVoucherWriter
     {
         //instancia de la clase.
-        public static PdfVoucherWriter instance { get; private set; }
+        public static PdfVoucherWriter instancia { get; private set; }
 
         /// <summary>
         /// Constructor de la clase. Es de caracter privado para seguir el patrón de sisenio Singleton.
@@ -44,42 +44,42 @@ namespace ProyectoWebApp_Plat2.Controllers
         /// <returns>La instancia única de la clase</returns>
         public static PdfVoucherWriter GetInstance()
         {
-            if (instance == null)
+            if (instancia == null)
             {
-                instance = new PdfVoucherWriter();
+                instancia = new PdfVoucherWriter();
             }
 
-            return instance;
+            return instancia;
         }
 
         /// <summary>
         /// Método encargado de escribir cada aspecto del archivo Pdf de la reserva.
         /// </summary>
-        /// <param name="customer"></param>
+        /// <param name="cliente"></param>
         /// <returns></returns>
-        public FileStreamResult WriteVoucher(Customer customer, Flight flight)
+        public FileStreamResult WriteVoucher(Customer cliente, Flight vuelo)
         {
-            MemoryStream memoryStream = new MemoryStream();
+            MemoryStream flujoMemoria = new MemoryStream();
 
-            PdfWriter pdfWriter = new PdfWriter(memoryStream);
-            PdfDocument pdfDocument = new PdfDocument(pdfWriter);
-            Document document = new Document(pdfDocument,PageSize.LETTER);
+            PdfWriter escritorPdf = new PdfWriter(flujoMemoria);
+            PdfDocument documentoPdf = new PdfDocument(escritorPdf);
+            Document documento = new Document(documentoPdf,PageSize.LETTER);
 
-            PdfFont font = PdfFontFactory.CreateFont(StandardFonts.HELVETICA);
+            PdfFont fuente = PdfFontFactory.CreateFont(StandardFonts.HELVETICA);
 
-            Style styleTitles = new Style()
-                .SetFont(font)
+            Style estiloTitulo = new Style()
+                .SetFont(fuente)
                 .SetFontSize(28)
                 .SetBold()
                 .SetTextAlignment(TextAlignment.JUSTIFIED);
 
-            Style styleParagraph = new Style()
-                .SetFont(font)
+            Style estiloParrafo = new Style()
+                .SetFont(fuente)
                 .SetFontSize(12)
                 .SetTextAlignment(TextAlignment.JUSTIFIED);
 
-            Style styleCell = new Style()
-                .SetFont(font)
+            Style estiloCelda = new Style()
+                .SetFont(fuente)
                 .SetFontSize(12)
                 .SetTextAlignment(TextAlignment.CENTER)
                 .SetVerticalAlignment(VerticalAlignment.MIDDLE);
@@ -87,204 +87,204 @@ namespace ProyectoWebApp_Plat2.Controllers
 
             Image logo = new Image(ImageDataFactory.Create(@"C:\Users\tomas\source\repos\ProyectoReservaVuelos\ProyectoWebApp_Plat2\images\LogoAirlinePlus.png"));
             
-            pdfDocument.AddEventHandler(PdfDocumentEvent.START_PAGE, new HeaderEventHandler(logo));
+            documentoPdf.AddEventHandler(PdfDocumentEvent.START_PAGE, new HeaderEventHandler(logo));
 
-            document.SetMargins(25,25,25,25);
+            documento.SetMargins(25,25,25,25);
 
-            document.Add(new Paragraph("Información de tu Reserva").AddStyle(styleTitles));
-            document.Add(new Paragraph("Este documento contiene el detalle y condiciones del servicio que adquiriste.").AddStyle(styleParagraph));
-            document.Add(new Paragraph("No es necesario que lo lleves el día de tu viaje.").AddStyle(styleParagraph));
-            document.Add(new LineSeparator(new SolidLine()));
+            documento.Add(new Paragraph("Información de tu Reserva").AddStyle(estiloTitulo));
+            documento.Add(new Paragraph("Este documento contiene el detalle y condiciones del servicio que adquiriste.").AddStyle(estiloParrafo));
+            documento.Add(new Paragraph("No es necesario que lo lleves el día de tu viaje.").AddStyle(estiloParrafo));
+            documento.Add(new LineSeparator(new SolidLine()));
 
             //Salto de línea
-            document.Add(new Paragraph());
+            documento.Add(new Paragraph());
 
             //Tabla de datos pasajero
-            Table table = new Table(2).UseAllAvailableWidth();
+            Table tabla = new Table(2).UseAllAvailableWidth();
             //Datos Pasajero
-            Cell cell = new Cell(1,2).Add(new Paragraph("Datos Pasajero"))
-                .AddStyle(styleCell)
+            Cell celda = new Cell(1,2).Add(new Paragraph("Datos Pasajero"))
+                .AddStyle(estiloCelda)
                 .SetBold()
                 .SetBackgroundColor(ColorConstants.LIGHT_GRAY);
-            table.AddCell(cell);
+            tabla.AddCell(celda);
             //Nombre y Apellido
-            cell = new Cell(1,1).Add(new Paragraph("Nombre del pasajero"))
-                .AddStyle(styleCell)
+            celda = new Cell(1,1).Add(new Paragraph("Nombre del pasajero"))
+                .AddStyle(estiloCelda)
                 .SetBold()
                 .SetBackgroundColor(ColorConstants.LIGHT_GRAY);
-            table.AddCell(cell);
-            cell = new Cell(1,1).Add(new Paragraph(customer.Nombres + " " + customer.Apellidos))
-                .AddStyle(styleCell)
+            tabla.AddCell(celda);
+            celda = new Cell(1,1).Add(new Paragraph(cliente.Nombres + " " + cliente.Apellidos))
+                .AddStyle(estiloCelda)
                 .SetBackgroundColor(ColorConstants.LIGHT_GRAY, 0.5f);
-            table.AddCell(cell);
+            tabla.AddCell(celda);
             //Rut o Num. Pasaporte
-            cell = new Cell(1, 1).Add(new Paragraph("Documento de identificación"))
-                .AddStyle(styleCell)
+            celda = new Cell(1, 1).Add(new Paragraph("Documento de identificación"))
+                .AddStyle(estiloCelda)
                 .SetBold()
                 .SetBackgroundColor(ColorConstants.LIGHT_GRAY);
-            table.AddCell(cell);
-            if(customer.Rut != null)
+            tabla.AddCell(celda);
+            if(cliente.Rut != null)
             {
-                cell = new Cell(1, 1).Add(new Paragraph(customer.Rut))
-                .AddStyle(styleCell)
+                celda = new Cell(1, 1).Add(new Paragraph(cliente.Rut))
+                .AddStyle(estiloCelda)
                 .SetBackgroundColor(ColorConstants.LIGHT_GRAY, 0.5f);
-                table.AddCell(cell);
+                tabla.AddCell(celda);
             }
             else
             {
-                cell = new Cell(1, 1).Add(new Paragraph(customer.Numero_Pasaporte))
-                .AddStyle(styleCell)
+                celda = new Cell(1, 1).Add(new Paragraph(cliente.Numero_Pasaporte))
+                .AddStyle(estiloCelda)
                 .SetBackgroundColor(ColorConstants.LIGHT_GRAY, 0.5f);
-                table.AddCell(cell);
+                tabla.AddCell(celda);
             }
             //Dirección y Num. Dirección
-            cell = new Cell(1, 1).Add(new Paragraph("Dirección del pasajero"))
-                .AddStyle(styleCell)
+            celda = new Cell(1, 1).Add(new Paragraph("Dirección del pasajero"))
+                .AddStyle(estiloCelda)
                 .SetBold()
                 .SetBackgroundColor(ColorConstants.LIGHT_GRAY);
-            table.AddCell(cell);
-            cell = new Cell(1, 1).Add(new Paragraph(customer.Direccion + " " + customer.Numero_Direccion))
-                .AddStyle(styleCell)
+            tabla.AddCell(celda);
+            celda = new Cell(1, 1).Add(new Paragraph(cliente.Direccion + " " + cliente.Numero_Direccion))
+                .AddStyle(estiloCelda)
                 .SetBackgroundColor(ColorConstants.LIGHT_GRAY, 0.5f);
-            table.AddCell(cell);
+            tabla.AddCell(celda);
             //N° Teléfono
-            cell = new Cell(1, 1).Add(new Paragraph("Número Telefónico"))
-                .AddStyle(styleCell)
+            celda = new Cell(1, 1).Add(new Paragraph("Número Telefónico"))
+                .AddStyle(estiloCelda)
                 .SetBold()
                 .SetBackgroundColor(ColorConstants.LIGHT_GRAY);
-            table.AddCell(cell);
-            cell = new Cell(1, 1).Add(new Paragraph(customer.Numero_Telefono.ToString()))
-                .AddStyle(styleCell)
+            tabla.AddCell(celda);
+            celda = new Cell(1, 1).Add(new Paragraph("+56" + cliente.Numero_Telefono.ToString()))
+                .AddStyle(estiloCelda)
                 .SetBackgroundColor(ColorConstants.LIGHT_GRAY, 0.5f);
-            table.AddCell(cell);
+            tabla.AddCell(celda);
             //Datos Emergencia
-            cell = new Cell(1, 2).Add(new Paragraph("Datos de Emergencia"))
-                .AddStyle(styleCell)
+            celda = new Cell(1, 2).Add(new Paragraph("Datos de Emergencia"))
+                .AddStyle(estiloCelda)
                 .SetBold()
                 .SetBackgroundColor(ColorConstants.LIGHT_GRAY);
-            table.AddCell(cell);
+            tabla.AddCell(celda);
             //Nombre y Apellido de Emergencia
-            cell = new Cell(1, 1).Add(new Paragraph("Nombre de Emergencia"))
-                .AddStyle(styleCell)
+            celda = new Cell(1, 1).Add(new Paragraph("Nombre de Emergencia"))
+                .AddStyle(estiloCelda)
                 .SetBold()
                 .SetBackgroundColor(ColorConstants.LIGHT_GRAY);
-            table.AddCell(cell);
-            cell = new Cell(1, 1).Add(new Paragraph(customer.Nombres_Emergencia + " " + customer.Apellidos_Emergencia ))
-                .AddStyle(styleCell)
+            tabla.AddCell(celda);
+            celda = new Cell(1, 1).Add(new Paragraph(cliente.Nombres_Emergencia + " " + cliente.Apellidos_Emergencia ))
+                .AddStyle(estiloCelda)
                 .SetBackgroundColor(ColorConstants.LIGHT_GRAY, 0.5f);
-            table.AddCell(cell);
+            tabla.AddCell(celda);
             //N° Teléfono Emergencia
-            cell = new Cell(1, 1).Add(new Paragraph("Número Telefónico Emergencia"))
-                .AddStyle(styleCell)
+            celda = new Cell(1, 1).Add(new Paragraph("Número Telefónico Emergencia"))
+                .AddStyle(estiloCelda)
                 .SetBold()
                 .SetBackgroundColor(ColorConstants.LIGHT_GRAY);
-            table.AddCell(cell);
-            cell = new Cell(1, 1).Add(new Paragraph(customer.Numero_Telefono_Emergencia.ToString()))
-                .AddStyle(styleCell)
+            tabla.AddCell(celda);
+            celda = new Cell(1, 1).Add(new Paragraph("+56" + cliente.Numero_Telefono_Emergencia.ToString()))
+                .AddStyle(estiloCelda)
                 .SetBackgroundColor(ColorConstants.LIGHT_GRAY, 0.5f);
-            table.AddCell(cell);
+            tabla.AddCell(celda);
 
-            document.Add(table);
+            documento.Add(tabla);
 
             //Salto de línea
-            document.Add(new Paragraph());
-            document.Add(new Paragraph());
+            documento.Add(new Paragraph());
+            documento.Add(new Paragraph());
 
             //Datos de Vuelo
-            table = new Table(6).UseAllAvailableWidth();
+            tabla = new Table(6).UseAllAvailableWidth();
             //N° de Vuelo
-            cell = new Cell(2, 1).Add(new Paragraph("N° de Vuelo"))
-                .AddStyle(styleCell)
+            celda = new Cell(2, 1).Add(new Paragraph("N° de Vuelo"))
+                .AddStyle(estiloCelda)
                 .SetBold()
                 .SetBackgroundColor(ColorConstants.LIGHT_GRAY);
-            table.AddHeaderCell(cell);
+            tabla.AddHeaderCell(celda);
             //Origen
-            cell = new Cell(1, 2).Add(new Paragraph("Origen"))
-                .AddStyle(styleCell)
+            celda = new Cell(1, 2).Add(new Paragraph("Origen"))
+                .AddStyle(estiloCelda)
                 .SetBold()
                 .SetBackgroundColor(ColorConstants.LIGHT_GRAY);
-            table.AddHeaderCell(cell);
+            tabla.AddHeaderCell(celda);
             //Destino
-            cell = new Cell(1, 2).Add(new Paragraph("Destino"))
-                .AddStyle(styleCell)
+            celda = new Cell(1, 2).Add(new Paragraph("Destino"))
+                .AddStyle(estiloCelda)
                 .SetBold()
                 .SetBackgroundColor(ColorConstants.LIGHT_GRAY);
-            table.AddHeaderCell(cell);
+            tabla.AddHeaderCell(celda);
             //Categoría
-            cell = new Cell(2, 1).Add(new Paragraph("Categoría"))
-                .AddStyle(styleCell)
+            celda = new Cell(2, 1).Add(new Paragraph("Categoría"))
+                .AddStyle(estiloCelda)
                 .SetBold()
                 .SetBackgroundColor(ColorConstants.LIGHT_GRAY);
-            table.AddHeaderCell(cell);
+            tabla.AddHeaderCell(celda);
             //Ciudad y Fecha Origen
-            cell = new Cell().Add(new Paragraph("Fecha"))
-                .AddStyle(styleCell)
+            celda = new Cell().Add(new Paragraph("Fecha"))
+                .AddStyle(estiloCelda)
                 .SetBold()
                 .SetBackgroundColor(ColorConstants.LIGHT_GRAY);
-            table.AddHeaderCell(cell);
-            cell = new Cell().Add(new Paragraph("Ciudad Origen"))
-                .AddStyle(styleCell)
+            tabla.AddHeaderCell(celda);
+            celda = new Cell().Add(new Paragraph("Ciudad Origen"))
+                .AddStyle(estiloCelda)
                 .SetBold()
                 .SetBackgroundColor(ColorConstants.LIGHT_GRAY);
-            table.AddHeaderCell(cell);
+            tabla.AddHeaderCell(celda);
             //Ciudad y Fecha Destino
-            cell = new Cell().Add(new Paragraph("Fecha"))
-                .AddStyle(styleCell)
+            celda = new Cell().Add(new Paragraph("Fecha"))
+                .AddStyle(estiloCelda)
                 .SetBold()
                 .SetBackgroundColor(ColorConstants.LIGHT_GRAY);
-            table.AddHeaderCell(cell);
-            cell = new Cell().Add(new Paragraph("Ciudad Destino"))
-                .AddStyle(styleCell)
+            tabla.AddHeaderCell(celda);
+            celda = new Cell().Add(new Paragraph("Ciudad Destino"))
+                .AddStyle(estiloCelda)
                 .SetBold()
                 .SetBackgroundColor(ColorConstants.LIGHT_GRAY);
-            table.AddHeaderCell(cell);
+            tabla.AddHeaderCell(celda);
 
             //Datos
             //Dato N° de Vuelo
-            cell = new Cell().Add(new Paragraph(flight.ID_Vuelo))
-                .AddStyle(styleCell)
+            celda = new Cell().Add(new Paragraph(vuelo.ID_Vuelo))
+                .AddStyle(estiloCelda)
                 .SetBackgroundColor(ColorConstants.LIGHT_GRAY, 0.5f);
-            table.AddCell(cell);
+            tabla.AddCell(celda);
             //Dato Ciudad y Fecha Origen
-            cell = new Cell().Add(new Paragraph(flight.Ciudad_Origen))
-                .AddStyle(styleCell)
+            celda = new Cell().Add(new Paragraph(vuelo.Fecha_Salida.ToString()))
+                .AddStyle(estiloCelda)
                 .SetBackgroundColor(ColorConstants.LIGHT_GRAY, 0.5f);
-            table.AddCell(cell);
-            cell = new Cell().Add(new Paragraph(flight.Fecha_Salida.ToString()))
-                .AddStyle(styleCell)
+            tabla.AddCell(celda);
+            celda = new Cell().Add(new Paragraph(vuelo.Ciudad_Origen))
+                .AddStyle(estiloCelda)
                 .SetBackgroundColor(ColorConstants.LIGHT_GRAY, 0.5f);
-            table.AddCell(cell);
+            tabla.AddCell(celda);
             //Dato Ciudad y Fecha Destino
-            cell = new Cell().Add(new Paragraph(flight.Ciudad_Destino))
-                .AddStyle(styleCell)
+            celda = new Cell().Add(new Paragraph(vuelo.Fecha_Llegada.ToString()))
+                .AddStyle(estiloCelda)
                 .SetBackgroundColor(ColorConstants.LIGHT_GRAY, 0.5f);
-            table.AddCell(cell);
-            cell = new Cell().Add(new Paragraph(flight.Fecha_Llegada.ToString()))
-                .AddStyle(styleCell)
+            tabla.AddCell(celda);
+            celda = new Cell().Add(new Paragraph(vuelo.Ciudad_Destino))
+                .AddStyle(estiloCelda)
                 .SetBackgroundColor(ColorConstants.LIGHT_GRAY, 0.5f);
-            table.AddCell(cell);
+            tabla.AddCell(celda);
             //Dato Categoría
-            cell = new Cell().Add(new Paragraph(flight.Categoria))
-                .AddStyle(styleCell)
+            celda = new Cell().Add(new Paragraph(vuelo.Categoria))
+                .AddStyle(estiloCelda)
                 .SetBackgroundColor(ColorConstants.LIGHT_GRAY, 0.5f);
-            table.AddCell(cell);
+            tabla.AddCell(celda);
 
-            document.Add(table);
+            documento.Add(tabla);
 
             //Salto de línea
-            document.Add(new Paragraph());
-            document.Add(new LineSeparator(new SolidLine()));
-            document.Add(new Paragraph());
-            document.Add(new Paragraph("NOTA:").SetBold()).Add(new Paragraph("No olvide llegar al menos dos horas antes al aeropuerto."));
+            documento.Add(new Paragraph());
+            documento.Add(new LineSeparator(new SolidLine()));
+            documento.Add(new Paragraph());
+            documento.Add(new Paragraph("NOTA:").SetBold()).Add(new Paragraph("No olvide llegar al menos dos horas antes al aeropuerto."));
 
-            document.Close();
+            documento.Close();
 
-            byte[] byteStream = memoryStream.ToArray();
-            memoryStream = new MemoryStream();
-            memoryStream.Write(byteStream, 0,byteStream.Length);
-            memoryStream.Position = 0;
+            byte[] flujoBytes = flujoMemoria.ToArray();
+            flujoMemoria = new MemoryStream();
+            flujoMemoria.Write(flujoBytes, 0,flujoBytes.Length);
+            flujoMemoria.Position = 0;
 
-            return new FileStreamResult(memoryStream, "application/pdf");
+            return new FileStreamResult(flujoMemoria, "application/pdf");
         }
     }
 
@@ -292,46 +292,46 @@ namespace ProyectoWebApp_Plat2.Controllers
     {
         Image logo;
 
-        public HeaderEventHandler(Image image)
+        public HeaderEventHandler(Image imagen)
         {
-            this.logo = image;
+            this.logo = imagen;
         }
-        public void HandleEvent(Event @event)
+        public void HandleEvent(Event evento)
         {
-            PdfDocumentEvent docEvent = (PdfDocumentEvent)@event;
-            PdfDocument pdfDocument = docEvent.GetDocument();
-            PdfPage pdfPage = docEvent.GetPage();
+            PdfDocumentEvent eventoDocumento = (PdfDocumentEvent)evento;
+            PdfDocument documentoPdf = eventoDocumento.GetDocument();
+            PdfPage paginaPdf = eventoDocumento.GetPage();
 
-            PdfCanvas pdfCanvas = new PdfCanvas(pdfPage.NewContentStreamBefore(), pdfPage.GetResources(), pdfDocument);
-            Rectangle rootArea = new Rectangle(25, pdfPage.GetPageSize().GetTop() - 25, pdfPage.GetPageSize().GetRight() - 25, 25);
-            new Canvas(pdfCanvas, rootArea).Add(getTable(docEvent));
+            PdfCanvas canvasPdf = new PdfCanvas(paginaPdf.NewContentStreamBefore(), paginaPdf.GetResources(), documentoPdf);
+            Rectangle areaRaiz = new Rectangle(25, paginaPdf.GetPageSize().GetTop() - 25, paginaPdf.GetPageSize().GetRight() - 25, 25);
+            new Canvas(canvasPdf, areaRaiz).Add(getTable());
 
         }
 
-        public Table getTable(PdfDocumentEvent docEvent)
+        public Table getTable()
         {
-            float[] cellWidht = { 40f, 80f };
-            Table tableEvent = new Table(UnitValue.CreatePercentArray(cellWidht)).UseAllAvailableWidth();
+            float[] anchuraCelda = { 40f, 80f };
+            Table tablaEvento = new Table(UnitValue.CreatePercentArray(anchuraCelda)).UseAllAvailableWidth();
 
-            Style styleCell = new Style()
+            Style estiloCelda = new Style()
                 .SetBorder(Border.NO_BORDER);
-            Style styleText = new Style()
+            Style estiloTexto = new Style()
                 .SetTextAlignment(TextAlignment.RIGHT)
                 .SetFontSize(10f);
 
-            Cell cell = new Cell().Add(logo.SetAutoScale(true));
+            Cell celda = new Cell().Add(logo.SetAutoScale(true));
 
-            tableEvent.AddCell(cell
-                .AddStyle(styleCell)
+            tablaEvento.AddCell(celda
+                .AddStyle(estiloCelda)
                 .SetTextAlignment(TextAlignment.RIGHT));
 
-            cell = new Cell()
+            celda = new Cell()
                 .Add(new Paragraph("AIRLINE PLUS S.A."))
-                .AddStyle(styleText).AddStyle(styleCell);
+                .AddStyle(estiloTexto).AddStyle(estiloCelda);
 
-            tableEvent.AddCell(cell);
+            tablaEvento.AddCell(celda);
 
-            return tableEvent;
+            return tablaEvento;
 
         }
     }

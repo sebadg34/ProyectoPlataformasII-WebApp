@@ -10,34 +10,26 @@
 
 <div class="login-container">
 
-        <div class="jumbotron" id="log_in">
-            <h2 class="ml-2 md-2" id="header_color">
-                ¡Se ha realizado la reserva con éxito!
-            </h2>
+    <div class="jumbotron" id="log_in">
+        <h2 class="ml-2 md-2" id="header_color">
+            ¡Se ha realizado la reserva con éxito!
+        </h2>
 
-            <div class="row no-gutters">
+        <div class="row no-gutters">
 
-                <div class="col-md-6">
-                    <div class="float-left row flex-row-reverse no-gutters">
-                        @using (Html.BeginForm("Menu", "Home"))
-                        {
-                            <button type="submit" class="btn btn-primary" id="LoginButton" value="LoginUser">Volver a Inicio</button>
-                        }
-                    </div>
+            <div class="col-md-6">
+                <div class="float-right row flex-row-reverse no-gutters">
+                    @using (Html.BeginForm("SendVoucher", "Home"))
+                    {
+                        <button type="submit" class="btn btn-primary" id="voucherButton" value="LoginUser">Descargar el Comprobante</button>
+                    }
                 </div>
-                
-                <div class="col-md-6">
-                    <div class="float-right row flex-row-reverse no-gutters">
-                        @using (Html.BeginForm("SendVoucher", "Home"))
-                        {
-                            <button type="submit" class="btn btn-primary" id="LoginButton" value="LoginUser">Descargar el Comprobante</button>
-                        }
-                    </div>
-                </div>
-
             </div>
 
         </div>
 
+    </div>
+
 </div>
+
 

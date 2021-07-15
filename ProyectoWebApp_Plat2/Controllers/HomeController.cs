@@ -13,46 +13,14 @@ namespace ProyectoWebApp_Plat2.Controllers
 {
     public class HomeController : Controller
     {
-        // Variable que guarda el estado de Login, es decir, si se ha iniciado sesión o no
-        bool State { get; set; }
-        // Variable que guarda el rol del usuario que ha iniciado sesión; en caso de cerrar sesión o no estar iniciada esta misma, rol tomara el valor de false
-        bool Role { get; set; }
-
         // Variables por defecto que deben ir en las casillas de los filtros
         string origen = "Todo";
         string destino = "Todo";
         DateTime fechaDesde = DateTime.Today;
         DateTime fechaHasta = DateTime.Today.AddMonths(6);
-        
-        public ActionResult About()
+
+        public async Task<ActionResult> Menu(string origen, string destino, string fechaDesde, string fechaHasta)
         {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
-
-        public ActionResult RegisterFlights()
-        {
-            ViewData["Nombre"] = "Eduard Tomas";
-            ViewData["Log-In"] = State;
-            ViewData["Role"] = Role;
-            return View();
-        }
-
-        public async Task<ActionResult> Menu(string origen, string destino, string desde, string hasta)
-        {
-            if (Session["Log-In"] != null && Session["Role"] != null)
-            {
-                State = (bool)Session["Log-In"];
-                Role = (bool)Session["Role"];
-            }
 
             // Si origen no es null significa que filtros fueron aplicados sobre la ciudad de origen
             if (origen != null)
@@ -66,60 +34,62 @@ namespace ProyectoWebApp_Plat2.Controllers
             }
 
             // Si se cumple la condición significa que filtros fueron aplicados sobre la fecha mínima de despegue
-            if (desde != "" && desde != null)
+            if (fechaDesde != "" && fechaDesde != null)
             {
-                desde.Replace("-", "/");
-                desde = desde + " 00:00:00";
-                fechaDesde = Convert.ToDateTime(desde);
+                fechaDesde.Replace("-", "/");
+                fechaDesde = fechaDesde + " 00:00:00";
+                this.fechaDesde = Convert.ToDateTime(fechaDesde);
             }
             // Valor por defecto de fecha mínima de despegue
             else
             {
-                fechaDesde = DateTime.Today;
+                this.fechaDesde = DateTime.Today;
             }
             // Si se cumple la condición significa que filtros fueron aplicados sobre la fecha máxima de despegue
-            if (hasta != "" && hasta != null)
+            if (fechaHasta != "" && fechaHasta != null)
             {
-                hasta.Replace("-", "/");
-                hasta = hasta + " 23:59:59";
-                fechaHasta = Convert.ToDateTime(hasta);
+                fechaHasta.Replace("-", "/");
+                fechaHasta = fechaHasta + " 23:59:59";
+                this.fechaHasta = Convert.ToDateTime(fechaHasta);
             }
             // Valor por defecto de fecha máxima de despegue
             else
             {
-                fechaHasta = DateTime.Today.AddMonths(6);
+                this.fechaHasta = DateTime.Today.AddMonths(6);
             }
 
             ViewData["Nombre"] = Session["Nombre"] as string;
-            ViewData["Log-In"] = State;
-            ViewData["Role"] = Role;
+            ViewData["Login"] = (bool)Session["Login"];
+            ViewData["Rol"] = (bool)Session["Rol"];
 
             // Lista que recibira los vuelos desde la API
-            List<Flight> vuelos = await Communication.GetInstance().GetFlights();
+            List<Flight> vuelosApi = await Communication.GetInstance().GetFlights();
 
             // Lista en el que se almacenarán solo los vuelos válidos o con filtros aplicados
-            List<Flight> flights = new List<Flight>();
+            List<Flight> vuelos = new List<Flight>();
 
-            foreach (Flight vuelo in vuelos)
+            foreach (Flight vuelo in vuelosApi)
             {
                 if ((this.origen == "Todo" || this.origen == vuelo.Ciudad_Origen) && (this.destino == "Todo" || this.destino == vuelo.Ciudad_Destino) && (DateTime.Compare(this.fechaDesde, vuelo.Fecha_Salida) < 0) && (DateTime.Compare(this.fechaHasta, vuelo.Fecha_Salida) > 0) && (vuelo.Cupos > 0))
                 {
-                    flights.Add(vuelo);
+                    vuelos.Add(vuelo);
                 }
             }
 
+            ViewBag.vuelosApi = vuelosApi;
             ViewBag.vuelos = vuelos;
-            ViewBag.flights = flights;
 
             return View();
-        }      
+        }
+
+        public ActionResult RegisterFlights()
+        {
+            return View();
+        }
 
         /// <summary>
         /// Método que almacena los datos id_vuelo, cantidadPasajeros y usuarioPasajero para ser enviados a la vista ToReserve
         /// </summary>
-        /// <param name="id_vuelo"></param>
-        /// <param name="cantidadPasajeros"></param>
-        /// <param name="usuarioPasajero"></param>
         /// <returns>vista ToReserve</returns>
         public ActionResult ToReserve()
         {
@@ -132,27 +102,30 @@ namespace ProyectoWebApp_Plat2.Controllers
         /// <returns></returns>
         public ActionResult Voucher()
         {
-            
             return View();
         }
 
-        // Métodos que redirigen hacia otra vista
+        // A partir de aquí se redactan los métodos que redirigen hacia otra acción.
 
         /// <summary>
-        /// Método que almacena temporalmente datos en las etiquetas Log-In, Role, Nombre e Id para ser usados por el controlador Home en la acción Menu
+        /// Método que almacena datos en las etiquetas Log-In, Role, Nombre e Id para ser usados por el controlador Home en la acción Menu
         /// </summary>
         /// <param name="role"></param>
         /// <param name="name"></param>
-        /// <param name="idUsuario"></param>
+        /// <param name="userID"></param>
         /// <returns>Acción Menu del controlador Home</returns>
-
-        public ActionResult ToMenu(bool role, string name, string idUsuario)
+        public ActionResult ToMenu(bool role, string name, string userID)
         {
-            Session["Log-In"] = true;
-            Session["Role"] = role;
+            Session["Login"] = true;
+            Session["Rol"] = role;
             Session["Nombre"] = name;
-            Session["userId"] = idUsuario;
+            Session["IdUsuario"] = userID;
 
+            return RedirectToAction("Menu");
+        }
+
+        public ActionResult BackToMenu()
+        {
             return RedirectToAction("Menu");
         }
 
@@ -163,8 +136,12 @@ namespace ProyectoWebApp_Plat2.Controllers
         /// <returns>Redirige a la Acción Menu</returns>
         public ActionResult Logout()
         {
-            State = false;
-            Role = false;
+            Session["Login"] = false;
+            Session["Rol"] = false;
+            Session["Nombre"] = null;
+            Session["IdUsuario"] = null;
+            Session["VueloReserva"] = null;
+            Session["PasajeroReserva"] = null;
 
             return RedirectToAction("Menu");
         }
@@ -180,11 +157,11 @@ namespace ProyectoWebApp_Plat2.Controllers
 
         public async Task<ActionResult> GoToReserve()
         {
-            string flighID = Request.QueryString["id"];
-            Session["ReserveFlight"] = await Communication.GetInstance().GetFlight(Int32.Parse(flighID));
-            string option = Request.QueryString["option"];
+            string idVuelo = Request.QueryString["id"];
+            Session["VueloReserva"] = await Communication.GetInstance().GetFlight(Int32.Parse(idVuelo));
+            string opcion = Request.QueryString["opcion"];
 
-            if (option == "myself")
+            if (opcion == "myself")
             {
                 return RedirectToAction("MyselfVoucher");
             }
@@ -197,8 +174,8 @@ namespace ProyectoWebApp_Plat2.Controllers
 
         public async Task<ActionResult> MyselfVoucher()
         {
-            string userId = Session["userId"] as string;
-            Session["ReserveUser"] = await Communication.GetInstance().GetCustomer(Int32.Parse(userId));
+            string idUsuario = Session["IdUsuario"] as string;
+            Session["PasajeroReserva"] = await Communication.GetInstance().GetCustomer(Int32.Parse(idUsuario));
             
             return RedirectToAction("Voucher");
         }
@@ -213,9 +190,9 @@ namespace ProyectoWebApp_Plat2.Controllers
 
         public FileStreamResult SendVoucher()
         {
-            Flight reserveFlight = (Flight)Session["ReserveFlight"];
-            Customer reserveCustomer = (Customer)Session["ReserveUser"];
-            return PdfVoucherWriter.GetInstance().WriteVoucher(reserveCustomer, reserveFlight);
+            Flight vueloReserva = (Flight)Session["VueloReserva"];
+            Customer pasajeroReserva = (Customer)Session["PasajeroReserva"];
+            return PdfVoucherWriter.GetInstance().WriteVoucher(pasajeroReserva, vueloReserva);
         }
    
     }

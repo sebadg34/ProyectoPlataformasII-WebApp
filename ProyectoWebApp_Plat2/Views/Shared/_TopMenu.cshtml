@@ -3,17 +3,16 @@
     <link rel="stylesheet" href="~/Content/menuStyles.css" />
 </head>
 
-
 <body id="body">
 
     <div class="perma_container_menu no-gutters for">
         @{
-            bool State = (bool)ViewData["Log-In"];
-            bool Role = (bool)ViewData["Role"];
+            bool estado = (bool)ViewData["Login"];
+            bool rol = (bool)ViewData["Rol"];
         }
-        @if (State)
+        @if (estado)
         {
-            if (Role)
+            if (rol)
             {
                 <div class="float-left">
                     <div class="row form-group">
@@ -43,8 +42,6 @@
                                     </h3>
                                 </button>
                             }
-
-
                         </div>
                     </div>
                 </div>

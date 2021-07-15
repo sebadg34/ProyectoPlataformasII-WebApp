@@ -23,11 +23,6 @@ namespace ProyectoWebApp_Plat2.Controllers
         public ActionResult RegisterCustomer()
         {
             return View();
-        }
-        
-        // Métodos que redirigen hacia otra vista
-
-        
-      
+        } 
     }
 }

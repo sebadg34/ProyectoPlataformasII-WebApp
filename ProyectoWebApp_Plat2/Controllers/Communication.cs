@@ -16,18 +16,18 @@ namespace ProyectoWebApp_Plat2.Controllers
     /// </summary>
     public class Communication
     {
-        public static Communication instance { get; private set; }
+        public static Communication instancia { get; private set; }
 
         private Communication() { }
 
         public static Communication GetInstance()
         {
-            if(instance == null)
+            if(instancia == null)
             {
-                instance = new Communication();
+                instancia = new Communication();
             }
 
-            return instance;
+            return instancia;
         }
 
         /// <summary>
@@ -38,80 +38,60 @@ namespace ProyectoWebApp_Plat2.Controllers
         /// </returns>
         public async Task<List<Flight>> GetFlights()
         {
-            using (var client = new HttpClient())
+            using (var clienteHttp = new HttpClient())
             {
-                client.BaseAddress = new Uri("https://localhost:44350/");
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                clienteHttp.BaseAddress = new Uri("https://localhost:44350/");
+                clienteHttp.DefaultRequestHeaders.Accept.Clear();
+                clienteHttp.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                HttpResponseMessage response = await client.GetAsync("api/Flights");
-                List<Flight> flight = new List<Flight>();
-                if (response.IsSuccessStatusCode)
+                HttpResponseMessage respuesta = await clienteHttp.GetAsync("api/Flights");
+                List<Flight> vuelos = new List<Flight>();
+                if (respuesta.IsSuccessStatusCode)
                 {
-                    flight = await response.Content.ReadAsAsync<List<Flight>>();
+                    vuelos = await respuesta.Content.ReadAsAsync<List<Flight>>();
                 }
 
-                return flight;
+                return vuelos;
             }
         }
 
         public async Task<Flight> GetFlight(int id)
         {
-            using (var client = new HttpClient())
+            using (var clienteHttp = new HttpClient())
             {
-                client.BaseAddress = new Uri("https://localhost:44350/");
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                clienteHttp.BaseAddress = new Uri("https://localhost:44350/");
+                clienteHttp.DefaultRequestHeaders.Accept.Clear();
+                clienteHttp.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                HttpResponseMessage response = await client.GetAsync("api/Flights/" + id);
-                Flight flight = null;
+                HttpResponseMessage respuesta = await clienteHttp.GetAsync("api/Flights/" + id);
+                Flight vuelo = null;
 
-                if (response.IsSuccessStatusCode)
+                if (respuesta.IsSuccessStatusCode)
                 {
-                    flight = await response.Content.ReadAsAsync<Flight>();
+                    vuelo = await respuesta.Content.ReadAsAsync<Flight>();
                 }
 
-                return flight;
+                return vuelo;
             }
         }
 
         public async Task<Customer> GetCustomer(int id)
         {
-            using (var client = new HttpClient())
+            using (var clienteHttp = new HttpClient())
             {
-                client.BaseAddress = new Uri("https://localhost:44350/");
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                clienteHttp.BaseAddress = new Uri("https://localhost:44350/");
+                clienteHttp.DefaultRequestHeaders.Accept.Clear();
+                clienteHttp.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                HttpResponseMessage response = await client.GetAsync("api/Customers/" + id);
-                Customer customer = null;
+                HttpResponseMessage respuesta = await clienteHttp.GetAsync("api/Customers/" + id);
+                Customer cliente = null;
 
-                if (response.IsSuccessStatusCode)
+                if (respuesta.IsSuccessStatusCode)
                 {
-                    customer = await response.Content.ReadAsAsync<Customer>();
+                    cliente = await respuesta.Content.ReadAsAsync<Customer>();
                 }
 
-                return customer;
-            }
-        }
-
-        public async Task<Manager> GetManager(int id)
-        {
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri("https://localhost:44350/");
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                HttpResponseMessage response = await client.GetAsync("api/Managers/" + id);
-                Manager manager = null;
-
-                if (response.IsSuccessStatusCode)
-                {
-                    manager = await response.Content.ReadAsAsync<Manager>();
-                }
-
-                return manager;
+                return cliente;
             }
         }
     }

@@ -26,7 +26,6 @@
     });
 </script>
 
-
 <style type="text/css">
 
     #register_user {
@@ -37,121 +36,117 @@
     }
 </style>
 
-<div>
-    @Html.Partial("_TopMenu")
+<div class="container-fluid vertical-center">
+    <form id="register">
+        <section class="jumbotron" id="register_user">
+            <div class="container-fluid">
 
-    <div class="container-fluid vertical-center">
-        <form id="register">
-            <section class="jumbotron" id="register_user">
-                <div class="container-fluid">
+                <!-- Titulo de la pagina -->
+                <div class="row">
+                    <h2 class="top-left" id="header_color">Registrar Vuelo</h2>
+                </div>
+                <h3 style="font-size: 15px;color: #000000; margin-left: 30px;">
+                    Datos del vuelo
+                </h3>
 
-                    <!-- Titulo de la pagina -->
-                    <div class="row">
-                        <h2 class="top-left" id="header_color">Registrar Vuelo</h2>
-                    </div>
-                    <h3 style="font-size: 15px;color: #000000; margin-left: 30px;">
-                        Datos del vuelo
-                    </h3>
+                <div class="row">
 
-                    <div class="row">
+                    <!-- Contenedor izquierdo: datos del usuario -->
+                    <div id="register_user_left">
 
-                        <!-- Contenedor izquierdo: datos del usuario -->
-                        <div id="register_user_left">
-
-                            <!-- Ingreso de la Ciudad de origen -->
-                            <div class="row form-group-mini">
-                                <div class="col-12">
-                                    <input type="text" class="form-control" placeholder="Ciudad de Origen" id="ciudadOrigen" name="ciudadOrigen">
-                                </div>
+                        <!-- Ingreso de la Ciudad de origen -->
+                        <div class="row form-group-mini">
+                            <div class="col-12">
+                                <input type="text" class="form-control" placeholder="Ciudad de Origen" id="ciudadOrigen" name="ciudadOrigen">
                             </div>
+                        </div>
 
-                            <!-- Ingreso de la Ciudad de destino -->
-                            <div class="row form-group">
-                                <div class="col-12">
-                                    <input type="text" class="form-control" placeholder="Ciudad de Destino" id="ciudadDestino" name="ciudadDestino">
-                                </div>
+                        <!-- Ingreso de la Ciudad de destino -->
+                        <div class="row form-group">
+                            <div class="col-12">
+                                <input type="text" class="form-control" placeholder="Ciudad de Destino" id="ciudadDestino" name="ciudadDestino">
                             </div>
+                        </div>
 
-                            <!-- Ingreso Fecha y Hora de salida -->
-                            <div class="row form-group-mini">
-                                <div class="col-12">
-                                    <small class="form-text text-muted ">
-                                        Fecha y hora de salida.
-                                    </small>
-                                    <input type="text" class="form-control" id="fechaSalida" name="fechaSalida" placeholder="yyyy-mm-dd" readonly />
-                                </div>
+                        <!-- Ingreso Fecha y Hora de salida -->
+                        <div class="row form-group-mini">
+                            <div class="col-12">
+                                <small class="form-text text-muted ">
+                                    Fecha y hora de salida.
+                                </small>
+                                <input type="text" class="form-control" id="fechaSalida" name="fechaSalida" placeholder="yyyy-mm-dd" readonly />
                             </div>
+                        </div>
 
-                            <div class="row form-group">
-                                <div class="col-12">
-                                    <input type="time" id="horaSalida" name="horaSalida" class="form-control" />
-                                </div>
+                        <div class="row form-group">
+                            <div class="col-12">
+                                <input type="time" id="horaSalida" name="horaSalida" class="form-control" />
                             </div>
+                        </div>
 
-                            <!-- Ingreso la duracion de vuelo -->
-                            <div class="row">
-                                <div class="col-12">
-                                    <small class="form-text text-muted ">
-                                        Duración de vuelo.
-                                    </small>
-                                    <div class="input-group">
-                                        <input type="number" class="form-control" placeholder="hh" id="horaLlegada" name="horaLlegada" min="00" max="23" maxlength="2" oninput="if (this.value > 23) this.value = 23;
+                        <!-- Ingreso la duracion de vuelo -->
+                        <div class="row">
+                            <div class="col-12">
+                                <small class="form-text text-muted ">
+                                    Duración de vuelo.
+                                </small>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" placeholder="hh" id="horaLlegada" name="horaLlegada" min="00" max="23" maxlength="2" oninput="if (this.value > 23) this.value = 23;
     this.value = this.value.slice(0, this.maxLength);">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text" id="basic-addon1">:</span>
-                                        </div>
-                                        <input type="number" class="form-control" placeholder="mm" id="minutoLlegada" name="minutoLlegada" min="00" max="59" maxlength="2" oninput="if (this.value > 59) this.value = 59;
-    this.value = this.value.slice(0, this.maxLength);">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">:</span>
                                     </div>
+                                    <input type="number" class="form-control" placeholder="mm" id="minutoLlegada" name="minutoLlegada" min="00" max="59" maxlength="2" oninput="if (this.value > 59) this.value = 59;
+    this.value = this.value.slice(0, this.maxLength);">
                                 </div>
                             </div>
+                        </div>
 
-                        </div><!-- Fin del contenedor izquierdo -->
-                        <!-- Contenedor derecho -->
-                        <div id="register_user_right">
+                    </div><!-- Fin del contenedor izquierdo -->
+                    <!-- Contenedor derecho -->
+                    <div id="register_user_right">
 
-                            <!-- Seleccion de categoria -->
-                            <div class="row form-group">
-                                <div class="col-12">
-                                    <select class="form-control" id="categoria" name="categoria">
-                                        <option value="" disabled selected>Categoria</option>
-                                        <option value="Básico">Básico</option>
-                                        <option value="Normal">Normal</option>
-                                        <option value="Premium">Premium</option>
-                                    </select>
-                                </div>
+                        <!-- Seleccion de categoria -->
+                        <div class="row form-group">
+                            <div class="col-12">
+                                <select class="form-control" id="categoria" name="categoria">
+                                    <option value="" disabled selected>Categoria</option>
+                                    <option value="Básico">Básico</option>
+                                    <option value="Normal">Normal</option>
+                                    <option value="Premium">Premium</option>
+                                </select>
                             </div>
+                        </div>
 
-                            <!-- Ingreso de cupos de asientos -->
-                            <div class="row form-group">
-                                <div class="col-12">
-                                    <input type="number" class="form-control" placeholder="30" id="cupos" name="cupos" min="30" max="40" maxlength="2" oninput="this.value = this.value.slice(0, this.maxLength); if (this.value < 30 || this.value > 40) this.value = 30;">
-                                    <small class="form-text text-muted ">
-                                        Mínimo 30 y máximo 40.
-                                    </small>
-                                </div>
+                        <!-- Ingreso de cupos de asientos -->
+                        <div class="row form-group">
+                            <div class="col-12">
+                                <input type="number" class="form-control" placeholder="30" id="cupos" name="cupos" min="30" max="40" maxlength="2" oninput="this.value = this.value.slice(0, this.maxLength); if (this.value < 30 || this.value > 40) this.value = 30;">
+                                <small class="form-text text-muted ">
+                                    Mínimo 30 y máximo 40.
+                                </small>
                             </div>
+                        </div>
 
-                            <div class="row">
-                                <div class="col-6"></div>
-                                <div class="col-12">
-                                    <button type="button" id="registerButton" class="btn btn-block btn-lg"
-                                            style="margin-left: 0px;
+                        <div class="row">
+                            <div class="col-6"></div>
+                            <div class="col-12">
+                                <button type="button" id="registerButton" class="btn btn-block btn-lg"
+                                        style="margin-left: 0px;
                                         margin-right: 0px;
                                         background-color: #006ce5 !important;
                                         color: #FFF;
                                         border-color: #3d8af7 !important;">
-                                        Registrar vuelo
-                                    </button>
-                                </div>
+                                    Registrar vuelo
+                                </button>
                             </div>
+                        </div>
 
-                        </div><!-- Fin contenedor derecho -->
-                    </div>
+                    </div><!-- Fin contenedor derecho -->
                 </div>
-            </section>
-        </form>
-    </div>
+            </div>
+        </section>
+    </form>
 </div>
 
 <script>

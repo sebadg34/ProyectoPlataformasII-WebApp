@@ -12,6 +12,9 @@ using Newtonsoft.Json;
 
 namespace ProyectoWebApp_Plat2.Controllers
 {
+    /// <summary>
+    /// Clase que controla el flujo de inicio de sesion y agregar nuevos usuarios al sistema
+    /// </summary>
     public class LoginController : Controller
     {
         /// <summary>

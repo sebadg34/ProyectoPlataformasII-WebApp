@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Voucher";
 }
 
@@ -20,16 +19,13 @@
                 <div class="float-right row flex-row-reverse no-gutters">
                     @using (Html.BeginForm("BackToMenu", "Home"))
                     {
-                        <button type="submit" class="btn btn-primary" id="voucherButton" value="LoginUser">Volver al Menu</button>
+                        <button type="submit" class="btn btn-primary" id="voucherButton">Volver al Menu</button>
                     }
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="float-right row flex-row-reverse no-gutters">
-                    @using (Html.BeginForm("SendVoucher", "Home"))
-                    {
-                        <button type="submit" class="btn btn-primary" id="voucherButton" value="LoginUser">Descargar el Comprobante</button>
-                    }
+                        <button type="button" onclick="window.open('@Url.Action("SendVoucher","Home")')" class="btn btn-primary">Descargar el Comprobante</button>
                 </div>
             </div>
 
@@ -38,5 +34,3 @@
     </div>
 
 </div>
-
-

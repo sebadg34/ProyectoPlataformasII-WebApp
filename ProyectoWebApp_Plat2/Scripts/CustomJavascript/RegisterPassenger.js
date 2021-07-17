@@ -3,101 +3,93 @@ const entradas = document.querySelectorAll('#register_passenger input');
 
 const expresionesRegulares = {
     nombre_apellido: /^([A-Za-záéíóúñÁÉÍÓÚ ])*$/,
-    email: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/,
+    email: /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/,
     rut: /(^[0-9]{7,8}-([0-9]|k)$)/,
     pasaporte: /(^([A-Z]|[0-9]){9})$/,
     direccion: /^([A-Za-záéíóúñÁÉÍÓÚ .])*$/,
     numeroTelefono: /^9[0-9]{8}$/
 }
 
-const campos = {
-    nombre: false,
-    apellido: false,
-    email: false,
-    rutPasaporte: false,
-    direccion: false,
-    numeroTelefono: false,
-    nombreEmergencia: false,
-    apellidoEmergencia: false,
-    numeroTelefonoEmergencia: false
-}
+var campos = [false, false, false, false, false, false, false, false, false];
+var nombreCampos = ["nombre","apellido","email","rut/pasaporte","direccion","numero telefono","nombre emergencia","apellido emergencia","numero telefono emergencia"];
 
 const validarFormulario = (e) => {
     switch (e.target.name) {
         case "nombre":
             if (expresionesRegulares.nombre_apellido.test(e.target.value)) {
-                campos.nombre = true;
+                campos[0] = true;
             } else {
-                campos.nombre = false;
+                campos[0] = false;
             }
             break;
         case "apellido":
             if (expresionesRegulares.nombre_apellido.test(e.target.value)) {
-                campos.apellido = true;
+                campos[1] = true;
             } else {
-                campos.apellido = false;
+                campos[1] = false;
             }
             break;
         case "email":
             if (expresionesRegulares.email.test(e.target.value)) {
-                campos.email = true;
+                campos[2] = true;
             } else {
-                campos.email = false;
+                campos[2] = false;
             }
             break;
         case "rutPasaporte2":
             if ($("#rutPasaporte").val() == "rut") {
                 if (expresionesRegulares.rut.test(e.target.value)) {
-                    campos.rutPasaporte = true;
+                    campos[3] = true;
                 } else {
-                    campos.rutPasaporte = false;
+                    campos[3] = false;
                 }
             }
             if ($("#rutPasaporte").val() == "numPasaporte") {
                 if (expresionesRegulares.pasaporte.test(e.target.value)) {
-                    campos.rutPasaporte = true;
+                    campos[3] = true;
                 } else {
-                    campos.rutPasaporte = false;
+                    campos[3] = false;
                 }
             }
             break;
         case "direccion":
             if (expresionesRegulares.direccion.test(e.target.value)) {
-                campos.direccion = true;
+                campos[4] = true
             } else {
-                campos.direccion = false;
+                campos[4] = false;
             }
             break;
         case "numeroTelefono":
             if (expresionesRegulares.numeroTelefono.test(e.target.value)) {
-                campos.numeroTelefono = true;
+                campos[5] = true;
             } else {
-                campos.numeroTelefono = false;
+                campos[5] = false;
             }
             break;
         case "nombreEmergencia":
             if (expresionesRegulares.nombre_apellido.test(e.target.value)) {
-                campos.nombreEmergencia = true;
+                campos[6] = true;
             } else {
-                campos.nombreEmergencia = false;
+                campos[6] = false;
             }
             break;
         case "apellidoEmergencia":
             if (expresionesRegulares.nombre_apellido.test(e.target.value)) {
-                campos.apellidoEmergencia = true;
+                campos[7] = true;
             } else {
-                campos.apellidoEmergencia = false;
+                campos[7] = false;
             }
             break;
         case "numeroTelefonoEmergencia":
             if (expresionesRegulares.numeroTelefono.test(e.target.value)) {
-                campos.numeroTelefonoEmergencia = true;
+                campos[8] = true;
             } else {
-                campos.numeroTelefonoEmergencia = false;
+                campos[8] = false;
             }
             break;
     }
 }
+
 
 entradas.forEach((entrada) => {
     entrada.addEventListener('keyup', validarFormulario);
@@ -112,11 +104,6 @@ function reservar() {
             window.location = url;
         }
         else if ($("#rutPasaporte").val() == "numPasaporte") {
-            Swal.fire(
-                '¡Listo!!',
-                'Se ha reservado correctamente.',
-                'success'
-            );
             console.log("cambio de pagina pasaporte");
             url = "/Home/GoToVoucher?Nombres=" + $("#nombre").val() + "&Apellidos=" + $("#apellido").val() + "&Rut=" + null + "&Numero_Pasaporte=" + $("#rutPasaporte2").val() + "&Direccion=" + $("#direccion").val() + "&Numero_Direccion=" + $("#numero").val() + "&Numero_Telefono=" + $("#numeroTelefono").val() + "&Nombres_Emergencia=" + $("#nombreEmergencia").val() + "&Apellidos_Emergencia=" + $("#apellidoEmergencia").val() + "&Numero_Telefono_Emergencia=" + $("#numeroTelefonoEmergencia").val();
             window.location = url;
@@ -125,10 +112,12 @@ function reservar() {
 }
 
 function verificarCampos() {
-    for (i = 0; i < 9; i++) {
-        if (campos[i]) {
+    for (let i = 0; i < 9; i++) {
+        if (!campos[i]) {
+            alert("el campo " + nombreCampos[i] + "esta mal escrito.");
             return false;
         }
     }
+    alert("Reserva realizada correctamente");
     return true;
 }

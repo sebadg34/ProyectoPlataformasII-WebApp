@@ -46,7 +46,7 @@
                                     '¡Listo!!',
                                     'Se ha registrado correctamente.',
                                     'success'
-                                ).then(() => { window.location.href = "http://localhost:52811/Home/ToMenu?rol=" + ID_Rol + "&nombre=" + Nombres + "&idUsuario=" + ID; });
+                                ).then(() => { window.location.href = "/Home/ToMenu?rol=" + ID_Rol + "&nombre=" + Nombres + "&idUsuario=" + ID; });
                             })
                             // Mensaje de error
                             .fail(function (xhr, status, error) {

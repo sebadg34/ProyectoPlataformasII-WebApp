@@ -23,7 +23,7 @@ using ProyectoWebApp_Plat2.Models;
 namespace ProyectoWebApp_Plat2.Controllers
 {
     /// <summary>
-    /// Clase que se encarga de la escritura del archivo Pdf de cada Reserva
+    /// Clase que se encarga de la escritura del archivo Pdf de cada reserva
     /// </summary>
     public class PdfVoucherWriter
     {
@@ -31,7 +31,7 @@ namespace ProyectoWebApp_Plat2.Controllers
         public static PdfVoucherWriter instancia { get; private set; }
 
         /// <summary>
-        /// Constructor de la clase. Es de caracter privado para seguir el patrón de sisenio Singleton.
+        /// Constructor de la clase. Es de caracter privado para seguir el patron de disenio Singleton.
         /// </summary>
         private PdfVoucherWriter()
         {
@@ -39,9 +39,9 @@ namespace ProyectoWebApp_Plat2.Controllers
         }
 
         /// <summary>
-        /// Metodo que verifica si existe ya una instancia de la clase, de no existir una, entonces se crea la instancia única. En cualquier caso se retorna la instancia de la clase.
+        /// Metodo que verifica si existe o no una instancia de esta clase, de no existir llama al constructor para instanciar una.
         /// </summary>
-        /// <returns>La instancia única de la clase</returns>
+        /// <returns>Instancia de la clase PdfVoucherWriter.</returns>
         public static PdfVoucherWriter GetInstance()
         {
             if (instancia == null)
@@ -53,42 +53,48 @@ namespace ProyectoWebApp_Plat2.Controllers
         }
 
         /// <summary>
-        /// Método encargado de escribir cada aspecto del archivo Pdf de la reserva.
+        /// Metodo encargado de redactar cada aspecto del archivo Pdf de la reserva.
         /// </summary>
         /// <param name="cliente"></param>
         /// <returns></returns>
         public FileStreamResult WriteVoucher(Customer cliente, Flight vuelo)
         {
+            //inicia las instancias necesarios para comenzar a redactar el archivo
             MemoryStream flujoMemoria = new MemoryStream();
-
             PdfWriter escritorPdf = new PdfWriter(flujoMemoria);
             PdfDocument documentoPdf = new PdfDocument(escritorPdf);
             Document documento = new Document(documentoPdf,PageSize.LETTER);
 
+            //fuente de letra utilizada
             PdfFont fuente = PdfFontFactory.CreateFont(StandardFonts.HELVETICA);
 
+            //Tipografia para los titulos
             Style estiloTitulo = new Style()
                 .SetFont(fuente)
                 .SetFontSize(28)
                 .SetBold()
                 .SetTextAlignment(TextAlignment.JUSTIFIED);
 
+            //Tipografia para los parrafos
             Style estiloParrafo = new Style()
                 .SetFont(fuente)
                 .SetFontSize(12)
                 .SetTextAlignment(TextAlignment.JUSTIFIED);
 
+            //Tipografia para las celdas
             Style estiloCelda = new Style()
                 .SetFont(fuente)
                 .SetFontSize(12)
                 .SetTextAlignment(TextAlignment.CENTER)
                 .SetVerticalAlignment(VerticalAlignment.MIDDLE);
 
+            //ruta de la imagen del encabezado
             string rutaLogo = HttpContext.Current.Server.MapPath("~/Images/LogoAirlinePlus.png");
+            //genera la imagen con la ruta
             Image logo = new Image(ImageDataFactory.Create(rutaLogo));
-
+            //genera el encabezado utilizando la imagen de logo de la empresa
             documentoPdf.AddEventHandler(PdfDocumentEvent.START_PAGE, new HeaderEventHandler(logo));
-
+            //genera los margenes de la hoja
             documento.SetMargins(25,25,25,25);
 
             documento.Add(new Paragraph("Información de tu Reserva").AddStyle(estiloTitulo));
@@ -277,6 +283,7 @@ namespace ProyectoWebApp_Plat2.Controllers
             documento.Add(new Paragraph());
             documento.Add(new Paragraph("NOTA:").SetBold()).Add(new Paragraph("No olvide llegar al menos dos horas antes al aeropuerto."));
 
+            //cierra el archivo
             documento.Close();
 
             byte[] flujoBytes = flujoMemoria.ToArray();
@@ -288,14 +295,27 @@ namespace ProyectoWebApp_Plat2.Controllers
         }
     }
 
+    /// <summary>
+    /// Clase interna para generar el encabezado de cada pagina del archivo
+    /// </summary>
     public class HeaderEventHandler : IEventHandler
     {
+        //Imagen para el encabezado
         Image logo;
 
+        /// <summary>
+        /// Constructor de la clase. Recibe como parametro una imagen para ser utilizado en el encabezado.
+        /// </summary>
+        /// <param name="imagen"></param>
         public HeaderEventHandler(Image imagen)
         {
             this.logo = imagen;
         }
+
+        /// <summary>
+        /// Metodo que genera el espacio del encabezado de cada pagina del archivo.
+        /// </summary>
+        /// <param name="evento"></param>
         public void HandleEvent(Event evento)
         {
             PdfDocumentEvent eventoDocumento = (PdfDocumentEvent)evento;
@@ -308,6 +328,10 @@ namespace ProyectoWebApp_Plat2.Controllers
 
         }
 
+        /// <summary>
+        /// Metodo que crea una tabla sin margenes para insertar los elementos del encabezado.
+        /// </summary>
+        /// <returns>La tabla con elementos</returns>
         public Table getTable()
         {
             float[] anchuraCelda = { 40f, 80f };

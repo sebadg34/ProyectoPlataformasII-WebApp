@@ -14,12 +14,19 @@ namespace ProyectoWebApp_Plat2.Controllers
 {
     public class LoginController : Controller
     {
-        // GET: Login
+        /// <summary>
+        /// Metodo que muestra la vista para iniciar sesion en el sistema.
+        /// </summary>
+        /// <returns>La vista Login</returns>
         public ActionResult Login()
         {
             return View();
         }
        
+        /// <summary>
+        /// Metodo que muestra la vista para registrar usuarios al sistema.
+        /// </summary>
+        /// <returns>La vista RegisterCustomer</returns>
         public ActionResult RegisterCustomer()
         {
             return View();

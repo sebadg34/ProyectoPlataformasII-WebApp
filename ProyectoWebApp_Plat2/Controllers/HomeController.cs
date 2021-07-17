@@ -11,6 +11,9 @@ using Newtonsoft.Json;
 
 namespace ProyectoWebApp_Plat2.Controllers
 {
+    /// <summary>
+    /// Clase que controla el flujo de las acciones permitidas al estar dentro del sistema.
+    /// </summary>
     public class HomeController : Controller
     {
         // Variables por defecto que deben ir en las casillas de los filtros
@@ -19,6 +22,14 @@ namespace ProyectoWebApp_Plat2.Controllers
         DateTime fechaDesde = DateTime.Today;
         DateTime fechaHasta = DateTime.Today.AddMonths(6);
 
+        /// <summary>
+        /// Metodo que trabaja los filtros provenientes del menu y datos esenciales para mostrar las acciones respectivas del menu principal.
+        /// </summary>
+        /// <param name="origen"></param>
+        /// <param name="destino"></param>
+        /// <param name="fechaDesde"></param>
+        /// <param name="fechaHasta"></param>
+        /// <returns>La vista Menu</returns>
         public async Task<ActionResult> Menu(string origen, string destino, string fechaDesde, string fechaHasta)
         {
 
@@ -82,39 +93,40 @@ namespace ProyectoWebApp_Plat2.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Metodo que muestra la vista para registrar vuelos al sistema.
+        /// </summary>
+        /// <returns>La vista RegisterFlights</returns>
         public ActionResult RegisterFlights()
         {
             return View();
         }
 
         /// <summary>
-        /// Método que almacena los datos id_vuelo, cantidadPasajeros y usuarioPasajero para ser enviados a la vista ToReserve
+        /// Metodo que muestra la vista para rellenar el formulario de la reserva para otra persona.
         /// </summary>
-        /// <returns>vista ToReserve</returns>
+        /// <returns>La vista ToReserve</returns>
         public ActionResult ToReserve()
         {
             return View();
         }
 
         /// <summary>
-        /// Método que retorna la vista Voucher para acceder
+        /// Metodo que muestra la vista para visualizar el comprobante de la reserva.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>La vista Voucher</returns>
         public ActionResult Voucher()
         {
             ViewData["Mensaje"] = "¡Se ha realizado la reserva para " + Session["NombrePasajero"] as string + " en el vuelo " + Session["IdVueloDescriptivo"] as string + " !";
             return View();
         }
 
-        // A partir de aquí se redactan los métodos que redirigen hacia otra acción.
+        // A partir de aqui se redactan los metodos que redirigen hacia otra accion.
 
         /// <summary>
-        /// Método que almacena datos en las etiquetas Log-In, Role, Nombre e Id para ser usados por el controlador Home en la acción Menu
+        /// Metodo que almacena datos provenientes de una QueryString. Los datos se almacenan en las etiquetas Login, Rol, Nombre e IdUsuario.
         /// </summary>
-        /// <param name="role"></param>
-        /// <param name="name"></param>
-        /// <param name="userID"></param>
-        /// <returns>Acción Menu del controlador Home</returns>
+        /// <returns>Accion Menu del controlador Home</returns>
         public ActionResult ToMenu()
         {
             Session["Login"] = true;
@@ -125,16 +137,20 @@ namespace ProyectoWebApp_Plat2.Controllers
             return RedirectToAction("Menu");
         }
 
+        /// <summary>
+        /// Metodo utilizado para volver al menu principal sin necesidad de almacenar datos nuevos.
+        /// </summary>
+        /// <returns>Accion Menu del controlador Home</returns>
         public ActionResult BackToMenu()
         {
             return RedirectToAction("Menu");
         }
 
         /// <summary>
-        /// Metodo que almacena temporalmente dentro de las etiquetas Log-In y Role valores false de tipo bool,
-        /// estos datos seran usados posteriormente en la acción Menu, luego redirige hacia la acción Menu en el controlador Home 
+        /// Metodo utilizado para ir al menu principal al momento de cerrar sesion. Los datos almacenados en etiquetas se dejan como nulos
+        /// a excepcion de Login y Rol que almacenan el dato booleano false.
         /// </summary>
-        /// <returns>Redirige a la Acción Menu</returns>
+        /// <returns>Accion Menu del controlador Home</returns>
         public ActionResult Logout()
         {
             Session["Login"] = false;
@@ -152,14 +168,20 @@ namespace ProyectoWebApp_Plat2.Controllers
         }
 
         /// <summary>
-        /// Método que redirige hacia la accion Login que se encuentra en el controlador Login
+        /// Metodo utilizado para ir a la vista login desde el menu para iniciar sesion.
         /// </summary>
-        /// <returns>Acción Login del controlador Login</returns>
+        /// <returns>Accion Login del controlador Login</returns>
         public ActionResult ToLogin()
         {
             return RedirectToAction("Login", "Login");
         }
 
+        /// <summary>
+        /// Metodo que recibe los datos de vuelo de la reserva mediante QueryString. Los datos importantes se almacenan en las etiquetas
+        /// IdVueloReserva, VueloReserva e IdVueloDescriptivo.
+        /// </summary>
+        /// <returns>Accion MyselfVoucher en caso de ser reserva para el usuario.
+        /// Accion ToReserve en caso de ser reserva para otra persona.</returns>
         public async Task<ActionResult> GoToReserve()
         {
             string idVuelo = Request.QueryString["id"];
@@ -180,6 +202,11 @@ namespace ProyectoWebApp_Plat2.Controllers
             
         }
 
+        /// <summary>
+        /// Metodo que se invoca para realizar una reserva al usuaria, este se comunica con la API a traves de la clase Communication para pedir un cliente y ademas, realizar un Post de la reserva.
+        /// Los datos de interes se almacenan en las etiquetas PasajeroReserva y NombrePasajero.
+        /// </summary>
+        /// <returns>Accion Voucher del controlador Home</returns>
         public async Task<ActionResult> MyselfVoucher()
         {
             string idVuelo = Session["idVueloReserva"] as string;
@@ -193,6 +220,12 @@ namespace ProyectoWebApp_Plat2.Controllers
             return RedirectToAction("Voucher");
         }
 
+        /// <summary>
+        /// Metodo que se invoca para realizar una reserva a otra persona, este recibe todos los datos mediante QueryString para generar una
+        /// instancia de Customer para almacenar la informacion y luego hacer el Post de la reserva. 
+        /// Los datos de interes se guardan en las etiquetas PasajeroReserva y NombrePasajero.
+        /// </summary>
+        /// <returns>Accion Voucher del controlador Home</returns>
         public async Task<ActionResult> GoToVoucher()
         {
             string idVuelo = Session["idVueloReserva"] as string;
@@ -217,6 +250,11 @@ namespace ProyectoWebApp_Plat2.Controllers
             return RedirectToAction("Voucher");
         }
 
+        /// <summary>
+        /// Metodo que genera las instancias de Flight y Customer para la informacion almacenada en las etiquetas VueloReserva y PasajeroReserva.
+        /// Se hace llamado a la instancia de la clase PdfVoucherWriter para que reciba esta informacion y redactar el archivo PDF de la reserva.
+        /// </summary>
+        /// <returns>Archivo Pdf de la reserva</returns>
         public FileStreamResult SendVoucher()
         {
             Flight vueloReserva = (Flight)Session["VueloReserva"];

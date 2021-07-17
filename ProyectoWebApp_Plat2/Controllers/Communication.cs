@@ -17,10 +17,18 @@ namespace ProyectoWebApp_Plat2.Controllers
     /// </summary>
     public class Communication
     {
+        // Instancia unica de esta clase.
         public static Communication instancia { get; private set; }
 
+        /// <summary>
+        /// Constructor de la clase. Es de caracter privado para seguir el patron de disenio Singleton.
+        /// </summary>
         private Communication() { }
 
+        /// <summary>
+        /// Metodo que verifica si existe o no una instancia de esta clase, de no existir llama al constructor para instanciar una.
+        /// </summary>
+        /// <returns>Instancia de la clase Communication.</returns>
         public static Communication GetInstance()
         {
             if(instancia == null)
@@ -32,11 +40,10 @@ namespace ProyectoWebApp_Plat2.Controllers
         }
 
         /// <summary>
-        /// Método que obtiene todos los vuelos de la API
+        /// Metodo que obtiene todos los vuelos de la API
         /// </summary>
         /// <returns>
-        /// Retorna todos los vuelos en forma de un list<Flight>
-        /// </returns>
+        /// Todos los vuelos en forma de un list<Flight>.</returns>
         public async Task<List<Flight>> GetFlights()
         {
             using (var clienteHttp = new HttpClient())
@@ -56,6 +63,11 @@ namespace ProyectoWebApp_Plat2.Controllers
             }
         }
 
+        /// <summary>
+        /// Metodo que obtiene un vuelo en especifico de la API a traves de su id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Un vuelo como un objeto de tipo Flight.</returns>
         public async Task<Flight> GetFlight(int id)
         {
             using (var clienteHttp = new HttpClient())
@@ -76,6 +88,11 @@ namespace ProyectoWebApp_Plat2.Controllers
             }
         }
 
+        /// <summary>
+        /// Metodo que obtiene un cliente en especifico de la API a traves de su id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Un cliente como un objeto de tipo Customer.</returns>
         public async Task<Customer> GetCustomer(int id)
         {
             using (var clienteHttp = new HttpClient())
@@ -96,6 +113,12 @@ namespace ProyectoWebApp_Plat2.Controllers
             }
         }
 
+        /// <summary>
+        /// Metodo que realiza un Post en la API de una reserva utilizando la id del Vuelo y del Usuario involucrados en la reserva.
+        /// </summary>
+        /// <param name="idVuelo"></param>
+        /// <param name="idUsuario"></param>
+        /// <returns></returns>
         public async Task PostReserve(int idVuelo, int idUsuario)
         {
             using (var clienteHttp = new HttpClient())

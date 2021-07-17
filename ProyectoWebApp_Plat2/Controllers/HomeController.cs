@@ -114,12 +114,12 @@ namespace ProyectoWebApp_Plat2.Controllers
         /// <param name="name"></param>
         /// <param name="userID"></param>
         /// <returns>Acción Menu del controlador Home</returns>
-        public ActionResult ToMenu(bool role, string name, string userID)
+        public ActionResult ToMenu()
         {
             Session["Login"] = true;
-            Session["Rol"] = role;
-            Session["Nombre"] = name;
-            Session["IdUsuario"] = userID;
+            Session["Rol"] = Convert.ToBoolean(Request.QueryString["rol"]);
+            Session["Nombre"] = Request.QueryString["nombre"];
+            Session["IdUsuario"] = Request.QueryString["idUsuario"];
 
             return RedirectToAction("Menu");
         }
@@ -158,6 +158,7 @@ namespace ProyectoWebApp_Plat2.Controllers
         public async Task<ActionResult> GoToReserve()
         {
             string idVuelo = Request.QueryString["id"];
+            Session["IdVueloReserva"] = idVuelo;
             Session["VueloReserva"] = await Communication.GetInstance().GetFlight(Int32.Parse(idVuelo));
             string opcion = Request.QueryString["opcion"];
 
@@ -174,16 +175,34 @@ namespace ProyectoWebApp_Plat2.Controllers
 
         public async Task<ActionResult> MyselfVoucher()
         {
+            string idVuelo = Session["idVueloReserva"] as string;
             string idUsuario = Session["IdUsuario"] as string;
             Session["PasajeroReserva"] = await Communication.GetInstance().GetCustomer(Int32.Parse(idUsuario));
+
+            await Communication.GetInstance().PostReserve(Int32.Parse(idVuelo), Int32.Parse(idUsuario));
             
             return RedirectToAction("Voucher");
         }
 
-        public ActionResult GoToVoucher()
+        public async Task<ActionResult> GoToVoucher()
         {
-            //parametros string Nombres, string Apellidos, string Rut, string Numero_Pasaporte, string Direccion, int Numero_Direccion, int Numero_Telefono, string Nombres_Emergencia, string Apellidos_Emergencia, int Numero_Telefono_Emergencia, int ID
-            //this.reserveCustomer = new Customer(Nombres, Apellidos, Rut, Numero_Pasaporte, Direccion, Numero_Direccion, Numero_Telefono, Nombres_Emergencia, Apellidos_Emergencia, Numero_Telefono_Emergencia, ID);
+            string idVuelo = Session["idVueloReserva"] as string;
+            string idUsuario = Session["IdUsuario"] as string;
+
+            string Nombres = Request.QueryString["Nombres"];
+            string Apellidos = Request.QueryString["Apellidos"];
+            string Rut = Request.QueryString["Rut"];
+            string Numero_Pasaporte = Request.QueryString["Numero_Pasaporte"];
+            string Direccion = Request.QueryString["Direccion"];
+            int Numero_Direccion = Int32.Parse(Request.QueryString["Numero_Direccion"]);
+            int Numero_Telefono = Int32.Parse(Request.QueryString["Numero_Telefono"]);
+            string Nombres_Emergencia = Request.QueryString["Nombres_Emergencia"];
+            string Apellidos_Emergencia = Request.QueryString["Apellidos_Emergencia"];
+            int Numero_Telefono_Emergencia = Int32.Parse(Request.QueryString["Numero_Telefono_Emergencia"]);
+
+            Session["PasajeroReserva"] = new Customer(Nombres, Apellidos, Rut, Numero_Pasaporte, Direccion, Numero_Direccion, Numero_Telefono, Nombres_Emergencia, Apellidos_Emergencia, Numero_Telefono_Emergencia, 0);
+
+            await Communication.GetInstance().PostReserve(Int32.Parse(idVuelo), Int32.Parse(idUsuario));
 
             return RedirectToAction("Voucher");
         }

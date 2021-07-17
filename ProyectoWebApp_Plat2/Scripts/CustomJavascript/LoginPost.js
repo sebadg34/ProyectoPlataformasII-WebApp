@@ -7,7 +7,7 @@ function Login() {
         function (registro, status) {
             
             alert("LOGIN EXITOSO\n usuario: " + registro.Name + "\n id: " + registro.Id);
-            window.location.href = "http://localhost:52811/Home/ToMenu?role=" + registro.IdRol + "&name=" + registro.Name + "&userID=" + registro.Id;
+            window.location.href = "http://localhost:52811/Home/ToMenu?rol=" + registro.IdRol + "&nombre=" + registro.Name + "&idUsuario=" + registro.Id;
             
         }).fail(function (data, status) {
             alert("error");

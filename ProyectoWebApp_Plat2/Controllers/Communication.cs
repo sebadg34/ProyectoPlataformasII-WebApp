@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
+using System.Text;
 
 namespace ProyectoWebApp_Plat2.Controllers
 {
@@ -94,5 +95,23 @@ namespace ProyectoWebApp_Plat2.Controllers
                 return cliente;
             }
         }
+
+        public async Task PostReserve(int idVuelo, int idUsuario)
+        {
+            using (var clienteHttp = new HttpClient())
+            {
+                clienteHttp.BaseAddress = new Uri("https://localhost:44350/");
+                clienteHttp.DefaultRequestHeaders.Accept.Clear();
+                clienteHttp.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                Reserve reserva = new Reserve(idVuelo, idUsuario);
+                var jsonSerializado = JsonConvert.SerializeObject(reserva);
+                StringContent contenido = new StringContent(jsonSerializado, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage respuesta = await clienteHttp.PostAsync("api/Reserves/", contenido);
+                
+            }
+        }
+
     }
 }

@@ -16,7 +16,14 @@
         </h2>
 
         <div class="row no-gutters">
-
+            <div class="col-md-6">
+                <div class="float-right row flex-row-reverse no-gutters">
+                    @using (Html.BeginForm("BackToMenu", "Home"))
+                    {
+                        <button type="submit" class="btn btn-primary" id="voucherButton" value="LoginUser">Volver al Menu</button>
+                    }
+                </div>
+            </div>
             <div class="col-md-6">
                 <div class="float-right row flex-row-reverse no-gutters">
                     @using (Html.BeginForm("SendVoucher", "Home"))

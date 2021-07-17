@@ -102,6 +102,7 @@ namespace ProyectoWebApp_Plat2.Controllers
         /// <returns></returns>
         public ActionResult Voucher()
         {
+            ViewData["Mensaje"] = "¡Se ha realizado la reserva para " + Session["NombrePasajero"] as string + " en el vuelo " + Session["IdVueloDescriptivo"] as string + " !";
             return View();
         }
 
@@ -140,14 +141,18 @@ namespace ProyectoWebApp_Plat2.Controllers
             Session["Rol"] = false;
             Session["Nombre"] = null;
             Session["IdUsuario"] = null;
+            Session["IdVueloReserva"] = null;
+            Session["IdVueloDescriptivo"] = null;
             Session["VueloReserva"] = null;
+            Session["NombrePasajero"] = null;
             Session["PasajeroReserva"] = null;
+            
 
             return RedirectToAction("Menu");
         }
 
         /// <summary>
-        /// Método que redirige hacia la acción Login que se encuentra en el controlador Login
+        /// Método que redirige hacia la accion Login que se encuentra en el controlador Login
         /// </summary>
         /// <returns>Acción Login del controlador Login</returns>
         public ActionResult ToLogin()
@@ -159,7 +164,9 @@ namespace ProyectoWebApp_Plat2.Controllers
         {
             string idVuelo = Request.QueryString["id"];
             Session["IdVueloReserva"] = idVuelo;
-            Session["VueloReserva"] = await Communication.GetInstance().GetFlight(Int32.Parse(idVuelo));
+            Flight vueloReserva = await Communication.GetInstance().GetFlight(Int32.Parse(idVuelo));
+            Session["VueloReserva"] = vueloReserva;
+            Session["IdVueloDescriptivo"] = vueloReserva.ID_Vuelo;
             string opcion = Request.QueryString["opcion"];
 
             if (opcion == "myself")
@@ -177,7 +184,9 @@ namespace ProyectoWebApp_Plat2.Controllers
         {
             string idVuelo = Session["idVueloReserva"] as string;
             string idUsuario = Session["IdUsuario"] as string;
-            Session["PasajeroReserva"] = await Communication.GetInstance().GetCustomer(Int32.Parse(idUsuario));
+            Customer pasajeroReserva = await Communication.GetInstance().GetCustomer(Int32.Parse(idUsuario));
+            Session["PasajeroReserva"] = pasajeroReserva;
+            Session["NombrePasajero"] = pasajeroReserva.Nombres + " " + pasajeroReserva.Apellidos;
 
             await Communication.GetInstance().PostReserve(Int32.Parse(idVuelo), Int32.Parse(idUsuario));
             
@@ -201,6 +210,7 @@ namespace ProyectoWebApp_Plat2.Controllers
             int Numero_Telefono_Emergencia = Int32.Parse(Request.QueryString["Numero_Telefono_Emergencia"]);
 
             Session["PasajeroReserva"] = new Customer(Nombres, Apellidos, Rut, Numero_Pasaporte, Direccion, Numero_Direccion, Numero_Telefono, Nombres_Emergencia, Apellidos_Emergencia, Numero_Telefono_Emergencia, 0);
+            Session["NombrePasajero"] = Nombres + " " + Apellidos;
 
             await Communication.GetInstance().PostReserve(Int32.Parse(idVuelo), Int32.Parse(idUsuario));
 

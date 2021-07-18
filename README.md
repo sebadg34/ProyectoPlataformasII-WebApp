@@ -11,13 +11,13 @@
 
 ## Introducción
 
-### Quienes Somos
-Somos el equipo MakeMeister, compuesto por los siguientes integrantes
+### Quie¿énes Somos
+Somos el equipo MakeMeister, compuesto por los siguientes integrantes:
 
-- Tomas Reimann (Director general y full Stack).
+- Tomás Reimann (Director general y full Stack).
 - Javiera Cordero (Base de datos y full Stack).
 - Juan Barnett (Tester y full Stack).
-- Sebastian Delgado (FrontEnd supervisor y full Stack).
+- Sebastián Delgado (FrontEnd supervisor y full Stack).
 
 Landing web page: https://makemeister.wixsite.com/website
 

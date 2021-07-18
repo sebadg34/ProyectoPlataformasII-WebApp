@@ -9,9 +9,36 @@
     color: #006ce5;
 }
 
+#voucher {
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-top:10px;
+    margin-left: 250px;
+    margin-right: 250px;
+    border: 2px solid #3d8af7;
+
+    max-width: 750px;
+}
+.btn-logoutvoucher {
+    margin-left: 0px;
+    margin-right: 0px;
+    background-color: #4dd7fa !important;
+    color: #FFF;
+    border-color: #3d8af7 !important;
+}
+
 #sub_theme {
     font-size: 15px;
     color: #7a7a7a;
+}
+
+.btn-voucher {
+    margin-left: 0px;
+    margin-right: 0px;
+    background-color: #0069d9 !important;
+    color: #FFF;
+    border-color: #3d8af7 !important;
 }
 
 .login-container {

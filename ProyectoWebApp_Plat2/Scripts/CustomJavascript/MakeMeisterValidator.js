@@ -29,9 +29,6 @@ function ValidateForm() {
         nieES: "Por favor, escribe un NIE válido.",
         cifES: "Por favor, escribe un CIF válido."
     });
-
-
-
 }
 
 

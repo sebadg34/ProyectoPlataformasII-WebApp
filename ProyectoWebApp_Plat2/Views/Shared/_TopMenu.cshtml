@@ -3,20 +3,19 @@
     <link rel="stylesheet" href="~/Content/menuStyles.css" />
 </head>
 
-
 <body id="body">
 
-    <div class="perma_container_menu no-gutters for">
+    <div class="perma_container_menu no-gutters for" style="margin-top:0;">
         @{
-            bool State = (bool)ViewData["Log-In"];
-            bool Role = (bool)ViewData["Role"];
+            bool estado = (bool)ViewData["Login"];
+            bool rol = (bool)ViewData["Rol"];
         }
-        @if (State)
+        @if (estado)
         {
-            if (Role)
+            if (rol)
             {
                 <div class="float-left">
-                    <div class="row form-group">
+                    <div class="row form-group" style="margin-bottom:0px;">
                         <div class="row  flex-row-reverse no-gutters for">
                             @using (Html.BeginForm("RegisterFlight", "Home"))
                             {
@@ -30,7 +29,7 @@
                     </div>
                 </div>
                 <div class="float-right">
-                    <div class="row form-group">
+                    <div class="row form-group" style="margin-bottom:0px;">
                         <h3 id="sub_theme_2">
                             @ViewData["Nombre"]
                         </h3>
@@ -43,8 +42,6 @@
                                     </h3>
                                 </button>
                             }
-
-
                         </div>
                     </div>
                 </div>
@@ -52,7 +49,7 @@
             else
             {
                 <div class="float-right">
-                    <div class="row form-group">
+                    <div class="row form-group"style="margin-bottom:0px;">
                         <h3 id="sub_theme_2">
                             @ViewData["Nombre"]
                         </h3>
@@ -73,8 +70,8 @@
         else
         {
             <div class="float-right">
-                <div class="row form-group">
-                    <div class="row  flex-row-reverse no-gutters for">
+                <div class="row form-group" style="margin-bottom:0px;">
+                    <div  class="row  flex-row-reverse no-gutters for">
                         @using (Html.BeginForm("RegisterCustomer", "Login"))
                         {
                             <button type="submit" class="btn btn-primary-3">

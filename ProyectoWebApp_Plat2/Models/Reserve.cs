@@ -13,11 +13,10 @@ namespace ProyectoWebApp_Plat2.Models
 
         public int ID { get; set; }
 
-        public Reserve(int ID_Flight, int ID_Customer, int ID)
+        public Reserve(int ID_Flight, int ID_Customer)
         {
             this.ID_Flight = ID_Flight;
             this.ID_Customer = ID_Customer;
-            this.ID = ID;
         }
     }
 }

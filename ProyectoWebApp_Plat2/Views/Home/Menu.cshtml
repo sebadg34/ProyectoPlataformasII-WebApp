@@ -62,61 +62,15 @@
                         }
                     })
                     if (option) {
-                        // Si se selecciona "Para otra persona" entonces pregunta a cuantas personas
+                        
+                        // Si se selecciona "Para mi" entonces realiza la reserva directamente para el usuario conectado
                         if (option == "other") {
-                            /*const { value: amount } = await Swal.fire({
-                                title: '¿Cuantas personas en total?',
-                                confirmButtonColor: '#0a61bc',
-                                input: 'text',
-                                inputPlaceholder: 'Ej. 5',
-                                inputValidator: (value) => {
-                                    if (!value) {
-                                        return 'Debe ingresar una cantidad!'
-                                    }
-                                    if (Number.isNaN(Number.parseInt(value, 10))) {
-                                        console.log("hola")
-                                        return 'Debe ingresar una cantidad!'
-                                    }
-                                    else {
-
-                                    }
-                                }
-                            })
-
-                            if (amount) {
-                                url = "/Home/Mostrar?id=" + id + "&option=" + option + "&amount=" + amount;
-                                window.location = url;
-                            }*/
-                            url = "/Home/Mostrar?id=" + id + "&option=" + option + "&amount=1";
+                            url = "/Home/GoToReserve?id=" + id + "&opcion=" + option;
                             window.location = url;
                         }
-                        // Si se selecciona "Ambos" entonces pregunta a cuantas personas mas
-                        /*else if (option == "both") {
-                            const { value: amount } = await Swal.fire({
-                                title: '¿Cuantas personas en total?',
-                                confirmButtonColor: '#0a61bc',
-                                input: 'text',
-                                inputPlaceholder: 'Ej. 5',
-                                inputValidator: (value) => {
-                                    if (!value) {
-                                        return 'Debe ingresar una cantidad!'
-                                    }
-                                    if (Number.isNaN(Number.parseInt(value, 10))) {
-                                        console.log("hola")
-                                        return 'Debe ingresar una cantidad!'
-                                    }
-                                    else {
-
-                                    }
-                                }
-                            })
-                            if (amount) {
-                                url = "/Home/Mostrar?id=" + id + "&option=" + option + "&amount=" + amount;
-                                window.location = url;
-                            }
-                        }*/
+                        // Si se selecciona "Para otra persona" entonces se cambia la vista para llenar los datos requeridos
                         else {
-                            url = "/Home/Mostrar?id=" + id + "&option=" + option + "&amount=1";
+                            url = "/Home/GoToReserve?id=" + id + "&opcion=" + option;
                             window.location = url;
                         }
                     }
@@ -144,19 +98,19 @@
                             @{
                                 int n = 0;
                                 List<string> ciudades_origen = new List<string>();
-                                ciudades_origen.Add(ViewBag.vuelos[0].Ciudad_Origen);
+                                ciudades_origen.Add(ViewBag.vuelosApi[0].Ciudad_Origen);
                                 // Ciclo encargado de formar lista de ciudades de origen sin repetir
-                                for (int i = 0; i < ViewBag.vuelos.Count; i++)
+                                for (int i = 0; i < ViewBag.vuelosApi.Count; i++)
                                 {
                                     foreach (string ciudades in ciudades_origen)
                                     {
-                                        if (ViewBag.vuelos[i].Ciudad_Origen.Equals(ciudades))
+                                        if (ViewBag.vuelosApi[i].Ciudad_Origen.Equals(ciudades))
                                         {
                                             break;
                                         }
                                         if (ciudades_origen.Count == n + 1)
                                         {
-                                            ciudades_origen.Add(ViewBag.vuelos[i].Ciudad_Origen);
+                                            ciudades_origen.Add(ViewBag.vuelosApi[i].Ciudad_Origen);
                                             break;
                                         }
                                         n++;
@@ -189,19 +143,19 @@
                             @{
                                 int m = 0;
                                 List<string> ciudades_destino = new List<string>();
-                                ciudades_destino.Add(ViewBag.vuelos[0].Ciudad_Destino);
+                                ciudades_destino.Add(ViewBag.vuelosApi[0].Ciudad_Destino);
                                 // Ciclo encargado de formar lista de ciudades de destino sin repetir
-                                for (int i = 0; i < ViewBag.vuelos.Count; i++)
+                                for (int i = 0; i < ViewBag.vuelosApi.Count; i++)
                                 {
                                     foreach (string ciudades in ciudades_destino)
                                     {
-                                        if (ViewBag.vuelos[i].Ciudad_Destino.Equals(ciudades))
+                                        if (ViewBag.vuelosApi[i].Ciudad_Destino.Equals(ciudades))
                                         {
                                             break;
                                         }
                                         if (ciudades_destino.Count == m + 1)
                                         {
-                                            ciudades_destino.Add(ViewBag.vuelos[i].Ciudad_Destino);
+                                            ciudades_destino.Add(ViewBag.vuelosApi[i].Ciudad_Destino);
                                             break;
                                         }
                                         m++;
@@ -304,41 +258,56 @@
                 </div>
             </div>
             @{
-                bool Role = (bool)ViewData["Role"];
-                // La cantidad de vuelos disponibles puede variar por lo que hay que generar tantas filas de vuelos como vuelos hayan disponibles
-                for (int i = 0; i < ViewBag.flights.Count; i++)
-                {
+                    bool rol = (bool)ViewData["Rol"];
+                    bool estado = (bool)ViewData["Login"];
+                    // La cantidad de vuelos disponibles puede variar por lo que hay que generar tantas filas de vuelos como vuelos hayan disponibles
+                    for (int i = 0; i < ViewBag.vuelos.Count; i++)
+                    {
                     <!-- Fila donde se expone la información de un vuelo -->
                     <div class="row" style="width: 100%; height: 100px; margin: auto; display: flex; background: white;">
                         @{
                             // Un Administrador no puede reservar un vuelo, por lo que la opcón de reservar no debería de ser mostrada a el
-                            if (Role)
+                            if (rol)
                             {
                                 <div class="col" style="width: 14.28571429%; height: 100px; margin: auto; display: flex; border: 1px solid black;">
                                     <h3 style="color: #010812; margin: auto; font-size: 14px;">
-                                        @ViewBag.flights[i].ID_Vuelo
+                                        @ViewBag.vuelos[i].ID_Vuelo
                                     </h3>
                                 </div>
                             }
-                            // Si el usuario es un clienteentonces tiene la opción de reservar
+                            // Si el usuario es un cliente entonces tiene la opción de reservar
                             else
                             {
                                 <div class="col" style="width: 14.28571429%; height: 100px; margin: auto; display: flex; border: 1px solid black;">
                                     <div class="row" style="width: 100%; margin: auto; display: flex; height: 60px;">
                                         <div class="row" style="width: 100%; margin: auto; display: flex; height: 30px;">
                                             <h3 style="color: #010812; margin: auto; font-size: 14px;">
-                                                @ViewBag.flights[i].ID_Vuelo
+                                                @ViewBag.vuelos[i].ID_Vuelo
                                             </h3>
                                         </div>
                                         <div class="row" style="width: 70%; margin: auto; display: flex; height: 30px;">
                                             @{
-                                                int id = ViewBag.flights[i].ID;
+                                                int id = ViewBag.vuelos[i].ID;
                                             }
-                                            <button type="button" onclick="algo(@id)" class="btn btn-primary" value="@ViewBag.flights[i].ID_Vuelo" name="id_vuelo + @i" style="margin: auto; font-size: 14px; padding: 0px; background-color: #0a61bc !important;">
-                                                <h3 style="color: #010812; margin: auto; font-size: 14px; color: white;">
-                                                    Reservar
-                                                </h3>
-                                            </button>
+                                            @if (estado)
+                                            {
+                                                <button type="button" onclick="algo(@id)" class="btn btn-primary" value="@ViewBag.vuelos[i].ID_Vuelo" name="id_vuelo + @i" style="margin: auto; font-size: 14px; padding: 0px; background-color: #0a61bc !important;">
+                                                    <h3 style="color: #010812; margin: auto; font-size: 14px; color: white;">
+                                                        Reservar
+                                                    </h3>
+                                                </button>
+                                            }
+                                            else
+                                            {
+                                                using (Html.BeginForm("Login", "Login"))
+                                                {
+                                                    <button type="submit" class="btn btn-primary" style= "margin: auto; font-size: 14px; padding: 0px; background-color: #0a61bc !important;">
+                                                        <h3 style="color: #010812; margin: auto; font-size: 14px; color: white;">
+                                                            Reservar
+                                                        </h3>
+                                                    </button>
+                                                }
+                                            }
                                         </div>
                                     </div>
                                 </div>
@@ -346,22 +315,22 @@
                         }
                         <div class="col" style="width: 14.28571429%; height: 100px; margin: auto; display: flex; border: 1px solid black;">
                             <h3 style="color: #010812; margin: auto; font-size: 14px;">
-                                @ViewBag.flights[i].Ciudad_Origen
+                                @ViewBag.vuelos[i].Ciudad_Origen
                             </h3>
                         </div>
                         <div class="col" style="width: 14.28571429%; height: 100px; margin: auto; display: flex; border: 1px solid black;">
                             <h3 style="color: #010812; margin: auto; font-size: 14px;">
-                                @ViewBag.flights[i].Ciudad_Destino
+                                @ViewBag.vuelos[i].Ciudad_Destino
                             </h3>
                         </div>
                         <div class="col" style="width: 14.28571429%; height: 100px; margin: auto; display: flex; border: 1px solid black;">
                             <h3 style="color: #010812; margin: auto; font-size: 14px;">
-                                @ViewBag.flights[i].Fecha_Salida
+                                @ViewBag.vuelos[i].Fecha_Salida
                             </h3>
                         </div>
                         <div class="col" style="width: 14.28571429%; height: 100px; margin: auto; display: flex; border: 1px solid black;">
                             @{
-                                TimeSpan duracion = ViewBag.flights[i].Fecha_Llegada - ViewBag.flights[i].Fecha_Salida;
+                                TimeSpan duracion = ViewBag.vuelos[i].Fecha_Llegada - ViewBag.vuelos[i].Fecha_Salida;
                             }
                             <h3 style="color: #010812; margin: auto; font-size: 14px;">
                                 @duracion.Hours Horas y @duracion.Minutes Minutos
@@ -369,12 +338,12 @@
                         </div>
                         <div class="col" style="width: 14.28571429%; height: 100px; margin: auto; display: flex; border: 1px solid black;">
                             <h3 style="color: #010812; margin: auto; font-size: 14px;">
-                                @ViewBag.flights[i].Cupos
+                                @ViewBag.vuelos[i].Cupos
                             </h3>
                         </div>
                         <div class="col" style="width: 14.28571429%; height: 100px; margin: auto; display: flex; border: 1px solid black;">
                             <h3 style="color: #010812; margin: auto; font-size: 14px;">
-                                @ViewBag.flights[i].Categoria
+                                @ViewBag.vuelos[i].Categoria
                             </h3>
                         </div>
                     </div>

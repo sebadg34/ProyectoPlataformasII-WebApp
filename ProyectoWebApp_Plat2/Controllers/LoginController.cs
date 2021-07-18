@@ -12,51 +12,27 @@ using Newtonsoft.Json;
 
 namespace ProyectoWebApp_Plat2.Controllers
 {
+    /// <summary>
+    /// Clase que controla el flujo de inicio de sesion y agregar nuevos usuarios al sistema
+    /// </summary>
     public class LoginController : Controller
     {
-
-
-
-        // GET: Login
+        /// <summary>
+        /// Metodo que muestra la vista para iniciar sesion en el sistema.
+        /// </summary>
+        /// <returns>La vista Login</returns>
         public ActionResult Login()
         {
             return View();
         }
-
-        
-        
+       
+        /// <summary>
+        /// Metodo que muestra la vista para registrar usuarios al sistema.
+        /// </summary>
+        /// <returns>La vista RegisterCustomer</returns>
         public ActionResult RegisterCustomer()
         {
             return View();
-        }
-        
-      
-        
-        
-
-        // Métodos que redirigen hacia otra vista
-
-        /// <summary>
-        /// Método que almacena temporalmente datos en las etiquetas Log-In, Role, Nombre e Id para ser usados por el controlador Home en la acción Menu
-        /// </summary>
-        /// <param name="role"></param>
-        /// <param name="name"></param>
-        /// <param name="idUsuario"></param>
-        /// <returns>Acción Menu del controlador Home</returns>
-
-        public ActionResult ToMenu(bool role, string name, string idUsuario)
-        {
-            Session["Log-In"] = true;
-            Session["Role"] = role;
-            Session["Nombre"] = name;
-            Session["Id"] = idUsuario;
-            
-
-            return RedirectToAction("Menu","Home");
-        }
-
-      
-
-        
+        } 
     }
 }

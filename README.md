@@ -11,7 +11,7 @@
 
 ## Introducción
 
-### Quie¿énes Somos
+### Quiénes Somos
 Somos el equipo MakeMeister, compuesto por los siguientes integrantes:
 
 - Tomás Reimann (Director general y full Stack).

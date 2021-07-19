@@ -11,13 +11,13 @@
 
 ## Introducción
 
-### Quienes Somos
-Somos el equipo MakeMeister, compuesto por los siguientes integrantes
+### Quiénes Somos
+Somos el equipo MakeMeister, compuesto por los siguientes integrantes:
 
-- Tomas Reimann (Director general y full Stack).
+- Tomás Reimann (Director general y full Stack).
 - Javiera Cordero (Base de datos y full Stack).
 - Juan Barnett (Tester y full Stack).
-- Sebastian Delgado (FrontEnd supervisor y full Stack).
+- Sebastián Delgado (FrontEnd supervisor y full Stack).
 
 Landing web page: https://makemeister.wixsite.com/website
 
@@ -33,7 +33,6 @@ Este proyecto consta en la creación de una aplicación para realizar reservas d
 Este repositorio actualmente almacena la aplicación web. 
 Para la webApi, dirigirse al siguiente repositorio: https://github.com/sebadg34/ProyectoPlataformas_II_WebAPI
 
-
 ## Tecnologías
 ### WebApp
 * Visual Studio 2017/2019
@@ -43,6 +42,8 @@ Para la webApi, dirigirse al siguiente repositorio: https://github.com/sebadg34/
 * Administrador paquetes NuGet 4.6.0
 * JQuery 3.6.0
 * Modernizr 2.8.3
+* Microsoft.AspNet.WebApi.Client 5.2.7
+* IText 7 7.1.16
 ### WebApi
 * Microsoft SQL Management Studio 18
 * SQL Express 2019
@@ -50,6 +51,8 @@ Para la webApi, dirigirse al siguiente repositorio: https://github.com/sebadg34/
 * ASP.NET WebAPI 5.2.7
 * BCrypt.NET-Next 4.0.2
 * ASP.NET Cors 5.2.7
+* xunit 2.4.1
+* xunit.runner.visualstudio 2.4.3
 	
 ## Setup 
 Para el desarrollo y ejecución del programa se deben tener los siguiente:
@@ -60,10 +63,31 @@ Para el desarrollo y ejecución del programa se deben tener los siguiente:
 * .Net Framework 4.7.*
 * SO Windows 7/8/10
 * Terminal git (GitBash, etc.)
-### Requerimientos mínimos de Hardware
-* *POR DEFINIR*
+
 ### Instalación
-* *POR DEFINIR*
+* Por parte de la WebApp: 
+> Se debe crear un repositorio local el cual almacenará la información adyacente en el repositorio actual. Luego, se debe de instalar los paquetes y programas mencionados en la sección de [WebApp](#webapp), se recomienda utilizar el administrador de paquetes Nuget para realizar la instalación, el cual viene incluido en el Visual Studio.
+
+* Por parte de la WebApi, ocurre de manera análoga a la instalación de la WebApp:
+> Se debe de instalar los paquetes y programas mencionados en la sección de [WebApi](#webapi). Además, se debe de leer la carpeta Docs, cuya contiene la Documentación del proyecto para poder tener mejor comprensión de este. A su vez, se debe de crear una base de datos llamada "DB" dentro del programa *Microsoft SQL Management Studio 18*., dicha base de datos contendrá las entidades y atributos mencionadas dentro de la Documentación. Una vez creada, dentro del proyecto en el *Visual Studio 2017/2019* se debe ir a la sección *Web.config*, línea 68, cambiando el data source con el nombre del servidor que se muestra en *Microsoft SQL Management Studio 18*.
+
+
+#### Paso a paso  de instalación
+
+1. Abrir el terminal git.
+2. Crear el directorio al cual se clonará el proyecto.
+3. Iniciar el repositorio mediante:
+```
+git init
+```
+4. Crear conexión con el repositorio:
+```
+git remote add origin [link de la WebApp (https://github.com/sebadg34/ProyectoPlataformasII-WebApp) o la WebApi (https://github.com/sebadg34/ProyectoPlataformas_II_WebAPI)]
+```
+5. Finalmente, hacer pull al master:
+```
+git pull origin master
+```
 
 ## Convenciones
 ### Commits
@@ -92,7 +116,6 @@ La estructura de los mensajes es la siguiente:
 * Parámetros para Métodos: camelCase
 * Json: spinal-case
 
-
 ### Documentación 
 
 #### Para C#
@@ -103,9 +126,8 @@ La estructura de los mensajes es la siguiente:
 * Comentarios útiles sobre algo en específico dentro del código.
 ```
 
-### Versión
-* *POR DEFINIR*
-
 ### Comentarios
+Para cualquier duda o consulta sobre el proyecto, no dude en contactarse con el Director general, Tomás Reimann, mediante el siguiente correo electrónico: tomas.reimann@alumnos.ucn.cl 
 
+Se despide atentamente, el equipo MakeMeister.
 

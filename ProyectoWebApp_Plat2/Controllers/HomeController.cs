@@ -97,7 +97,7 @@ namespace ProyectoWebApp_Plat2.Controllers
         /// Metodo que muestra la vista para registrar vuelos al sistema.
         /// </summary>
         /// <returns>La vista RegisterFlights</returns>
-        public ActionResult RegisterFlights()
+        public ActionResult RegisterFlight()
         {
             return View();
         }

@@ -12,61 +12,82 @@
             if (status == "success") {
                 $.get("https://localhost:44350/api/Users?email=" + $("#email").val(),
                     function (dataRol, status) {
-                        // alert("Data: " + dataRol.ID + "\nStatus: " + status);
-
                         // Obtiene los valores temporales del rut o numero de pasaporte para poder insertarlos en la base de dato
                         var rutAux = "";
                         var pasaporteAux = "";
 
-                        if ($("#rutPasaporte").val() == "rut") {
+                        if ($("#rutPasaporte").val() == "rut")
+                        {
                             rutAux = $("#rutPasaporte2").val();
                         }
-                        if ($("#rutPasaporte").val() == "numPasaporte") {
+                        if ($("#rutPasaporte").val() == "numPasaporte")
+                        {
                             pasaporteAux = $("#rutPasaporte2").val();
                         }
 
-                        // Aqui inserta los datos a la tabla Customer.
-                        $.post("https://localhost:44350/api/Customers", {
-                            Nombres: $("#nombre").val(),
-                            Apellidos: $("#apellido").val(),
-                            Rut: rutAux,
-                            Numero_Pasaporte: pasaporteAux,
-                            Direccion: $("#direccion").val(),
-                            Numero_Direccion: $("#numero").val(),
-                            Numero_Telefono: $("#numeroTelefono").val(),
-                            Nombres_Emergencia: $("#nombreEmergencia").val(),
-                            Apellidos_Emergencia: $("#apellidoEmergencia").val(),
-                            Numero_Telefono_Emergencia: $("#numeroTelefonoEmergencia").val(),
-                            ID: dataRol.ID
-                        })
-                            // Mensaje de que se registro bien
-                            .done(function () {
-                                // alert("Cliente registrado correctamente.");
-                                Swal.fire(
-                                    '¡Listo!!',
-                                    'Se ha registrado correctamente.',
-                                    'success'
-                                ).then(() => { window.location.href = "/Home/ToMenu?rol=" + false + "&nombre=" + $("#nombre").val() + "&idUsuario=" + dataRol.ID; });
+                        if (rutAux != "" || pasaporteAux != "") {
+                            // Aqui inserta los datos a la tabla Customer.
+                            $.post("https://localhost:44350/api/Customers", {
+                                Nombres: $("#nombre").val(),
+                                Apellidos: $("#apellido").val(),
+                                Rut: rutAux,
+                                Numero_Pasaporte: pasaporteAux,
+                                Direccion: $("#direccion").val(),
+                                Numero_Direccion: $("#numero").val(),
+                                Numero_Telefono: $("#numeroTelefono").val(),
+                                Nombres_Emergencia: $("#nombreEmergencia").val(),
+                                Apellidos_Emergencia: $("#apellidoEmergencia").val(),
+                                Numero_Telefono_Emergencia: $("#numeroTelefonoEmergencia").val(),
+                                ID: dataRol.ID
                             })
-                            // Mensaje de error
-                            .fail(function (xhr, status, error) {
-                                // alert("Datos inválidos al registrar el cliente, intente de nuevo. ");
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: 'Oops...',
-                                    text: 'Datos inválidos al registrarse, intente de nuevo.'
+                                // Mensaje de que se registro bien
+                                .done(function () {
+                                    // alert("Cliente registrado correctamente.");
+                                    Swal.fire(
+                                        '¡Listo!!',
+                                        'Se ha registrado correctamente.',
+                                        'success'
+                                    )
+                                        .then(() => { window.location = "/Home/Menu"; });
                                 })
+                                // Mensaje de error
+                                .fail(function (xhr, status, error) {
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Oops...',
+                                        text: 'Datos inválidos al registrarse, intente de nuevo.'
+                                    })
 
-                                // En caso de que el customer no se pueda ingresar, se debe eliminar el rol asignado anteriormente.
-                                var path = 'https://localhost:44350/api/Users/' + dataRol.ID;
-                                $.ajax({
-                                    url: path,
-                                    type: 'DELETE',
-                                    success: function (result) {
-                                        //alert(dataRol.ID + " BORRADO");
-                                    }
+                                    // En caso de que el customer no se pueda ingresar, se debe eliminar el rol asignado anteriormente.
+                                    var path = 'https://localhost:44350/api/Users/' + dataRol.ID;
+                                    $.ajax({
+                                        url: path,
+                                        type: 'DELETE',
+                                        success: function (result) {
+                                            //alert(dataRol.ID + " BORRADO");
+                                        }
+                                    });
                                 });
+                        }
+                        // En caso de que no ingrese el rut ni pasaporte
+                        else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Ingrese la opción desplegable de rut o número de pasaporte.'
+                            })
+
+                            // En caso de que el customer no se pueda ingresar, se debe eliminar el rol asignado anteriormente.
+                            var path = 'https://localhost:44350/api/Users/' + dataRol.ID;
+                            $.ajax({
+                                url: path,
+                                type: 'DELETE',
+                                success: function (result) {
+                                    //alert(dataRol.ID + " BORRADO");
+                                }
                             });
+                        } 
+
                     }
                 );
             }

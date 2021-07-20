@@ -5,12 +5,28 @@ function Login() {
     // Post a al loginController de la api
     $.post(newUrl, {Email: $("#userEmail").val(), Contrasenia: $("#userPassword").val()},
         function (registro, status) {
+
+            // alert("Vuelo " + idVuelo + " registrado correctamente.");
+            Swal.fire(
+                '¡Ingreso Exitoso!',
+                'Usuario ' + registro.Name,
+                'success'
+            )
+                .then(() => {
+                        window.location.href = "http://localhost:52811/Home/ToMenu?rol=" +
+                        registro.IdRol + "&nombre=" +
+                        registro.Name + "&idUsuario=" +
+                        registro.Id;
+                });
+           
             
-            alert("LOGIN EXITOSO\n usuario: " + registro.Name + "\n id: " + registro.Id);
-            window.location.href = "http://localhost:52811/Home/ToMenu?rol=" + registro.IdRol + "&nombre=" + registro.Name + "&idUsuario=" + registro.Id;
             
         }).fail(function (data, status) {
-            alert("error");
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Verifique que los datos ingresados sean los correctos'
+            })
         });
     
 }

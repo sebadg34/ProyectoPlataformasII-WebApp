@@ -10,6 +10,7 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src='~/Scripts/datepicker-es.js' type='text/javascript'></script>
     <script src="~/Scripts/CustomJavascript/RegisterFlightScript.js" language="javascript" type="text/javascript"></script>
 </head>
 
@@ -23,6 +24,7 @@
             inline: true,
             showButtonPanel: true
         });
+        $("#fechaSalida").datepicker($.datepicker.regional["es"]);
     });
 </script>
 

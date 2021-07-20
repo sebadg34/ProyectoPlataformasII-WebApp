@@ -35,6 +35,8 @@
                 inline: true,
                 showButtonPanel: true,
             });
+
+
             $("#hasta").datepicker($.datepicker.regional["es"]);
 
         });
@@ -191,7 +193,7 @@
                         </div>
                         <!-- Selección de la fecha mínima de despegue -->
                         <div class="col p-0" style="width: 50%; height: 40px; margin: auto; display: flex;">
-                            <input type="text" class="form-control form-control-sm" id="desde" name="desde" placeholder="yyyy-mm-dd" style="margin: auto; font-size: 14px; padding: 0px;" readonly />
+                            <input type="text" class="form-control form-control-sm" id="desde" name="fechaDesde" placeholder="yyyy-mm-dd" style="margin: auto; font-size: 14px; padding: 0px;" readonly />
                         </div>
                     </div>
                 </div>
@@ -205,7 +207,7 @@
                         </div>
                         <!-- Selección de la fecha máxima de despegue -->
                         <div class="col p-0" style="width: 50%; height: 40px; margin: auto; display: flex;">
-                            <input type="text" class="form-control form-control-sm" id="hasta" name="hasta" placeholder="yyyy-mm-dd" style="margin: auto; font-size: 14px; padding: 0px;" readonly />
+                            <input type="text" class="form-control form-control-sm" id="hasta" name="fechaHasta" placeholder="yyyy-mm-dd" style="margin: auto; font-size: 14px; padding: 0px;" readonly />
                         </div>
                     </div>
                 </div>
